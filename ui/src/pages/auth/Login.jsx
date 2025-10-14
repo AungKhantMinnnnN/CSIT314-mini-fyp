@@ -38,6 +38,7 @@ const Login = () => {
         }
         finally{
             setLoading(false);
+            window.location.href = "/";
         }
     };
 
