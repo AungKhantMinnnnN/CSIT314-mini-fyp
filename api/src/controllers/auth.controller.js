@@ -1,33 +1,31 @@
-const userEntity = require('../entities/user.entity');
+const auth = require('../entities/auth.entity');
 
 class AuthController {
-    async login(username, password){
-        const user = await userEntity.findUserWithUsernameAndPassword(username, password);
-        if (!user){
-            throw new Error('Invalid credentials.');
-        }
+    async login(username, password, roleId){
+        const validUser = await auth.login(username, password, roleId);
 
-        return{
-            user: {
-                userId : user.userId,
-                username: user.username,
-                email: user.email,
-                roleId: user.roleId,
-                statusId: user.statusId,
-                isLoggedIn: true
+        if (!validUser){
+            console.error("Auth.Controller.Login(): Invalid credentials.");
+            return {
+                user: {
+                    userId: "",
+                    username: "",
+                    email: "",
+                    roleId: "",
+                    statusId: "",
+                    isLoggedIn: false
+                }
             }
         }
-    }
 
-    async logout(user){
         return{
             user: {
-                userId : user.userId,
-                username: user.username,
-                email: user.email,
-                roleId: user.roleId,
-                statusId: user.statusId,
-                isLoggedIn: false
+                userId: validUser.userId,
+                username: validUser.username,
+                email: validUser.email,
+                roleId: validUser.roleId,
+                statusId: validUser.statusId,
+                isLoggedIn: true
             }
         }
     }

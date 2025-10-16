@@ -8,6 +8,7 @@ export const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true);
 
     const login = async (username, password) => {
+
         const data = await authController.login(username, password);
         setUser(data.username);
         return data;

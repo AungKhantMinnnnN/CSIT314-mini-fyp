@@ -1,51 +1,33 @@
 const supabase = require('../config/supabase_client');
 
-class UserEntity {
+class User{
     constructor(){
-        this.tableName = 'UserAdmin';
+        this.tableName = 'User';
     }
 
-    async create(userData){
-
+    async createUser(userData){
         const { data, error } = await supabase
             .from(this.tableName)
             .insert([{
                 username : userData.username,
-                password : userData.password,
+                password: userData.password,
                 email: userData.email,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 phoneNumber: phoneNumber,
                 roleId: userData.roleId,
                 statusId: userData.statusId,
-                updatedDate: Date.now()
+                updatedDate: Date.Now()
             }])
             .select('userId, username, email, role, status, createdDate')
-            .single();
+            .maybeSingle();
 
-        if(error){
-            throw new Error(error.message);
-        }
-
-        return data;
-    }
-
-    // login
-    async findUserWithUsernameAndPassword(username, password){
-
-        const { data, error } = await supabase
-            .from(this.tableName)
-            .select('*')
-            .eq('username', username)
-            .eq('password', password)
-            .single();
-
-        if (error) {
-            throw new Error(error.message);
+        if (error){
+            console.error("createUser(): An error has occurred. Error: " + error.message);
         }
 
         return data;
     }
 }
 
-module.exports = new UserEntity();
+module.exports = new User();
