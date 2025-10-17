@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/auth.controller');
+const authLoginController = require('../controllers/auth.login.controller');
+const authLogoutController = require('../controllers/auth.logout.controller');
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
@@ -15,7 +16,7 @@ router.post('/login', async (req, res) => {
         }
         
 
-        const result = await authController.login(username, password);
+        const result = await authLoginController.login(username, password);
         return res.status(200).json({
             success : true,
             data: result
@@ -31,3 +32,19 @@ router.post('/login', async (req, res) => {
 })
 
 module.exports = router;
+
+router.post('/logout', async (req, res) => {
+    try{
+        const result = await authLogoutController.logout()
+        return res.status(200).json({
+            success : true,
+            data: result
+        });
+    }
+    catch (error){
+        res.status(500).json({
+            success : false,
+            message: error.message
+        })
+    }
+})
