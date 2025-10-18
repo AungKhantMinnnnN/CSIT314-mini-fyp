@@ -23,7 +23,7 @@ class AuthLoginController {
                 userId: validUser.userId,
                 username: validUser.username,
                 email: validUser.email,
-                roleId: validUser.roleId,
+                userProfileId: validUser.userProfileId,
                 statusId: validUser.statusId,
                 isLoggedIn: true
             }

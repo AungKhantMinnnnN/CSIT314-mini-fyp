@@ -60,7 +60,7 @@ const Navbar = () => {
                                 aria-current={item.current ? 'page' : undefined}
                                 className={classNames(
                                 item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-white/5 hover:text-white',
-                                'rounded-md px-3 py-2 text-sm font-medium',
+                                'rounded-md px-2 py-2 text-sm font-medium',
                                 )}
                             >
                                 {item.name}
@@ -77,7 +77,7 @@ const Navbar = () => {
                             onClick={handleLogInRedirect}
                             className="justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                             >
-                            LogIn
+                            Login
                             </button>
                         ) : (
                             // ✅ If there IS a username → show user menu
@@ -101,7 +101,7 @@ const Navbar = () => {
                                     onClick={handleLogOut}
                                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                 >
-                                    LogOut
+                                    Logout
                                 </button>
                                 </MenuItem>
                             </MenuItems>

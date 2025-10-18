@@ -12,7 +12,7 @@ class AuthController {
                 if(response.data.data.user.username != ""){
                     console.log("Response is success.");
                     console.log(response.data.data);
-                    localStorage.setItem('user', JSON.stringify(response.data.data.user.username));
+                    localStorage.setItem('user', JSON.stringify(response.data.data.user.username, response.data.data.user.userProfileId));
                     console.log(localStorage.getItem('user'));
                     return response.data;
                 }
