@@ -21,12 +21,6 @@ class Auth{
         return data;
     }
 
-    async logout(){
-        const { data, error } = await supabase
-        .from(this.tableName)
-        .select('*')
-        .eq('roleId', 1)
-    }
 }
 
 module.exports = new Auth();
