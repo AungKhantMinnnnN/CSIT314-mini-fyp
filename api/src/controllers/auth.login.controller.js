@@ -2,7 +2,7 @@ const auth = require('../entities/auth.entity');
 
 class AuthLoginController {
     async login(username, password, roleId){
-        const validUser = await auth.login(username, password, roleId);
+        const validUser = await auth.login(username, password);
 
         if (!validUser){
             console.error("Auth.Login.Controller.Login(): Invalid credentials.");
