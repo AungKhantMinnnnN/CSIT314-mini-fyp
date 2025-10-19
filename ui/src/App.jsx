@@ -6,6 +6,7 @@ import Login from './pages/auth/Login';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/auth/Dashboard'
 import { useAuth } from './hooks/useAuth';
+import LogOut from './pages/auth/Logout';
 
 
 const UserAdminDashboard = () => {
@@ -32,10 +33,9 @@ function App() {
             <Route 
               path="/login" 
               element = {
-                        <>
-                          <Navbar />
+                        <div>
                           <Login />
-                        </>
+                        </div>
                         } 
             />
 
@@ -43,6 +43,11 @@ function App() {
             <Route 
               path="/user-admin-dash" 
               element={<UserAdminDashboard />} 
+            />
+
+            <Route
+              path="/logout"
+              element={<LogOut />}
             />
 
             <Route path="*" element={<Navigate to="/login" replace />} />

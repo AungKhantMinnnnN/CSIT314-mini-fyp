@@ -1,8 +1,30 @@
 import React from "react";
 import { Users, UserPlus, Edit, Pause, UserCircle2, ChevronDown, LogOut } from "lucide-react";
+import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 
 const Sidebar = ({activePage, setActivePage}) => {
+
+  const {logout} = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogOut = async (e) => {
+      e.preventDefault();
+      try{
+          const username = localStorage.getItem("user");
+          var response = await logout(username);
+          console.log(response);
+      }
+      catch (error){
+          console.error(error.message);
+          console.error(error.stack);
+      }
+      finally{
+        navigate("/logout");
+      }
+    }
+
   return (
     <div className="h-screen w-72 bg-white text-black flex flex-col shadow-lg">
       {/* Logo space */}
@@ -83,7 +105,9 @@ const Sidebar = ({activePage, setActivePage}) => {
 
         {/* Log Out */}
         <button className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 transition cursor-pointer 
-        ${activePage === "logout" ? "bg-gray-200" : ""}`}
+        ${activePage === "logout" ? "bg-gray-200" : ""}`
+        }
+        onClick={handleLogOut}
         >
           <LogOut className="w-5 h-5 text-gray-600" />
           <div className="text-sm font-medium">Log Out</div>
