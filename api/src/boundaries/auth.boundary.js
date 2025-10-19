@@ -15,7 +15,6 @@ router.post('/login', async (req, res) => {
             });
         }
         
-
         const result = await authLoginController.login(username, password);
         return res.status(200).json({
             success : true,

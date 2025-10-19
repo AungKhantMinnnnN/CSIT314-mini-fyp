@@ -32,7 +32,7 @@ class AuthController {
         try{
             console.log("Logout function called.");
             localStorage.removeItem('user');
-            window.location.href = '/';
+            window.location.href = '/logout';
         }
         catch (error){
             console.error(error);

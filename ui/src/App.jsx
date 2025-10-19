@@ -15,7 +15,7 @@ const UserAdminDashboard = () => {
   if (loading) return <div>Loading...</div>; // show loader while auth state initializes
 
   return (
-    <PrivateRoute user={user} allowedRoles={[3]}>
+    <PrivateRoute user={user} loading={loading} allowedRoles={[3]}>
       <Dashboard />
     </PrivateRoute>
   );
