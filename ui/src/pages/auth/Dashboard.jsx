@@ -10,13 +10,13 @@ const pages = {
   logout: <div>You clicked Log Out</div>,
 };
 
-const Dashboard = () => {
+const Dashboard = ({user}) => {
   const [activePage, setActivePage] = useState("view"); // default page
 
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <Sidebar activePage={activePage} setActivePage={setActivePage} />
+      <Sidebar activePage={activePage} setActivePage={setActivePage} user={user}/>
 
       {/* Main content */}
       <div className="flex-1 p-6 overflow-auto">

@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 
-const Sidebar = ({activePage, setActivePage}) => {
+const Sidebar = ({activePage, setActivePage, user}) => {
 
   const {logout} = useAuth();
   const navigate = useNavigate();
@@ -25,12 +25,27 @@ const Sidebar = ({activePage, setActivePage}) => {
       }
     }
 
+  var role, tooldesc;
+  switch (user.userProfileId){
+    case 1:
+      role = "Person In Need"
+      break;
+    case 2:
+      role = "CSR Representative"
+      break;
+    case 3:
+      role = "User Admin"
+      break;
+    case 4:
+      role = "Platform Management"
+      break;
+  }
+
   return (
     <div className="h-screen w-72 bg-white text-black flex flex-col shadow-lg">
       {/* Logo space */}
       <div className="h-25 flex items-center justify-center border-b border-gray-300">
         <img src={Logo} alt="converge" className="font-bold text-xl text-gray-800"></img>
-        {/* Replace the span with an <img> tag if you have a logo image */}
       </div>
 
       {/* Profile Section */}
@@ -42,8 +57,8 @@ const Sidebar = ({activePage, setActivePage}) => {
           </div>
           {/* Name and Role */}
           <div>
-            <div className="font-semibold text-base">John Doe</div>
-            <div className="text-gray-500 text-sm">User Admin</div>
+            <div className="font-semibold text-base">{user.username}</div>
+            <div className="text-gray-500 text-sm">{role}</div>
           </div>
         </div>
         {/* Dropdown Arrow */}

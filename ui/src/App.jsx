@@ -16,7 +16,7 @@ const UserAdminDashboard = () => {
 
   return (
     <PrivateRoute user={user} loading={loading} allowedRoles={[3]}>
-      <Dashboard />
+      <Dashboard user={user}/>
     </PrivateRoute>
   );
 };
