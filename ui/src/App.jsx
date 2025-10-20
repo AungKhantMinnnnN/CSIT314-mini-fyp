@@ -10,13 +10,13 @@ import LogOut from './pages/auth/Logout';
 import CreateUser from './pages/users/createUser';
 
 
-const UserAdminDashboard = () => {
+const DashboardRoute = () => {
   const { user, loading } = useAuth();
 
   if (loading) return <div>Loading...</div>; // show loader while auth state initializes
 
   return (
-    <PrivateRoute user={user} loading={loading} allowedRoles={[3]}>
+    <PrivateRoute user={user} loading={loading} allowedRoles={[2,3]}>
       <Dashboard user={user}/>
     </PrivateRoute>
   );
@@ -46,10 +46,10 @@ function App() {
               element={<LogOut />}
             />
 
-            {/* User Admin Dashboard */}
+            {/* Dashboard */}
             <Route 
-              path="/user-admin-dash" 
-              element={<UserAdminDashboard />} 
+              path="/dashboard" 
+              element={<DashboardRoute />} 
             />
 
             {/* Create user page */}

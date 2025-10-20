@@ -19,9 +19,8 @@ const Login = () => {
                 console.log(username + " has been logged in successfully.");
                 const userRole = response.data.user.userProfileId;
 
-                // Change to use switch case
-                if (userRole == 3){
-                    navigate("/user-admin-dash");
+                if (userRole != 0){
+                    navigate("/dashboard");
                 }
             }
         }

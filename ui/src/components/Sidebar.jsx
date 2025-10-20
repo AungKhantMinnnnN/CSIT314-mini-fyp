@@ -25,21 +25,37 @@ const Sidebar = ({activePage, setActivePage, user}) => {
       }
     }
 
-  var role, tooldesc;
+  var role; 
   switch (user.userProfileId){
-    case 1:
-      role = "Person In Need"
-      break;
-    case 2:
-      role = "CSR Representative"
-      break;
-    case 3:
-      role = "User Admin"
-      break;
-    case 4:
-      role = "Platform Management"
-      break;
+    case 1: role = "Person In Need"; break;
+    case 2: role = "CSR Representative"; break;
+    case 3: role = "User Admin"; break;
+    case 4: role = "Platform Management"; break;
+    default: roleName = "Unknown";
   }
+
+
+  const adminMenu = [
+    { id: "view", icon: <Users className="w-5 h-5 text-gray-600" />, title: "View", desc: "View user accounts" },
+    { id: "create", icon: <UserPlus className="w-5 h-5 text-gray-600" />, title: "Create", desc: "Create user accounts" },
+    { id: "update", icon: <Edit className="w-5 h-5 text-gray-600" />, title: "Update", desc: "Update user accounts" },
+    { id: "suspend", icon: <Pause className="w-5 h-5 text-gray-600" />, title: "Suspend", desc: "Suspend user accounts" },
+  ]
+
+  const csrMenu = [
+    { id: "pinrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "PIN Requests", desc: "Search and view requests by Person-In-Need" },
+    { id: "savedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Saved request", desc: "View your saved requests" },
+    { id: "shortlistedreqs", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Shortlisted", desc: "View and search shortlisted requests" },
+    { id: "completedreqs", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed", desc: "View and sarch all completed requests" },
+  ]
+
+  // Compose final menu depending on role
+  let menuItems = [];
+  if (user.userProfileId === 3) menuItems = [...menuItems, ...adminMenu];
+  if (user.userProfileId === 2) menuItems = [...menuItems, ...csrMenu];
+  if (user.userProfileId === 4) menuItems = [...menuItems, ...platformMenu];
+  
+
 
   return (
     <div className="h-screen w-72 bg-white text-black flex flex-col shadow-lg">
@@ -65,55 +81,23 @@ const Sidebar = ({activePage, setActivePage, user}) => {
         <ChevronDown className="w-5 h-5 text-gray-500" />
       </div>
 
-      {/* Menu Buttons */}
+      {/* Navigation Section */}
       <nav className="flex-1 p-4 space-y-3">
-        {/* View */}
-        <button onClick={() => setActivePage("view")} 
-          className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 transition cursor-pointer
-        ${activePage === "view" ? "bg-gray-200" : ""}`}
-        >
-          <Users className="w-5 h-5 text-gray-600" />
-          <div>
-            <div className="text-sm font-medium">View</div>
-            <div className="text-gray-500 text-xs">View user accounts</div>
-          </div>
-        </button>
-
-        {/* Create */}
-        <button onClick={() => setActivePage("create")}
-          className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 transition cursor-pointer
-          ${activePage === "create" ? "bg-gray-200" : ""}`}
-        >
-          <UserPlus className="w-5 h-5 text-gray-600" />
-          <div>
-            <div className="text-sm font-medium">Create</div>
-            <div className="text-gray-500 text-xs">Create user accounts</div>
-          </div>
-        </button>
-
-        {/* Update */}
-        <button onClick={() => setActivePage("update")}
-          className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 transition cursor-pointer
-          ${activePage === "update" ? "bg-gray-200" : ""}`}
-        >
-          <Edit className="w-5 h-5 text-gray-600" />
-          <div>
-            <div className="text-sm font-medium">Update</div>
-            <div className="text-gray-500 text-xs">Update user accounts</div>
-          </div>
-        </button>
-
-        {/* Suspend */}
-        <button onClick={() => setActivePage("suspend")}
-          className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 transition cursor-pointer
-          ${activePage === "suspend" ? "bg-gray-200" : ""}`}
-        >
-          <Pause className="w-5 h-5 text-gray-600" />
-          <div>
-            <div className="text-sm font-medium">Suspend</div>
-            <div className="text-gray-500 text-xs">Suspend user accounts</div>
-          </div>
-        </button>
+        {/* Menu Buttons */}
+        {menuItems.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setActivePage(item.id)}
+            className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-lg hover:bg-gray-100 transition cursor-pointer
+              ${activePage === item.id ? "bg-gray-200" : ""}`}
+          >
+            {item.icon}
+            <div>
+              <div className="text-sm font-medium">{item.title}</div>
+              <div className="text-gray-500 text-xs">{item.desc}</div>
+            </div>
+          </button>
+        ))}
 
         {/* Divider */}
         <div className="border-t border-gray-300 my-4"></div>
