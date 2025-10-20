@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/auth/Dashboard'
 import { useAuth } from './hooks/useAuth';
 import LogOut from './pages/auth/Logout';
+import CreateUser from './pages/users/createUser';
 
 
 const UserAdminDashboard = () => {
@@ -39,15 +40,22 @@ function App() {
                         } 
             />
 
+            {/* Logout Page */}
+            <Route
+              path="/logout"
+              element={<LogOut />}
+            />
+
             {/* User Admin Dashboard */}
             <Route 
               path="/user-admin-dash" 
               element={<UserAdminDashboard />} 
             />
 
+            {/* Create user page */}
             <Route
-              path="/logout"
-              element={<LogOut />}
+              path="/create-user"
+              element={<CreateUser />}
             />
 
             <Route path="*" element={<Navigate to="/login" replace />} />

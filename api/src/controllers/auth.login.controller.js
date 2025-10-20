@@ -1,7 +1,7 @@
 const auth = require('../entities/auth.entity');
 
 class AuthLoginController {
-    async login(username, password, roleId){
+    async login(username, password){
         const validUser = await auth.login(username, password);
 
         if (!validUser){

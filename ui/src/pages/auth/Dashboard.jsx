@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar.jsx";
+import CreateUser from "../users/createUser.jsx";
+import UpdateUser from "../users/updateUser.jsx";
 
 // Example content for each section
 const pages = {
   view: <div>Here you can view user accounts</div>,
-  create: <div>Here you can create new user accounts</div>,
-  update: <div>Here you can update existing user accounts</div>,
+  create: <CreateUser />,
+  update: <UpdateUser />,
   suspend: <div>Here you can suspend user accounts</div>,
   logout: <div>You clicked Log Out</div>,
 };
@@ -19,8 +21,7 @@ const Dashboard = ({user}) => {
       <Sidebar activePage={activePage} setActivePage={setActivePage} user={user}/>
 
       {/* Main content */}
-      <div className="flex-1 p-6 overflow-auto">
-        <h1 className="text-2xl font-bold mb-4 capitalize">{activePage}</h1>
+      <div className="flex-1 p-1 overflow-auto">
         <div className="bg-white rounded-lg shadow p-6">
           {pages[activePage]}
         </div>
