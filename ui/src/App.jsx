@@ -3,11 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './context/authContext';
 import PrivateRoute from "./components/PrivateRoute";
 import Login from './pages/auth/Login';
-import Navbar from './components/Navbar';
-import Dashboard from './pages/auth/Dashboard'
-import { useAuth } from './hooks/useAuth';
 import LogOut from './pages/auth/Logout';
-import CreateUser from './pages/users/createUser';
+import Dashboard from './pages/auth/Dashboard'
+import ViewUser from "./pages/users/viewUser";
+import CreateUser from "./pages/users/createUser";
+import UpdateUser from "./pages/users/updateUser";
+import { useAuth } from './hooks/useAuth';
 
 
 const DashboardRoute = () => {
@@ -16,7 +17,7 @@ const DashboardRoute = () => {
   if (loading) return <div>Loading...</div>; // show loader while auth state initializes
 
   return (
-    <PrivateRoute user={user} loading={loading} allowedRoles={[2,3]}>
+    <PrivateRoute user={user} allowedRoles={[2,3]}>
       <Dashboard user={user}/>
     </PrivateRoute>
   );
@@ -30,35 +31,25 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            {/* Login Page */}
+            {/* Auth Routes */}
+            <Route path="/login" element = {<Login />} />
+            <Route path="/logout" element={<LogOut />} />
+
+            {/* Dashboard Layout */}
             <Route 
-              path="/login" 
-              element = {
-                        <div>
-                          <Login />
-                        </div>
-                        } 
-            />
+              path="/dashboard/*"
+              element={<DashboardRoute />}
+            >
+              {/* Nested Routes for dashboard */}
+              <Route path="view" element={<ViewUser />} />
+              <Route path="create" element={<CreateUser />} />
+              <Route path="update" element={<UpdateUser />} />
+              <Route path="suspend" element={<div>Suspend</div>} />
+            </Route>
 
-            {/* Logout Page */}
-            <Route
-              path="/logout"
-              element={<LogOut />}
-            />
-
-            {/* Dashboard */}
-            <Route 
-              path="/dashboard" 
-              element={<DashboardRoute />} 
-            />
-
-            {/* Create user page */}
-            <Route
-              path="/create-user"
-              element={<CreateUser />}
-            />
-
+            {/* Fallback */}
             <Route path="*" element={<Navigate to="/login" replace />} />
+
           </Routes>
         </AuthProvider>
       </Router>

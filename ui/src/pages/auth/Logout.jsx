@@ -7,19 +7,16 @@ const LogOut = () => {
     const [countdown, setCountdown] = useState(5); // 5 seconds before redirect
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            setCountdown((prev) => {
-                if (prev <= 1) {
-                    clearInterval(timer);
-                    navigate("/login");
-                    return 0;
-                }
-                return prev - 1;
-            });
+        if (countdown === 0){
+            navigate("/login", {replace:true});
+            return;
+        }
+        const timerId = setTimeout(() => {
+            setCountdown(countdown - 1);
         }, 1000);
 
-        return () => clearInterval(timer);
-    }, [navigate]);
+        return () => clearTimeout(timerId);
+    }, [countdown, navigate]);
 
     return (
         <div className="min-h-screen bg-indigo-950 flex items-center justify-center p-8 content-center">
