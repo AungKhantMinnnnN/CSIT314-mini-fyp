@@ -22,3 +22,5 @@ class updateUserInfoController{
         }
     }
 }
+
+module.exports = new updateUserInfoController();

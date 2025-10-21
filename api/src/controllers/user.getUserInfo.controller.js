@@ -1,6 +1,6 @@
 const user = require("../entities/user.entity")
 
-class GetUserInfo{
+class GetUserInfoController{
     async get(userId){
         const userInfo = await user.getUserInfo(userId);
 
@@ -32,3 +32,5 @@ class GetUserInfo{
         }
     }
 }
+
+module.exports = new GetUserInfoController();

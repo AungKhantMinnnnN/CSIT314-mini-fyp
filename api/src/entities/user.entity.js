@@ -5,6 +5,18 @@ class User{
         this.tableName = 'User';
     }
 
+    async getAllUserInfo(){
+        const { data, error } = await supabase
+            .from(this.tableName)
+            .select('*');
+        
+        console.log("GetAllUserInfo(): Response from database: ", data);
+
+        if (error){
+            console.error("GetAllUserInfo(): An error has occurred. Error: ", error)
+        }
+    }
+
     async getUserInfo(userId){
         const { data, error } = await supabase.
             from(this.tableName)
@@ -69,6 +81,22 @@ class User{
         }
 
         return data;
+    }
+
+    async changeUserStatus(userId, userStatus){
+        const { data, error} = await supabase
+            .from(this.tableName)
+            .update({
+                userStatusId : userStatus
+            })
+            .eq('userId', userId)
+            .select();
+        
+        console.log("ChangeUserStatus(): Response from database: ", data);
+
+        if (error){
+            console.error("ChangeUserStatus(): An error has occurred. Error: " + error.message);
+        }
     }
 }
 

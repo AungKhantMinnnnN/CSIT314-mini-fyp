@@ -22,3 +22,5 @@ class createUserController{
         }
     }
 }
+
+module.exports = new createUserController();
