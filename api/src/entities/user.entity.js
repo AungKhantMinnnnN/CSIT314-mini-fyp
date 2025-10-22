@@ -8,13 +8,19 @@ class User{
     async getAllUserInfo(){
         const { data, error } = await supabase
             .from(this.tableName)
-            .select('*');
+            .select(`
+                *,
+                Status(c, statusName),
+                UserProfile(profileId, roleName)
+            `);
         
         console.log("GetAllUserInfo(): Response from database: ", data);
 
         if (error){
             console.error("GetAllUserInfo(): An error has occurred. Error: ", error)
         }
+
+        return data;
     }
 
     async getUserInfo(userId){

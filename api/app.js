@@ -1,6 +1,7 @@
 const express = require('express');
 const supabase = require('./src/config/supabase_client');
-const authBoundary = require('./src/boundaries/auth.boundary')
+const authBoundary = require('./src/boundaries/auth.boundary');
+const userBoundary = require('./src/boundaries/user.boundary');
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 // Routes (Boundaries)
 app.use('/api/auth', authBoundary);
+app.use('/api/user', userBoundary);
 
 // api health check
 app.get('/health', (req, res) => {

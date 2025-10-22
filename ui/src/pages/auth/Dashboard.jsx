@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate, useLocation, UNSAFE_getPatchRoutesOnNavigationFunction } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Sidebar from "../../components/Sidebar.jsx";
 
 const Dashboard = ({user}) => {

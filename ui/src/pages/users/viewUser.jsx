@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, UserPlus, Edit, Pause } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import userController from "../../controllers/user.controller.js";
 
 const ViewUser = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,12 +13,12 @@ const ViewUser = () => {
   // 🔹 Load sample users for now
   useEffect(() => {
     const timer = setTimeout(() => {
-      const sampleData = [
-        { id: 1, username: "john_doe", role: "User Admin" },
-        { id: 2, username: "mary_lim", role: "CSR Representative" },
-        { id: 3, username: "alex_tan", role: "Platform Management" },
-      ];
-      setUsers(sampleData);
+      const fetchUserData = async () => {
+        const response = await userController.getAllUserInfo();
+        const usersResponse = await response.data.userInfo;
+        setUsers(usersResponse);
+      }
+      fetchUserData();
       setLoading(false);
     }, 1000); // fake loading delay
 
@@ -64,27 +65,27 @@ const ViewUser = () => {
         ) : filteredUsers.length > 0 ? (
           filteredUsers.map((user) => (
             <div
-              key={user.id}
+              key={user.userId}
               className="flex justify-between items-center py-3 px-2 hover:bg-gray-50 rounded-lg transition"
             >
               {/* Left: user info */}
               <div>
                 <div className="font-semibold text-gray-800">{user.username}</div>
-                <div className="text-gray-500 text-sm">{user.role}</div>
+                <div className="text-gray-500 text-sm">{user.Status.statusName}</div>
               </div>
 
               {/* Right: action buttons */}
               <div className="flex gap-3">
                 <button
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
-                  onClick={() => console.log("Edit", user.username)}
+                  onClick={() => console.log("Edit", user.userId)}
                 >
                   <Edit className="w-4 h-4" />
                   Edit
                 </button>
                 <button
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
-                  onClick={() => console.log("Suspend", user.username)}
+                  onClick={() => console.log("Suspend", user.userId)}
                 >
                   <Pause className="w-4 h-4" />
                   Suspend
