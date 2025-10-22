@@ -10,7 +10,7 @@ class User{
             .from(this.tableName)
             .select(`
                 *,
-                Status(c, statusName),
+                Status(stausId, statusName),
                 UserProfile(profileId, roleName)
             `);
         
