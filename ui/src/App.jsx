@@ -1,6 +1,5 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/authContext';
 import PrivateRoute from "./components/PrivateRoute";
 import Login from './pages/auth/Login';
 import LogOut from './pages/auth/Logout';
@@ -29,7 +28,6 @@ function App() {
 
     <>
       <Router>
-        <AuthProvider>
           <Routes>
             {/* Auth Routes */}
             <Route path="/login" element = {<Login />} />
@@ -43,7 +41,7 @@ function App() {
               {/* Nested Routes for dashboard */}
               <Route path="view" element={<ViewUser />} />
               <Route path="create" element={<CreateUser />} />
-              <Route path="update" element={<UpdateUser />} />
+              <Route path="update/:userId" element={<UpdateUser />} />
               <Route path="suspend" element={<div>Suspend</div>} />
             </Route>
 
@@ -51,7 +49,6 @@ function App() {
             <Route path="*" element={<Navigate to="/login" replace />} />
 
           </Routes>
-        </AuthProvider>
       </Router>
     </>
     

@@ -14,7 +14,7 @@ class User{
                 UserProfile(profileId, roleName)
             `);
         
-        console.log("GetAllUserInfo(): Response from database: ", data);
+        console.log("GetAllUserInfo(): Response from database: ", data.length);
 
         if (error){
             console.error("GetAllUserInfo(): An error has occurred. Error: ", error)
@@ -40,18 +40,22 @@ class User{
     }
 
     async createUser(userData){
+
+        const currentUsers = await this.getAllUserInfo();
+        const userId = currentUsers.length + 1;
+
         const { data, error } = await supabase
             .from(this.tableName)
             .insert([{
+                userId: userId,
                 username : userData.username,
                 password: userData.password,
                 email: userData.email,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
-                phoneNumber: phoneNumber,
                 userProfileId: userData.roleId,
                 userStatusId: 1,
-                updatedDate: Date.Now()
+                updatedDate: Date.Now
             }])
             .select('userId, username, email, userProfileId, userStatusId, createdDate')
             .maybeSingle();

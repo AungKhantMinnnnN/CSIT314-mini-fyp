@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import apiClient from "../../api/index.js";
 
 const CreateUser = () => {
     const [formData, setFormData] = useState({
@@ -26,8 +27,26 @@ const CreateUser = () => {
         }));
     };
 
-    const handleSubmit = () => {
-        console.log("Form submitted. ", formData);
+    const handleSubmit = async () => {
+        const requestBody = {
+            user: {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                role: 1,
+                username: formData.username,
+                password: formData.password
+            }
+        }
+
+        try{
+            const response = await apiClient.post("/user/create-user", requestBody);
+            console.log(response);
+        }
+        catch (error){
+            console.error(error);
+        }
+        
     }
 
     return(
@@ -81,20 +100,6 @@ const CreateUser = () => {
                                 name="email"
                                 placeholder="Email "
                                 value={formData.email}
-                                onChange={handleInputChange}
-                                className="w-full max-w-md px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                            />
-                        </div>
-
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Phone Number
-                            </label>
-                            <input
-                                type="tel"
-                                name="phoneNumber"
-                                placeholder="Phone Number"
-                                value={formData.phoneNumber}
                                 onChange={handleInputChange}
                                 className="w-full max-w-md px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                             />

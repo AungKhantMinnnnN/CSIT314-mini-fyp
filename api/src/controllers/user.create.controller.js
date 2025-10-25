@@ -1,8 +1,8 @@
 const user = require("../entities/user.entity")
 
 class createUserController{
-    async createUser(user){
-        const createdUser = await user.createUser(user);
+    async createUser(userData){
+        const createdUser = await user.createUser(userData);
 
         if (!createdUser){
             console.error("user.create.Controller.createUser(): Invalid user object.");

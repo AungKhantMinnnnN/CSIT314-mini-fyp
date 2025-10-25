@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, UserPlus, Edit, Pause } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import userController from "../../controllers/user.controller.js";
+import { useNavigate, Link } from "react-router-dom";
+import apiClient from "../../api/index.js";
 
 const ViewUser = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,8 +14,8 @@ const ViewUser = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       const fetchUserData = async () => {
-        const response = await userController.getAllUserInfo();
-        const usersResponse = await response.data.userInfo;
+        const response = await apiClient.get('/user/getAllUserInfo');
+        const usersResponse = await response.data.data.userInfo;
         setUsers(usersResponse);
       }
       fetchUserData();
@@ -80,8 +80,10 @@ const ViewUser = () => {
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
                   onClick={() => console.log("Edit", user.userId)}
                 >
-                  <Edit className="w-4 h-4" />
-                  Edit
+                  <Link className="flex gap-1" to={`/dashboard/update/` + user.userId}>
+                    <Edit className="w-4 h-4" />
+                    Edit
+                  </Link>
                 </button>
                 <button
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"

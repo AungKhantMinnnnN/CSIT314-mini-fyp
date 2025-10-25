@@ -23,7 +23,7 @@ router.get("/getAllUserInfo", async (req, res) => {
     }
 });
 
-router.get("/getUserInfo", async (req,res) => {
+router.post("/getUserInfo", async (req,res) => {
     try{
         const { userId } = req.body;
 

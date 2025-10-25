@@ -27,7 +27,7 @@ class GetUserInfoController{
                 lastName : userInfo.lastName,
                 email: userInfo.email,
                 phoneNumber : userInfo.phoneNumber,
-                role : userInfo.roleId
+                role : userInfo.userProfileId
             }
         }
     }
