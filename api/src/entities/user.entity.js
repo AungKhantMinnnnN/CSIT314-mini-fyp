@@ -103,11 +103,13 @@ class User{
             .select();
         
         console.log("ChangeUserStatus(): Response from database: ", data);
-
+        
         if (error){
             console.error("ChangeUserStatus(): An error has occurred. Error: " + error.message);
         }
+        
+        return data;
     }
 }
 
-module.exports = new User();
+module.exports = User;
