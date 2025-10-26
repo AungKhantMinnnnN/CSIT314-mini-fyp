@@ -7,11 +7,18 @@ const router = express.Router();
 // const getAllUserInfoController = require("../controllers/user.getAllUserInfo.controller");
 // const ChangeUserStatusController = require("../controllers/user.changeUserStatus.controller");
 
-const userAdminExports = require("../controllers/useradmin.controller.js");
+const { 
+  CreateUserController,
+  GetAllUserInfoController,
+  GetUserInfoController,
+  UpdateUserInfoController,
+  SuspendUserController
+} = require("../controllers/useradmin.controller.js");
+
 
 router.get("/getAllUserInfo", async (req, res) => {
     try{
-        const controller = new userAdminExports.GetAllUserInfoController()
+        const controller = new GetAllUserInfoController()
 
         const result = await controller.getAllUserInfo();
 
@@ -40,7 +47,7 @@ router.post("/getUserInfo", async (req,res) => {
             });
         }
 
-        const controller = new userAdminExports.GetUserInfoController()
+        const controller = new GetUserInfoController()
         const result = await controller.get(userId);
 
         return res.status(200).json({
@@ -69,7 +76,7 @@ router.post("/create-user", async (req, res) =>  {
             });
         }
 
-        const controller = new userAdminExports.CreateUserController()
+        const controller = new CreateUserController()
         const result = await controller.createUser(user);
         return res.status(200).json({
             success : true,
@@ -96,7 +103,7 @@ router.post("/update-user", async (req, res) => {
             });
         }
 
-        const controller = new userAdminExports.UpdateUserInfoController()
+        const controller = new UpdateUserInfoController()
         const result = await controller.updateUserInfo(user);
 
         return res.status(200).json({
@@ -113,29 +120,33 @@ router.post("/update-user", async (req, res) => {
     }
 });
 
-router.post("/changeUserStatus", async (req,res) => {
-    try{
-        const { userId, userStatusId } = req.body;
+// router.post("/changeUserStatus", async (req,res) => {
+//     try{
+//         const { userId, userStatusId } = req.body;
 
-        if (!userId || !userStatusId){
-            return res.status(400).json({
-                success: false,
-                message: "Missing userId or userStatusId."
-            });
-        }
+//         if (!userId || !userStatusId){
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Missing userId or userStatusId."
+//             });
+//         }
 
-        const controller = new userAdminExports.ChangeUserStatusController()
-        const result = await controller.changeUserStatus(userId, userStatusId);
+//         const controller = new ChangeUserStatusController()
+//         const result = await controller.changeUserStatus(userId, userStatusId);
 
-        return res.status(200).json({
-            success: true,
-            data: result
-        });
-    }
-    catch (error){
-        console.error("An error has occurred. Error: ", error)
-    }
-})
+//         return res.status(200).json({
+//             success: true,
+//             data: result
+//         });
+//     }
+//     catch (error){
+//         console.error("An error has occurred. Error: ", error)
+//         return res.status(500).json({
+//         success: false,
+//         message: error.message
+//     });
+//     }
+// })
 
 
 router.post("/suspend-user", async (req,res) => {
@@ -149,7 +160,7 @@ router.post("/suspend-user", async (req,res) => {
             });
         }
 
-        const controller = new userAdminExports.SuspendUserController()
+        const controller = new SuspendUserController()
         const result = await controller.suspendUser(user);
 
         return res.status(200).json({
@@ -159,6 +170,10 @@ router.post("/suspend-user", async (req,res) => {
     }
     catch (error){
         console.error("An error has occurred. Error: ", error)
+        return res.status(500).json({
+        success: false,
+        message: error.message
+    });
     }
 })
 
