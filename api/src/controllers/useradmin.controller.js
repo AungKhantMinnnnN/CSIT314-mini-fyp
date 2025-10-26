@@ -55,26 +55,30 @@ class GetUserInfoController{
             console.error("user.getUserInfo.Controller.get(): No valid user is found.");
             return {
                 user : {
+                    userId : "",
                     username : "",
                     password: "",
                     firstName : "",
                     lastName : "",
                     email: "",
                     phoneNumber : "",
-                    role : 0
+                    userProfileId : "",
+                    userStatusId : ""
                 }
             }
         }
 
         return {
             user : {
+                userId : userInfo.userId,
                 username : userInfo.username,
                 password: userInfo.password,
                 firstName : userInfo.firstName,
                 lastName : userInfo.lastName,
                 email: userInfo.email,
                 phoneNumber : userInfo.phoneNumber,
-                role : userInfo.roleId
+                userProfileId : userInfo.userProfileId,
+                userStatusId : userInfo.userStatusId
             }
         }
     }
@@ -127,8 +131,9 @@ class SuspendUserController{
             return {
                 user : {
                     username: "",
-                    isUserUpdated: false
-                }
+                    isUserSuspended: false
+                },
+                message: "User is already suspended"
             }
         }
 

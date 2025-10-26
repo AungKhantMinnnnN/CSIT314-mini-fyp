@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authLoginController = require('../controllers/auth.login.controller');
+const AuthLoginController = require('../controllers/auth.login.controller.js');
 
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
@@ -14,7 +14,8 @@ router.post('/login', async (req, res) => {
             });
         }
         
-        const result = await authLoginController.login(username, password);
+        const controller = new AuthLoginController();
+        const result = await controller.login(username, password);
         return res.status(200).json({
             success : true,
             data: result

@@ -7,6 +7,8 @@ import Dashboard from './pages/auth/Dashboard'
 import ViewUser from "./pages/users/viewUser";
 import CreateUser from "./pages/users/createUser";
 import UpdateUser from "./pages/users/updateUser";
+import SuspendUser from './pages/users/suspendUser';
+import SuspendSuccess from './pages/users/supendSuccess';
 import { useAuth } from './hooks/useAuth';
 
 
@@ -42,7 +44,8 @@ function App() {
               <Route path="view" element={<ViewUser />} />
               <Route path="create" element={<CreateUser />} />
               <Route path="update/:userId" element={<UpdateUser />} />
-              <Route path="suspend" element={<div>Suspend</div>} />
+              <Route path="suspend/:userId" element={<SuspendUser />} />
+              <Route path="suspend-success" element={<SuspendSuccess />} />
             </Route>
 
             {/* Fallback */}

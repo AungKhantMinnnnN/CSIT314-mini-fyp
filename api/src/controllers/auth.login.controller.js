@@ -1,8 +1,10 @@
-const auth = require('../entities/auth.entity');
+const Auth = require('../entities/auth.entity');
 
 class AuthLoginController {
     async login(username, password){
-        const validUser = await auth.login(username, password);
+
+        const authEntity = new Auth()
+        const validUser = await authEntity.login(username, password);
 
         if (!validUser){
             console.error("Auth.Login.Controller.Login(): Invalid credentials.");
@@ -31,4 +33,4 @@ class AuthLoginController {
     }
 }
 
-module.exports = new AuthLoginController();
+module.exports = AuthLoginController;

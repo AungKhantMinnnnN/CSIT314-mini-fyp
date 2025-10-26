@@ -26,9 +26,9 @@ const ViewUser = () => {
   }, []);
 
   // 🔹 Filter by search term
-  const filteredUsers = users.filter((u) =>
-    u.username?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredUsers = users
+    .filter((u) => u.username?.toLowerCase().includes(searchTerm.toLowerCase()))
+    .sort((a, b) => a.userId - b.userId);
 
   return (
     <div className="flex flex-col p-8 w-full bg-gray-50 min-h-screen">
@@ -87,7 +87,7 @@ const ViewUser = () => {
                 </button>
                 <button
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
-                  onClick={() => console.log("Suspend", user.userId)}
+                  onClick={() => navigate(`/dashboard/suspend/${user.userId}`)}
                 >
                   <Pause className="w-4 h-4" />
                   Suspend
