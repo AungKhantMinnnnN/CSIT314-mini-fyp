@@ -8,6 +8,7 @@ const UpdateUser = () => {
 
     // Send request to db with userId when page is loaded
     const [formData, setFormData] = useState({
+        userId: 0,
         firstName: '',
         lastName: '',
         email: '',
@@ -25,6 +26,7 @@ const UpdateUser = () => {
             console.log(response);
             const userData = response.data.data.user;
             setFormData({
+                userId: userData.userId,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 email: userData.email,
@@ -54,8 +56,26 @@ const UpdateUser = () => {
         }));
     };
 
-    const handleSubmit = () => {
-        console.log("Form submitted. ", formData);
+    const handleSubmit = async () => {
+        const requestBody = {
+            user: {
+                userId: formData.userId,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                username: formData.username,
+                password: formData.password,
+                userProfileId: formData.role
+            }
+        }
+
+        try{
+            const response = await apiClient.post("/user/update-user", requestBody);
+            console.log(response);
+        }
+        catch (error){
+            console.error(error);
+        }
     }
 
     return(

@@ -95,7 +95,6 @@ router.post("/create-user", async (req, res) =>  {
 router.post("/update-user", async (req, res) => {
     try{
         const { user } = req.body;
-
         if (!user){
             return res.status(400).json({
                 success: false,

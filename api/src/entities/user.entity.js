@@ -73,21 +73,23 @@ class User{
         const { data, error } = await supabase
             .from(this.tableName)
             .update({
+                userId: userData.userId,
                 username : userData.username,
                 password : userData.password,
                 email: userData.email,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
                 userProfileId: userData.userProfileId,
-                userStatusId: userData.userStatusId
+                updatedDate: Date.now
             })
             .eq('userId', userData.userId)
-            .select();
+            .select('userId, username, email, userProfileId, userStatusId, createdDate')
+            .maybeSingle();
 
         console.log("updateUserInfo(): response from database: ", data);
 
         if (error){
-            console.error("updateUserInfo(): An error has occurred. Error: " + error.message);
+            console.error("updateUserInfo(): An error has occurred. Error: ", error);
         }
 
         return data;

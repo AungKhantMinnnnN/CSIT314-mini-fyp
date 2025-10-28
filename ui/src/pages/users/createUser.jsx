@@ -46,7 +46,6 @@ const CreateUser = () => {
         catch (error){
             console.error(error);
         }
-        
     }
 
     return(
