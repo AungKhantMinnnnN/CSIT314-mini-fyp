@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, UserPlus, Edit, Pause, UserCircle2, ChevronDown, LogOut } from "lucide-react";
+import { Users, UserPlus, Edit, Pause, UserCircle2, ChevronDown, LogOut, User } from "lucide-react";
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
@@ -38,6 +38,7 @@ const Sidebar = ({activePage, setActivePage, user}) => {
 
   const adminMenu = [
     { id: "usermanagement", icon: <Users className="w-5 h-5 text-gray-600" />, title: "User Management", desc: "Manage user accounts" },
+    { id: "userprofiles", icon: <User className="w-5 h-5 text-gray-600" />, title: "User Profiles", desc: "Manage user profiles" },
 
   ]
 

@@ -17,6 +17,8 @@ import UpdateSuccess from './pages/users/updateSuccess';
 import SuspendUser from './pages/users/suspendUser';
 import SuspendSuccess from './pages/users/suspendSuccess';
 
+// User Profiles
+import ViewUserProfile from './pages/users/userprofile/viewUserProfile';
 
 
 const DashboardRoute = () => {
@@ -52,6 +54,8 @@ function App() {
               <Route path="update-success" element={<UpdateSuccess />} />
               <Route path="suspend/:userId" element={<SuspendUser />} />
               <Route path="suspend-success" element={<SuspendSuccess />} />
+
+              <Route path="userprofiles" element={<ViewUserProfile />} />
             </Route>
 
             {/* Fallback */}
