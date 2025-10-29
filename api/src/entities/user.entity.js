@@ -53,11 +53,11 @@ class User{
                 email: userData.email,
                 firstName: userData.firstName,
                 lastName: userData.lastName,
-                userProfileId: userData.roleId,
+                userProfileId: userData.userProfileId,
                 userStatusId: 1,
-                updatedDate: Date.Now
+                updatedDate: Date.now
             }])
-            .select('userId, username, email, userProfileId, userStatusId, createdDate')
+            .select('userId, username, email, firstName, lastName, userProfileId, userStatusId, createdDate')
             .maybeSingle();
 
         console.log("createUser(): response from database: ", data);
@@ -73,7 +73,6 @@ class User{
         const { data, error } = await supabase
             .from(this.tableName)
             .update({
-                userId: userData.userId,
                 username : userData.username,
                 password : userData.password,
                 email: userData.email,
@@ -83,7 +82,7 @@ class User{
                 updatedDate: Date.now
             })
             .eq('userId', userData.userId)
-            .select('userId, username, email, userProfileId, userStatusId, createdDate')
+            .select('userId, username, email, firstName, lastName, userProfileId, userStatusId, createdDate')
             .maybeSingle();
 
         console.log("updateUserInfo(): response from database: ", data);

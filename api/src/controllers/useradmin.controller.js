@@ -19,10 +19,7 @@ class CreateUserController{
         }
 
         return {
-            user : {
-                username : createdUser.username,
-                isUserCreated : true
-            }
+            createdUser
         }
     }
 }
@@ -102,12 +99,10 @@ class UpdateUserInfoController{
         }
 
         return {
-            user : {
-                username : updatedUserInfo.username,
-                isUserUpdated : true
+            updatedUserInfo,
+            isUserUpdated : true
             }
         }
-    }
 }
 
 

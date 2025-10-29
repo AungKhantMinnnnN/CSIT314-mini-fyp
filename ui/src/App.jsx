@@ -6,9 +6,12 @@ import LogOut from './pages/auth/Logout';
 import Dashboard from './pages/auth/Dashboard'
 import ViewUser from "./pages/users/viewUser";
 import CreateUser from "./pages/users/createUser";
+import CreateSuccess from './pages/users/createSuccess';
 import UpdateUser from "./pages/users/updateUser";
+import UpdateSuccess from './pages/users/updateSuccess';
 import SuspendUser from './pages/users/suspendUser';
 import SuspendSuccess from './pages/users/supendSuccess';
+
 import { useAuth } from './hooks/useAuth';
 
 
@@ -41,9 +44,11 @@ function App() {
               element={<DashboardRoute />}
             >
               {/* Nested Routes for dashboard */}
-              <Route path="view" element={<ViewUser />} />
+              <Route path="usermanagement" element={<ViewUser />} />
               <Route path="create" element={<CreateUser />} />
+              <Route path="create-success" element={<CreateSuccess />} />
               <Route path="update/:userId" element={<UpdateUser />} />
+              <Route path="update-success" element={<UpdateSuccess />} />
               <Route path="suspend/:userId" element={<SuspendUser />} />
               <Route path="suspend-success" element={<SuspendSuccess />} />
             </Route>
