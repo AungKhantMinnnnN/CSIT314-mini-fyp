@@ -6,22 +6,29 @@ import { useAuth } from '../../hooks/useAuth';
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isSuspended, setIsSuspended] = useState(false);
     const {login} = useAuth();
     
     const navigate = useNavigate();
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
-
+        setIsSuspended(false);
         try{
             var response = await login(username, password);
             if (response.success){
-                console.log(username + " has been logged in successfully.");
+                
                 const userRole = response.data.user.userProfileId;
-
-                if (userRole != 0){
+                const userStatus = response.data.user.userStatusId;
+                console.log(response.data.user)
+                if (userStatus == 2){
+                    setIsSuspended(true);
+                }
+                else if (userRole !== 0){
+                    console.log(username + " has been logged in successfully.");
                     navigate("/dashboard");
                 }
+                
             }
         }
         catch (error){
@@ -65,6 +72,12 @@ const Login = () => {
                             <button type="button" className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                                 onClick={handleLoginSubmit}>Login</button>
                         </div>
+                        {/* Suspended message */}
+                        {isSuspended && (
+                            <p className="text-red-600 text-center font-medium mt-4">
+                                Your account has been suspended. Please contact an administrator.
+                            </p>
+                        )}
                     </form>
                 </div>
             </div>

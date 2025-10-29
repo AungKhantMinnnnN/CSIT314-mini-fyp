@@ -43,17 +43,27 @@ const Sidebar = ({activePage, setActivePage, user}) => {
   ]
 
   const csrMenu = [
-    { id: "pinrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "PIN Requests", desc: "Search and view requests by Person-In-Need" },
-    { id: "savedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Saved request", desc: "View your saved requests" },
-    { id: "shortlistedreqs", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Shortlisted", desc: "View and search shortlisted requests" },
-    { id: "completedreqs", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed", desc: "View and sarch all completed requests" },
+    { id: "managerequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "PIN Requests", desc: "Manage requests by Person-In-Need" },
+    { id: "shortlistedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Shortlisted", desc: "View your shortlisted requests" },
+    { id: "completedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed", desc: "View completed requests" },
+  ]
+
+  const platformMgmMenu = [
+    { id: "categories", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Category", desc: "Manage Categories" },
+  ]
+
+  const pinMenu = [
+    { id: "createrequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Create Request", desc: "Request for Corporate Social Responsibility Representatives" },
+    { id: "viewmyrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "View my requests", desc: "View your submitted requests" },
+    { id: "completedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed Requests", desc: "View completed matching requests" }
   ]
 
   // Compose final menu depending on role
   let menuItems = [];
-  if (user.userProfileId === 3) menuItems = [...menuItems, ...adminMenu];
+  if (user.userProfileId === 1) menuItems = [...menuItems, ...pinMenu];
   if (user.userProfileId === 2) menuItems = [...menuItems, ...csrMenu];
-  if (user.userProfileId === 4) menuItems = [...menuItems, ...platformMenu];
+  if (user.userProfileId === 3) menuItems = [...menuItems, ...adminMenu];
+  if (user.userProfileId === 4) menuItems = [...menuItems, ...platformMgmMenu];
   
 
 
