@@ -1,24 +1,28 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import PrivateRoute from "./components/PrivateRoute";
+
+// Auth
+import { useAuth } from './hooks/useAuth';
 import Login from './pages/auth/Login';
 import LogOut from './pages/auth/Logout';
-import Dashboard from './pages/auth/Dashboard'
-import ViewUser from "./pages/users/viewUser";
-import CreateUser from "./pages/users/createUser";
+import Dashboard from './pages/auth/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
+
+// User Management
+import ViewUser from './pages/users/viewUser';
+import CreateUser from './pages/users/createUser';
 import CreateSuccess from './pages/users/createSuccess';
-import UpdateUser from "./pages/users/updateUser";
+import UpdateUser from './pages/users/updateUser';
 import UpdateSuccess from './pages/users/updateSuccess';
 import SuspendUser from './pages/users/suspendUser';
-import SuspendSuccess from './pages/users/supendSuccess';
+import SuspendSuccess from './pages/users/suspendSuccess';
 
-import { useAuth } from './hooks/useAuth';
 
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
 
-  if (loading) return <div>Loading...</div>; // show loader while auth state initializes
+  if (loading) return <div>Loading...</div>;
 
   return (
     <PrivateRoute user={user} allowedRoles={[2,3]}>
@@ -28,9 +32,7 @@ const DashboardRoute = () => {
 };
 
 function App() {
-
   return (
-
     <>
       <Router>
           <Routes>
@@ -38,12 +40,11 @@ function App() {
             <Route path="/login" element = {<Login />} />
             <Route path="/logout" element={<LogOut />} />
 
-            {/* Dashboard Layout */}
+            {/* Dashboard Routes */}
             <Route 
               path="/dashboard/*"
               element={<DashboardRoute />}
             >
-              {/* Nested Routes for dashboard */}
               <Route path="usermanagement" element={<ViewUser />} />
               <Route path="create" element={<CreateUser />} />
               <Route path="create-success" element={<CreateSuccess />} />
@@ -59,7 +60,6 @@ function App() {
           </Routes>
       </Router>
     </>
-    
   )
 }
 

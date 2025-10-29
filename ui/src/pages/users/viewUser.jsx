@@ -3,6 +3,8 @@ import { Search, UserPlus, Edit, Pause } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../api/index.js";
 
+
+
 const ViewUser = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
@@ -10,31 +12,41 @@ const ViewUser = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // 🔹 Load sample users for now
-  useEffect(() => {
+
+
+    useEffect(() => {
     const timer = setTimeout(() => {
       const fetchUserData = async () => {
-        const response = await apiClient.get('/user/getAllUserInfo');
-        const usersResponse = await response.data.data.userInfo;
-        setUsers(usersResponse);
-      }
-      fetchUserData();
-      setLoading(false);
-    }, 1000); // fake loading delay
+        try {
+          const response = await apiClient.get("/user/getAllUserInfo");
+          const usersResponse = response.data.data.userInfo;
+          setUsers(usersResponse);
+        } catch (err) {
+          console.error(err);
+          setError("Failed to fetch users.");
+        } finally {
+          setLoading(false);
+        }
+      };
 
+      fetchUserData();
+    }, 1000); // simulate loading delay
     return () => clearTimeout(timer);
   }, []);
 
-  // 🔹 Filter by search term
+
+
+  // Filter by search term
   const filteredUsers = users
     .filter((u) => u.username?.toLowerCase().includes(searchTerm.toLowerCase()))
     .sort((a, b) => a.userId - b.userId);
 
-  return (
+
+
+    return (
     <div className="flex flex-col p-8 w-full bg-gray-50 min-h-screen">
-      {/* Header row — search bar + create button */}
+      {/* Header: Search + Create */}
       <div className="flex justify-between items-center mb-6">
-        {/* Search Bar */}
         <div className="relative w-1/2">
           <Search className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
           <input
@@ -46,7 +58,6 @@ const ViewUser = () => {
           />
         </div>
 
-        {/* Create Button */}
         <button
           className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-lg shadow transition"
           onClick={() => navigate("/dashboard/create")}
@@ -68,31 +79,28 @@ const ViewUser = () => {
               key={user.userId}
               className="flex justify-between items-center py-3 px-2 hover:bg-gray-50 rounded-lg transition"
             >
-              {/* Left: user info */}
+              {/* User Info */}
               <div>
                 <div className="font-semibold text-gray-800">{user.username}</div>
-                <div className="text-gray-500 text-sm">{user.Status.statusName}</div>
+                <div className="text-gray-500 text-sm">{user.Status?.statusName}</div>
               </div>
 
-              {/* Right: action buttons */}
-              <div className="flex gap-3">
-                <button
-                  className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
-                  onClick={() => console.log("Edit", user.userId)}
-                >
-                  <Link className="flex gap-1" to={`/dashboard/update/` + user.userId}>
-                    <Edit className="w-4 h-4" />
-                    Edit
-                  </Link>
-                </button>
-                <button
-                  className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
-                  onClick={() => navigate(`/dashboard/suspend/${user.userId}`)}
-                >
-                  <Pause className="w-4 h-4" />
-                  Suspend
-                </button>
-              </div>
+              {/* Actions */}
+             <div className="flex gap-3">
+              <Link
+                to={`/dashboard/update/${user.userId}`}
+                className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
+              >
+                <Edit className="w-4 h-4" /> Edit
+              </Link>
+
+              <button
+                className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-red-100 text-sm text-red-600 transition cursor-pointer"
+                onClick={() => navigate(`/dashboard/suspend/${user.userId}`)}
+              >
+                <Pause className="w-4 h-4" /> Suspend
+              </button>
+            </div>
             </div>
           ))
         ) : (

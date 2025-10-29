@@ -11,18 +11,19 @@ const Sidebar = ({activePage, setActivePage, user}) => {
 
   const handleLogOut = async (e) => {
       e.preventDefault();
-      try{
-          const username = localStorage.getItem("user");
-          var response = await logout(username);
-          console.log(response);
-      }
-      catch (error){
-          console.error(error.message);
-          console.error(error.stack);
-      }
-      finally{
-        navigate("/logout");
-      }
+      // try{
+      //     const username = localStorage.getItem("user");
+      //     var response = await logout(username);
+      //     console.log(response);
+      // }
+      // catch (error){
+      //     console.error(error.message);
+      //     console.error(error.stack);
+      // }
+      // finally{
+      localStorage.removeItem("user");
+      navigate("/logout");
+      //}
     }
 
   var role; 
