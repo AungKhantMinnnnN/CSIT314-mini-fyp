@@ -8,11 +8,11 @@ const router = express.Router();
 // const ChangeUserStatusController = require("../controllers/user.changeUserStatus.controller");
 
 const { 
-  CreateUserController,
-  GetAllUserInfoController,
-  GetUserInfoController,
-  UpdateUserInfoController,
-  SuspendUserController
+    CreateUserController,
+    GetAllUserInfoController,
+    GetUserInfoController,
+    UpdateUserInfoController,
+    SuspendUserController
 } = require("../controllers/useradmin.controller.js");
 
 
