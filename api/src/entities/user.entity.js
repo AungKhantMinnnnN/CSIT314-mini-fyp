@@ -126,6 +126,87 @@ class User{
         }
         return data
     }
+
+    async getProfileInfo(profileId){
+        const { data, error } = await supabase
+            .from("UserProfile")
+            .select('*')
+            .eq('profileId', profileId)
+            .maybeSingle();
+
+        console.log("GetUserProfile(): response from database: ", data);
+        
+        if (error){
+            console.error("GetUserProfileInfo(): An error has occurred. Error: ", error);
+        }
+
+        return data;
+    }
+
+    async createProfile(profile){
+        const currentProfiles = await this.getAllUserProfile();
+        const profileId = currentProfiles.length + 1;
+
+        const { data, error } = await supabase
+            .from("UserProfile")
+            .insert([{
+                profileId: profileId,
+                updatedDate: Date.now,
+                roleName: profile.roleName,
+                description: profile.description,
+                userProfileStatusId: 1
+            }])
+            .select('*')
+            .maybeSingle();
+
+        console.log("createProfile(): response from database: ", data);
+
+        if (error){
+            console.error("createProfile(): An error has occurred. Error: " + error.message);
+        }
+
+        return data;
+    }
+
+    async updateProfile(profile){
+        const { data, error } = await supabase
+            .from("UserProfile")
+            .update({
+                updatedDate: Date.now,
+                roleName: profile.roleName,
+                description: profile.description,
+                userProfileStatusId: profile.userProfileStatusId
+            })
+            .eq('profileId', profile.profileId)
+            .select('*')
+            .maybeSingle();
+
+        console.log("updateProfile(): response from database: ", data);
+
+        if (error){
+            console.error("updateProfile(): An error has occurred. Error: ", error);
+        }
+
+        return data;
+    }
+
+    async changeProfileStatus(profileId, userProfileStatus){
+        const { data, error} = await supabase
+            .from("UserProfile")
+            .update({
+                userProfileStatusId : userProfileStatus
+            })
+            .eq('profileId', profileId)
+            .select();
+        
+        console.log("ChangeProfileStatus(): Response from database: ", data);
+        
+        if (error){
+            console.error("ChangeProfileStatus(): An error has occurred. Error: " + error.message);
+        }
+        
+        return data;
+    }
 }
 
 module.exports = User;

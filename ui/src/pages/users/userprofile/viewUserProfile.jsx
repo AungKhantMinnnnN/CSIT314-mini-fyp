@@ -16,7 +16,6 @@ const ViewUserProfile = () => {
         const response = await apiClient.get("/user/getAllUserProfiles");
         const profileData = response.data.data.userProfile;
         setProfiles(profileData);
-        console.log("Response data:", response.data.data);
       } catch (err) {
         console.error(err);
         setError("Failed to fetch profiles.");
