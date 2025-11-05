@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import apiClient from "../../api/index.js";
+import apiClient from "../../../api/index.js";
 import { UserPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

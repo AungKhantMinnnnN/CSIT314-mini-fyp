@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AlertTriangle, User, Mail, Phone, Building, IdCard, XCircle } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import apiClient from "../../api/index.js";
+import apiClient from "../../../api/index.js";
 
 const SuspendUser = () => {
     const navigate = useNavigate();

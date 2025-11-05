@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import apiClient from "../../api/index.js";
+import apiClient from "../../../api/index.js";
 import { UserCircle2, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

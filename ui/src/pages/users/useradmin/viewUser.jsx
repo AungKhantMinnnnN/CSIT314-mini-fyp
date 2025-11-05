@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, UserPlus, Edit, Pause } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import apiClient from "../../api/index.js";
+import apiClient from "../../../api/index.js";
 
 
 

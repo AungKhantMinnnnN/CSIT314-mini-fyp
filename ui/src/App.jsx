@@ -9,13 +9,13 @@ import Dashboard from './pages/auth/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 
 // User Management
-import ViewUser from './pages/users/viewUser';
-import CreateUser from './pages/users/createUser';
-import CreateSuccess from './pages/users/createSuccess';
-import UpdateUser from './pages/users/updateUser';
-import UpdateSuccess from './pages/users/updateSuccess';
-import SuspendUser from './pages/users/suspendUser';
-import SuspendSuccess from './pages/users/suspendSuccess';
+import ViewUser from './pages/users/useradmin/viewUser';
+import CreateUser from './pages/users/useradmin/createUser';
+import CreateSuccess from './pages/users/useradmin/createSuccess';
+import UpdateUser from './pages/users/useradmin/updateUser';
+import UpdateSuccess from './pages/users/useradmin/updateSuccess';
+import SuspendUser from './pages/users/useradmin/suspendUser';
+import SuspendSuccess from './pages/users/useradmin/suspendSuccess';
 
 // User Profiles
 import ViewUserProfile from './pages/users/userprofile/viewUserProfile';
