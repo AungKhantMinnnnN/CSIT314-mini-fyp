@@ -1,13 +1,13 @@
 const express = require('express')
 const router = express.Router();
 
-const [
+const {
     CreateRequestController,
     GetAllRequestController,
     GetRequestInfoController,
     UpdateRequestInfoController,
     DeleteRequestController
-] = require("../controllers/request.controller")
+ } = require("../controllers/request.controller")
 
 router.get("/getAllRequest", async (req, res) => {
     try{

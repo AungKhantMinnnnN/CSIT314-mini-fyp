@@ -111,6 +111,21 @@ class User{
         
         return data;
     }
+
+    async getAllUserProfile(){
+        const { data, error } = await supabase
+            .from("UserProfile")
+            .select(`
+                *
+            `);
+        
+        console.log("getAllUserProfile(): Response from database: ", data)
+
+        if (error){
+            console.error("getAllUserProfile(): An error has occurred. Error: " + error.message);
+        }
+        return data
+    }
 }
 
 module.exports = User;

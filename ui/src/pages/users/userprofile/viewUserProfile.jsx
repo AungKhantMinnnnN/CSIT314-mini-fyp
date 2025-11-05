@@ -13,9 +13,10 @@ const ViewUserProfile = () => {
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
-        const response = await apiClient.get("/profile/getAllProfiles");
-        const profileData = response.data.data.profileInfo;
+        const response = await apiClient.get("/user/getAllUserProfiles");
+        const profileData = response.data.data.userProfile;
         setProfiles(profileData);
+        console.log("Response data:", response.data.data);
       } catch (err) {
         console.error(err);
         setError("Failed to fetch profiles.");
@@ -28,7 +29,7 @@ const ViewUserProfile = () => {
   }, []);
 
   const filteredProfiles = profiles.filter((p) =>
-    p.profileName?.toLowerCase().includes(searchTerm.toLowerCase())
+    p.roleName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -70,7 +71,7 @@ const ViewUserProfile = () => {
               {/* Profile Info */}
               <div>
                 <div className="font-semibold text-gray-800">
-                  {profile.profileName}
+                  {profile.roleName}
                 </div>
                 <div className="text-gray-500 text-sm">{profile.description}</div>
               </div>

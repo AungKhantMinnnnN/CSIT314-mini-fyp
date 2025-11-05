@@ -144,12 +144,26 @@ class SuspendUserController{
     }
 }
     
+class GetAllUserProfileController {
+    async getAllUserProfile(){
+        const userEntity = new User();
+        const userProfile = await userEntity.getAllUserProfile();
+        if (!userProfile){
+            console.error("An error has occurred.");
+            return null;
+        }
 
+        return {
+            userProfile
+        }
+    }
+}
 
 module.exports = {
     CreateUserController,
     GetAllUserInfoController,
     GetUserInfoController,
     UpdateUserInfoController,
-    SuspendUserController
+    SuspendUserController,
+    GetAllUserProfileController
 }

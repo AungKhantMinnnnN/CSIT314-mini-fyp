@@ -12,7 +12,8 @@ const {
     GetAllUserInfoController,
     GetUserInfoController,
     UpdateUserInfoController,
-    SuspendUserController
+    SuspendUserController,
+    GetAllUserProfileController
 } = require("../controllers/useradmin.controller.js");
 
 
@@ -175,5 +176,27 @@ router.post("/suspend-user", async (req,res) => {
     });
     }
 })
+
+router.get("/getAllUserProfiles", async (req, res) => {
+    try{
+        const controller = new GetAllUserProfileController()
+
+        const result = await controller.getAllUserProfile();
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error){
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+})
+
+
 
 module.exports = router;
