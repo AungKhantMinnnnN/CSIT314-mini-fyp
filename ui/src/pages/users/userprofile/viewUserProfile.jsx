@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, UserCog, Edit, PlusCircle } from "lucide-react";
+import { Search, UserCog, Edit, PlusCircle, Pause } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../../api/index.js";
 
@@ -11,20 +11,23 @@ const ViewUserProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfiles = async () => {
-      try {
-        const response = await apiClient.get("/user/getAllUserProfiles");
-        const profileData = response.data.data.userProfile;
-        setProfiles(profileData);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch profiles.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    const timer = setTimeout(() => {
+      const fetchProfiles = async () => {
+        try {
+          const response = await apiClient.get("/user/getAllUserProfiles");
+          const profileData = response.data.data.userProfiles;
+          setProfiles(profileData);
+        } catch (err) {
+          console.error(err);
+          setError("Failed to fetch profiles.");
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchProfiles();
+      fetchProfiles();
+    }, 600); // simulate loading delay
+    return () => clearTimeout(timer);
   }, []);
 
   const filteredProfiles = profiles.filter((p) =>
@@ -48,7 +51,7 @@ const ViewUserProfile = () => {
 
         <button
           className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-lg shadow transition"
-          onClick={() => navigate("/dashboard/profile/create")}
+          onClick={() => navigate("/dashboard/userprofiles/create")}
         >
           <PlusCircle className="w-5 h-5" />
           <span className="font-medium text-sm">Create Profile</span>
@@ -78,11 +81,17 @@ const ViewUserProfile = () => {
               {/* Actions */}
               <div className="flex gap-3">
                 <Link
-                  to={`/dashboard/profile/update/${profile.profileId}`}
+                  to={`/dashboard/userprofiles/update/${profile.profileId}`}
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
                 >
                   <Edit className="w-4 h-4" /> Edit
                 </Link>
+                <button
+                  className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-red-100 text-sm text-red-600 transition cursor-pointer"
+                  onClick={() => navigate(`/dashboard/userprofiles/suspend/${profile.profileId}`)}
+                >
+                  <Pause className="w-4 h-4" /> Suspend
+                </button>
               </div>
             </div>
           ))

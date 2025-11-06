@@ -11,15 +11,20 @@ import PrivateRoute from './components/PrivateRoute';
 // User Management
 import ViewUser from './pages/users/useradmin/viewUser';
 import CreateUser from './pages/users/useradmin/createUser';
-import CreateSuccess from './pages/users/useradmin/createSuccess';
+import CreateUserSuccess from './pages/users/useradmin/createUserSuccess';
 import UpdateUser from './pages/users/useradmin/updateUser';
-import UpdateSuccess from './pages/users/useradmin/updateSuccess';
+import UpdateUserSuccess from './pages/users/useradmin/updateUserSuccess';
 import SuspendUser from './pages/users/useradmin/suspendUser';
-import SuspendSuccess from './pages/users/useradmin/suspendSuccess';
+import SuspendUserSuccess from './pages/users/useradmin/suspendUserSuccess';
 
 // User Profiles
 import ViewUserProfile from './pages/users/userprofile/viewUserProfile';
-
+import CreateProfile from './pages/users/userprofile/createProfile';
+import CreateProfileSuccess from './pages/users/userprofile/createProfileSuccess'
+import UpdateProfile from './pages/users/userprofile/updateProfile';
+import UpdateProfileSuccess from './pages/users/userprofile/updateProfileSuccess';
+import SuspendProfile from './pages/users/userprofile/suspendProfile';
+import SuspendProfileSuccess from './pages/users/userprofile/suspendProfileSuccess';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
@@ -48,14 +53,20 @@ function App() {
               element={<DashboardRoute />}
             >
               <Route path="usermanagement" element={<ViewUser />} />
-              <Route path="create" element={<CreateUser />} />
-              <Route path="create-success" element={<CreateSuccess />} />
-              <Route path="update/:userId" element={<UpdateUser />} />
-              <Route path="update-success" element={<UpdateSuccess />} />
-              <Route path="suspend/:userId" element={<SuspendUser />} />
-              <Route path="suspend-success" element={<SuspendSuccess />} />
+              <Route path="usermanagement/create" element={<CreateUser />} />
+              <Route path="usermanagement/create-success" element={<CreateUserSuccess />} />
+              <Route path="usermanagement/update/:userId" element={<UpdateUser />} />
+              <Route path="usermanagement/update-success" element={<UpdateUserSuccess />} />
+              <Route path="usermanagement/suspend/:userId" element={<SuspendUser />} />
+              <Route path="usermanagement/suspend-success" element={<SuspendUserSuccess />} />
 
               <Route path="userprofiles" element={<ViewUserProfile />} />
+              <Route path="userprofiles/create" element={<CreateProfile />} />
+              <Route path="userprofiles/create-success" element={<CreateProfileSuccess />} />
+              <Route path="userprofiles/update/:profileId" element={<UpdateProfile />} />
+              <Route path="userprofiles/update-success" element={<UpdateProfileSuccess />} />
+              <Route path="userprofiles/suspend/:profileId" element={<SuspendProfile />} />
+              <Route path="userprofiles/suspend-success" element={<SuspendProfileSuccess />} />
             </Route>
 
             {/* Fallback */}

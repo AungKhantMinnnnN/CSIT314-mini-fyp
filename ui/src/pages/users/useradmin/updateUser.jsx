@@ -103,7 +103,7 @@ const UpdateUser = () => {
         const response = await apiClient.post("/user/update-user", requestBody);
         console.log(response);
 
-        navigate("/dashboard/update-success", { state: { user: response.data.data } });
+        navigate("/dashboard/usermanagement/update-success", { state: { user: response.data.data } });
     } catch (error) {
         console.error(error);
     }

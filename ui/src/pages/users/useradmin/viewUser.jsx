@@ -30,7 +30,7 @@ const ViewUser = () => {
       };
 
       fetchUserData();
-    }, 1000); // simulate loading delay
+    }, 600); // simulate loading delay
     return () => clearTimeout(timer);
   }, []);
 
@@ -60,7 +60,7 @@ const ViewUser = () => {
 
         <button
           className="flex items-center gap-2 bg-indigo-500 hover:bg-indigo-400 text-white px-4 py-2 rounded-lg shadow transition"
-          onClick={() => navigate("/dashboard/create")}
+          onClick={() => navigate("/dashboard/usermanagement/create")}
         >
           <UserPlus className="w-5 h-5" />
           <span className="font-medium text-sm">Create User</span>
@@ -88,7 +88,7 @@ const ViewUser = () => {
               {/* Actions */}
              <div className="flex gap-3">
               <Link
-                to={`/dashboard/update/${user.userId}`}
+                to={`/dashboard/usermanagement/update/${user.userId}`}
                 className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
               >
                 <Edit className="w-4 h-4" /> Edit
@@ -96,7 +96,7 @@ const ViewUser = () => {
 
               <button
                 className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-red-100 text-sm text-red-600 transition cursor-pointer"
-                onClick={() => navigate(`/dashboard/suspend/${user.userId}`)}
+                onClick={() => navigate(`/dashboard/usermanagement/suspend/${user.userId}`)}
               >
                 <Pause className="w-4 h-4" /> Suspend
               </button>

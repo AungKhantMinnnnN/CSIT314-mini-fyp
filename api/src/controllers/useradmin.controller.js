@@ -149,14 +149,14 @@ class SuspendUserController{
 class GetAllUserProfileController {
     async getAllUserProfile(){
         const userEntity = new User();
-        const userProfile = await userEntity.getAllUserProfile();
-        if (!userProfile){
+        const userProfiles = await userEntity.getAllUserProfile();
+        if (!userProfiles){
             console.error("An error has occurred.");
             return null;
         }
 
         return {
-            userProfile
+            userProfiles
         }
     }
 }
@@ -169,19 +169,21 @@ class GetProfileController{
         const profileInfo = await userEntity.getProfileInfo(profileId);
 
         if (!profileInfo){
-            console.error("user.getUserInfo.Controller.get(): No valid user is found.");
+            console.error("user.getProfile.Controller.get(): No valid profile is found.");
             return {
-                profileId: "",
-                createdDate: "",
-                updatedDate: "",
-                roleName: "",
-                description: "",
-                userProfileStatusId: ""
+                userProfile : {
+                    profileId: "",
+                    createdDate: "",
+                    updatedDate: "",
+                    roleName: "",
+                    description: "",
+                    userProfileStatusId: ""
+                }
             }
         }
         
         return {
-            profileInfo
+            userProfile : profileInfo
         }
     }
 }
@@ -221,7 +223,7 @@ class UpdateProfileController{
         if (!updatedProfile){
             console.error("user.updateProfile.Controller.updateProfile(): Invalid profile object.");
             return {
-                profile : {
+                userProfile : {
                     roleName: "",
                     isProfileUpdated: false
                 }
@@ -229,7 +231,7 @@ class UpdateProfileController{
         }
 
         return {
-            updatedProfile,
+            userProfile: updatedProfile,
             isProfileUpdated : true
             }
         }
@@ -244,9 +246,9 @@ class SuspendProfileController{
             const userEntity = new User();
             const updatedProfile = await userEntity.changeProfileStatus(profile.profileId, suspendedId);
             return {
-                profile : {
+                userProfile : {
                     roleName: updatedProfile.roleName,
-                    isUserSuspended: true
+                    isProfileSuspended: true
                 }
             }
         }
@@ -254,9 +256,9 @@ class SuspendProfileController{
         else if (profile.userProfileStatusId == 2){
             console.error("user.SuspendProfile.Controller.changeProfileStatus(): User is already suspended");
             return {
-                profile : {
+                userProfile : {
                     roleName: "",
-                    isUserSuspended: false
+                    isProfileSuspended: false
                 },
                 message: "Profile is already suspended"
             }
@@ -265,9 +267,9 @@ class SuspendProfileController{
         else {
             console.error("SuspendProfileController.suspendUser(): Invalid profile status");
             return {
-                profile: {
+                userProfile: {
                     roleName: "",
-                    isUserSuspended: false
+                    isProfileSuspended: false
                 }
             };
         }

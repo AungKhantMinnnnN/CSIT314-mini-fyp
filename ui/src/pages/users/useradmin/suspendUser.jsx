@@ -45,7 +45,7 @@ const SuspendUser = () => {
             return;
         }
         
-        navigate("/dashboard/suspend-success", { state: { user } });
+        navigate("/dashboard/usermanagement/suspend-success", { state: { user } });
 
         } catch (error) {
             console.error("Error suspending user:", error);

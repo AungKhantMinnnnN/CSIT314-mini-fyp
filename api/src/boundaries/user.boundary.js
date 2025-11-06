@@ -164,7 +164,7 @@ router.get("/getAllUserProfiles", async (req, res) => {
     }
 })
 
-router.post("/getProfileInfo", async (req,res) => {
+router.post("/getUserProfile", async (req,res) => {
     try{
         const { profileId } = req.body;
 
@@ -194,9 +194,9 @@ router.post("/getProfileInfo", async (req,res) => {
 
 router.post("/create-profile", async (req, res) =>  {
     try{
-        const { profile } = req.body;
+        const { userProfile } = req.body;
 
-        if (!profile){
+        if (!userProfile){
             return res.status(400).json({
                 success : false,
                 message : 'Profile object is required.'
@@ -204,7 +204,7 @@ router.post("/create-profile", async (req, res) =>  {
         }
 
         const controller = new CreateProfileController()
-        const result = await controller.createProfile(profile);
+        const result = await controller.createProfile(userProfile);
         return res.status(200).json({
             success : true,
             data: result
@@ -221,8 +221,8 @@ router.post("/create-profile", async (req, res) =>  {
 
 router.post("/update-profile", async (req, res) => {
     try{
-        const { profile } = req.body;
-        if (!profile){
+        const { userProfile } = req.body;
+        if (!userProfile){
             return res.status(400).json({
                 success: false,
                 message: 'Profile object is required.'
@@ -230,7 +230,7 @@ router.post("/update-profile", async (req, res) => {
         }
 
         const controller = new UpdateProfileController()
-        const result = await controller.updateProfile(profile);
+        const result = await controller.updateProfile(userProfile);
 
         return res.status(200).json({
             success: true,
@@ -248,9 +248,9 @@ router.post("/update-profile", async (req, res) => {
 
 router.post("/suspend-profile", async (req,res) => {
     try{
-        const { profile } = req.body;
+        const { userProfile } = req.body;
 
-        if (!profile.profileId || !profile.userProfileStatusId){
+        if (!userProfile.profileId || !userProfile.userProfileStatusId){
             return res.status(400).json({
                 success: false,
                 message: "Missing profileId or userProfileStatusId."
@@ -258,7 +258,7 @@ router.post("/suspend-profile", async (req,res) => {
         }
 
         const controller = new SuspendProfileController()
-        const result = await controller.suspendProfile(profile);
+        const result = await controller.suspendProfile(userProfile);
 
         return res.status(200).json({
             success: true,
