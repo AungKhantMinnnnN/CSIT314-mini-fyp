@@ -26,13 +26,16 @@ import UpdateProfileSuccess from './pages/users/userprofile/updateProfileSuccess
 import SuspendProfile from './pages/users/userprofile/suspendProfile';
 import SuspendProfileSuccess from './pages/users/userprofile/suspendProfileSuccess';
 
+// CSR
+import ViewAllRequests from './pages/requests/viewAllRequests';
+
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <PrivateRoute user={user} allowedRoles={[2,3]}>
+    <PrivateRoute user={user} allowedRoles={[1,2,3]}>
       <Dashboard user={user}/>
     </PrivateRoute>
   );
@@ -67,6 +70,8 @@ function App() {
               <Route path="userprofiles/update-success" element={<UpdateProfileSuccess />} />
               <Route path="userprofiles/suspend/:profileId" element={<SuspendProfile />} />
               <Route path="userprofiles/suspend-success" element={<SuspendProfileSuccess />} />
+
+              <Route path="viewAllRequests" element={<ViewAllRequests />} />
             </Route>
 
             {/* Fallback */}
