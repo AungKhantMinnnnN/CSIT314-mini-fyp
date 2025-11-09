@@ -24,6 +24,37 @@ class User{
         return data;
     }
 
+    async searchUserInfo(query) {
+        try {
+            // Sanitize query input
+            const trimmedQuery = query?.trim();
+            if (!trimmedQuery) {
+                console.warn("searchUser(): Empty query provided.");
+                return [];
+            }
+
+            // Build search pattern (case-insensitive)
+            const pattern = `%${trimmedQuery}%`;
+
+            // Perform OR-based ILIKE search across allowed columns
+            const { data, error } = await supabase
+                .from(this.tableName)
+                .select("userId, createdDate, updatedDate, username, email, firstName, lastName, UserProfile(profileId, roleName), Status(statusId, statusName)")
+                .or(`username.ilike.${pattern},email.ilike.${pattern},firstName.ilike.${pattern},lastName.ilike.${pattern}`);
+
+            if (error) {
+                console.error("searchUser(): Database error:", error.message);
+                return [];
+            }
+
+            console.log(`searchUser(): Found ${data.length} users for query "${query}"`);
+            return data;
+        } catch (err) {
+            console.error("searchUser(): Unexpected error:", err);
+            return [];
+        }
+    }
+
     async getUserInfo(userId){
         const { data, error } = await supabase.
             from(this.tableName)
@@ -42,7 +73,8 @@ class User{
 
     async createUser(userData){
 
-        const userId = getRandomId(1000, 9999);
+        const currentId = await this.getAllUserInfo;
+        const userId = currentId.length + 1;
 
         const { data, error } = await supabase
             .from(this.tableName)
@@ -127,6 +159,39 @@ class User{
         return data
     }
 
+    async searchUserProfile(query) {
+        try {
+            const trimmedQuery = query?.trim();
+            if (!trimmedQuery) return [];
+
+            const pattern = `%${trimmedQuery}%`;
+            const isNumber = !isNaN(Number(trimmedQuery));
+
+            const orConditions = [
+                `roleName.ilike.${pattern}`,
+                `description.ilike.${pattern}`
+            ];
+
+            if (isNumber) {
+                orConditions.push(`profileId.eq.${trimmedQuery}`);
+            }
+
+            const { data, error } = await supabase
+                .from("UserProfile")
+                .select("*")
+                .or(orConditions.join(","));
+
+            if (error) {
+                console.error("searchUserProfile(): Database error:", error.message);
+                return [];
+            }
+            return data;
+        } catch (err) {
+            console.error("searchUserProfile(): Unexpected error:", err);
+            return [];
+        }
+    }
+
     async getProfileInfo(profileId){
         const { data, error } = await supabase
             .from("UserProfile")
@@ -143,39 +208,9 @@ class User{
         return data;
     }
 
-    async searchUserInfo(query) {
-    try {
-        // Sanitize query input
-        const trimmedQuery = query?.trim();
-        if (!trimmedQuery) {
-            console.warn("searchUser(): Empty query provided.");
-            return [];
-        }
-
-        // Build search pattern (case-insensitive)
-        const pattern = `%${trimmedQuery}%`;
-
-        // Perform OR-based ILIKE search across allowed columns
-        const { data, error } = await supabase
-            .from(this.tableName)
-            .select("userId, createdDate, updatedDate, username, email, firstName, lastName, UserProfile(profileId, roleName), Status(statusId, statusName)")
-            .or(`username.ilike.${pattern},email.ilike.${pattern},firstName.ilike.${pattern},lastName.ilike.${pattern}`);
-
-        if (error) {
-            console.error("searchUser(): Database error:", error.message);
-            return [];
-        }
-
-        console.log(`searchUser(): Found ${data.length} users for query "${query}"`);
-        return data;
-    } catch (err) {
-        console.error("searchUser(): Unexpected error:", err);
-        return [];
-    }
-}
-
     async createProfile(profile){
-        const profileId = getRandomId(1000, 9999);
+        const currentId = await this.getAllUserProfile();
+        const profileId = currentId.length + 1
 
         const { data, error } = await supabase
             .from("UserProfile")

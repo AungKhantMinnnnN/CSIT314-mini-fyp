@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Search, UserCog, Edit, PlusCircle, Pause } from "lucide-react";
+import { Search, PlusCircle, Edit, Pause } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../../api/index.js";
 
@@ -10,29 +10,39 @@ const ViewUserProfile = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // Dynamic search & fetch all profiles if searchTerm is empty
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const fetchProfiles = async () => {
-        try {
+    const delayDebounceFn = setTimeout(async () => {
+      setLoading(true);
+      try {
+        let profileData = [];
+
+        if (!searchTerm) {
+          // Fetch all profiles if search is empty
           const response = await apiClient.get("/user/getAllUserProfiles");
-          const profileData = response.data.data.userProfiles;
-          setProfiles(profileData);
-        } catch (err) {
-          console.error(err);
-          setError("Failed to fetch profiles.");
-        } finally {
-          setLoading(false);
+          profileData = response.data.data.userProfiles;
+        } else {
+          // Fetch search results
+          const response = await apiClient.get("/user/searchUserProfile", {
+            params: { query: searchTerm },
+          });
+          profileData = response.data.data.userProfiles;
         }
-      };
 
-      fetchProfiles();
-    }, 600); // simulate loading delay
-    return () => clearTimeout(timer);
-  }, []);
+        // Sort by profileId
+        profileData.sort((a, b) => a.profileId - b.profileId);
+        setProfiles(profileData);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch profiles.");
+      } finally {
+        setLoading(false);
+      }
+    }, 400); // debounce delay
 
-  const filteredProfiles = profiles.filter((p) =>
-    p.roleName?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   return (
     <div className="flex flex-col p-8 w-full bg-gray-50 min-h-screen">
@@ -64,18 +74,18 @@ const ViewUserProfile = () => {
           <div className="text-gray-500 text-center py-6">Loading profiles...</div>
         ) : error ? (
           <div className="text-red-500 text-center py-6">{error}</div>
-        ) : filteredProfiles.length > 0 ? (
-          filteredProfiles.map((profile) => (
+        ) : profiles.length > 0 ? (
+          profiles.map((profile) => (
             <div
               key={profile.profileId}
               className="flex justify-between items-center py-3 px-2 hover:bg-gray-50 rounded-lg transition"
             >
               {/* Profile Info */}
               <div>
-                <div className="font-semibold text-gray-800">
-                  {profile.roleName}
-                </div>
-                <div className="text-gray-500 text-sm">{profile.description}</div>
+                <div className="font-semibold text-gray-800">{profile.roleName}</div>
+                {profile.description && (
+                  <div className="text-gray-500 text-sm">{profile.description}</div>
+                )}
               </div>
 
               {/* Actions */}
@@ -88,7 +98,9 @@ const ViewUserProfile = () => {
                 </Link>
                 <button
                   className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-red-100 text-sm text-red-600 transition cursor-pointer"
-                  onClick={() => navigate(`/dashboard/userprofiles/suspend/${profile.profileId}`)}
+                  onClick={() =>
+                    navigate(`/dashboard/userprofiles/suspend/${profile.profileId}`)
+                  }
                 >
                   <Pause className="w-4 h-4" /> Suspend
                 </button>

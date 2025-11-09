@@ -166,6 +166,21 @@ class GetAllUserProfileController {
     }
 }
 
+class SearchUserProfileController {
+    async searchUserProfile(search){
+        const userEntity = new User();
+        const userProfiles = await userEntity.searchUserProfile(search);
+        if (!userProfiles){
+            console.error("An error has occurred.");
+            return null;
+        }
+
+        return {
+            userProfiles
+        }
+    }
+}
+
 class GetProfileController{
     async get(profileId){
         const userEntity = new User();
@@ -282,6 +297,7 @@ module.exports = {
     UpdateUserInfoController,
     SuspendUserController,
     GetAllUserProfileController,
+    SearchUserProfileController,
     GetProfileController,
     CreateProfileController,
     UpdateProfileController,

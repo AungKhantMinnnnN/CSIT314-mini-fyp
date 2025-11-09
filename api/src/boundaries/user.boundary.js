@@ -8,6 +8,7 @@ const {
     UpdateUserInfoController,
     SuspendUserController,
     GetAllUserProfileController,
+    SearchUserProfileController,
     GetProfileController,
     CreateProfileController,
     UpdateProfileController,
@@ -55,6 +56,7 @@ router.get("/searchUserInfo", async (req, res) => {
         });
     }
 });
+
 router.post("/getUserInfo", async (req,res) => {
     try{
         const { userId } = req.body;
@@ -184,6 +186,27 @@ router.get("/getAllUserProfiles", async (req, res) => {
         });
     }
 })
+
+router.get("/searchUserProfile", async (req, res) => {
+    try{
+        const { query } = req.query
+        const controller = new SearchUserProfileController()
+
+        const result = await controller.searchUserProfile(query);
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error){
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
 
 router.post("/getUserProfile", async (req,res) => {
     try{
