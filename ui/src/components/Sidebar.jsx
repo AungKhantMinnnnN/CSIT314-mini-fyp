@@ -49,7 +49,7 @@ const Sidebar = ({activePage, setActivePage, user}) => {
   ]
 
   const platformMgmMenu = [
-    { id: "categories", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Category", desc: "Manage Categories" },
+    { id: "platformmanagement", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Request Categories", desc: "Manage Categories" },
   ]
 
   const pinMenu = [

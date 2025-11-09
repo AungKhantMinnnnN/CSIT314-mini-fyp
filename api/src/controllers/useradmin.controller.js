@@ -208,7 +208,7 @@ class CreateProfileController{
 
         return {
             createdProfile,
-            isProfileUpdated : true
+            isProfileCreated : true
         }
     }
 }

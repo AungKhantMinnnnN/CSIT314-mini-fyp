@@ -3,6 +3,8 @@ const supabase = require('./src/config/supabase_client');
 const authBoundary = require('./src/boundaries/auth.boundary');
 const userBoundary = require('./src/boundaries/user.boundary');
 const requestBoundary = require('./src/boundaries/request.boundary');
+const platformBoundary = require('./src/boundaries/platform.boundary')
+
 require('dotenv').config();
 
 const app = express();
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', authBoundary);
 app.use('/api/user', userBoundary);
 app.use('/api/request', requestBoundary);
+app.use('/api/platform', platformBoundary)
 
 // api health check
 app.get('/health', (req, res) => {
