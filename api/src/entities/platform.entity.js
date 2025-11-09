@@ -21,6 +21,38 @@ class Category{
         return data;
     }
 
+    async searchCategory(query) {
+        try {
+            const trimmedQuery = query?.trim();
+            if (!trimmedQuery) return [];
+
+            const pattern = `%${trimmedQuery}%`;
+            const isNumber = !isNaN(Number(trimmedQuery));
+
+            const orConditions = [
+                `Name.ilike.${pattern}`,
+                `Description.ilike.${pattern}`
+            ];
+
+            if (isNumber) {
+                orConditions.push(`categoryId.eq.${trimmedQuery}`);
+            }
+            const { data, error } = await supabase
+                .from(this.tableName)
+                .select("*")
+                .or(orConditions.join(","));
+
+            if (error) {
+                console.error("searchCategory(): Database error:", error.message);
+                return [];
+            }
+            return data;
+        } catch (err) {
+            console.error("searchCategory(): Unexpected error:", err);
+            return [];
+        }
+    }
+
     async getCategory(categoryId){
         const { data, error } = await supabase
             .from(this.tableName)

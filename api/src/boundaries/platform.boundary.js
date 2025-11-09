@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { 
     GetAllCategoriesController,
+    SearchCategoryController,
     GetCategoryController,
     CreateCategoryController,
     UpdateCategoryController,
@@ -16,6 +17,26 @@ router.get("/getAllCategories", async (req , res) =>{
 
         const result = await controller.GetAllCategories();
 
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error){
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
+
+router.get("/searchCategory", async (req , res) => {
+    try {
+        const { query } = req.query
+        const controller = new SearchCategoryController()
+
+        const result = await controller.searchCategory(query);
         return res.status(200).json({
             success: true,
             data: result
