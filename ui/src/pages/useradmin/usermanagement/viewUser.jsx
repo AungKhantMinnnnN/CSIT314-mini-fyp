@@ -10,25 +10,6 @@ const ViewUser = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Fetch all users initially
-  useEffect(() => {
-    const fetchAllUsers = async () => {
-      try {
-        const response = await apiClient.get("/user/getAllUserInfo");
-        const usersResponse = response.data.data.userInfo;
-        usersResponse.sort((a, b) => a.userId - b.userId);
-        setUsers(usersResponse);
-        setError(null);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch users.");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAllUsers();
-  }, []);
-
   // Dynamic search
   useEffect(() => {
   const delayDebounceFn = setTimeout(async () => {
