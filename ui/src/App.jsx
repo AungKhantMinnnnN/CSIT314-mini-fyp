@@ -28,6 +28,10 @@ import SuspendProfileSuccess from './pages/users/userprofile/suspendProfileSucce
 
 // CSR
 import ViewAllRequests from './pages/requests/viewAllRequests';
+import CreateRequest from './pages/requests/createRequest';
+import UpdateRequest from './pages/requests/updateRequest';
+import ViewRequestDetails from './pages/requests/viewRequestDetails';
+import DeleteRequest from './pages/requests/deleteRequest';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
@@ -35,7 +39,7 @@ const DashboardRoute = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <PrivateRoute user={user} allowedRoles={[1,2,3]}>
+    <PrivateRoute user={user} allowedRoles={[1,2,3,4]}>
       <Dashboard user={user}/>
     </PrivateRoute>
   );
@@ -72,6 +76,10 @@ function App() {
               <Route path="userprofiles/suspend-success" element={<SuspendProfileSuccess />} />
 
               <Route path="viewAllRequests" element={<ViewAllRequests />} />
+              <Route path="createRequest" element={<CreateRequest />} />
+              <Route path="updateRequest/:requestId" element={<UpdateRequest />} />
+              <Route path="viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
+              <Route path="deleteRequest/:requestId" element={<DeleteRequest />} />
             </Route>
 
             {/* Fallback */}

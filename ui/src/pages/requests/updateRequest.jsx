@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from '../../api';
+import { useParams } from 'react-router-dom';
 
-const CreateRequest = () => {
+const UpdateRequest = () => {
+    const {requestId} = useParams();
 
     const [categories, setCategories] = useState([]);
     const [form, setFormData] = useState({
-        userId: "",
+        requestId: "",
         categoryId: "",
         title: "",
         description: "",
@@ -14,22 +16,34 @@ const CreateRequest = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        (async () => {
-            try {
-                const res = await apiClient.get("/requestCategory/getAllCategories");
-                const categoryData = res.data.data.map(c => ({
+        const fetchRequestData = async () => {
+            try{
+
+                const categoriesResponse = await apiClient.get("/requestCategory/getAllCategories");
+                const categoryData = categoriesResponse.data.data.map(c => ({
                     id: c.categoryId,
                     name: c.Name
                 }));
                 setCategories(categoryData);
-            } catch (e) {
-                console.error(e);
-            } 
-            finally{
+
+                const response = await apiClient.get(`/request/getRequestInfo/${requestId}`);
+                const requestInfo = response.data.data.requestInfo[0];
+                setFormData({
+                    categoryId: requestInfo.categoryId,
+                    title: requestInfo.title,
+                    description: requestInfo.description
+                });
+            }
+            catch(e){
+                console.log(e)
+            }
+            finally {
                 setLoading(false);
             }
-        })();
-    }, []);
+        }
+
+        fetchRequestData();
+    }, [])
 
     const handleInputChange = (name, value) => {
         setFormData(prev => ({
@@ -40,18 +54,11 @@ const CreateRequest = () => {
 
     async function handleSubmit(e){
         e.preventDefault();
-
-        const stored = JSON.parse(localStorage.getItem("user"));
-        const userId = stored.userId;
-
-        form.userId = userId;
-        form.status = 1;
-
         console.log("Create request payload: ", form);
 
         const requestBody = {
             request: {
-                userId: form.userId,
+                requestId: requestId,
                 categoryId: form.categoryId,
                 title: form.title,
                 description: form.description
@@ -59,7 +66,7 @@ const CreateRequest = () => {
         }
 
         try{
-            const response = await apiClient.post("/request/createRequest", requestBody);
+            const response = await apiClient.post("/request/updateRequest", requestBody);
             console.log(response);
         }
         catch (e){
@@ -75,9 +82,9 @@ const CreateRequest = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="mx-auto max-w-5xl px-6 py-10">
-                <h1 className="text-3xl font-semibold text-gray-900">Create new request</h1>
+                <h1 className="text-3xl font-semibold text-gray-900">Update Request</h1>
                 <p className="mt-1 text-gray-600">
-                    Submit a new request to connect with CSR organizations
+                    Update your Request Details
                 </p>
 
                 <div className="mt-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -143,7 +150,7 @@ const CreateRequest = () => {
                         <button 
                             onClick={handleSubmit}
                             className="w-full rounded-lg bg-indigo-600 px-6 py-3 font-semibold text-white shadow hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-200">
-                                Create Request
+                                Update Request
                         </button>
                     </div>
                 </div>
@@ -152,4 +159,4 @@ const CreateRequest = () => {
     )
 }
 
-export default CreateRequest;
+export default UpdateRequest;
