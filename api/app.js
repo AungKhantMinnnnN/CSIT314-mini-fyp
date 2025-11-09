@@ -4,6 +4,7 @@ const authBoundary = require('./src/boundaries/auth.boundary');
 const userBoundary = require('./src/boundaries/user.boundary');
 const requestBoundary = require('./src/boundaries/request.boundary');
 const requestCategoryBoundary = require('./src/boundaries/request.category.boundary')
+const platformBoundary = require('./src/boundaries/platform.boundary')
 
 require('dotenv').config();
 
@@ -29,6 +30,7 @@ app.use('/api/auth', authBoundary);
 app.use('/api/user', userBoundary);
 app.use('/api/request', requestBoundary);
 app.use('/api/requestCategory', requestCategoryBoundary);
+app.use('/api/platform', platformBoundary)
 
 // api health check
 app.get('/health', (req, res) => {

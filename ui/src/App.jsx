@@ -9,22 +9,31 @@ import Dashboard from './pages/auth/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 
 // User Management
-import ViewUser from './pages/users/useradmin/viewUser';
-import CreateUser from './pages/users/useradmin/createUser';
-import CreateUserSuccess from './pages/users/useradmin/createUserSuccess';
-import UpdateUser from './pages/users/useradmin/updateUser';
-import UpdateUserSuccess from './pages/users/useradmin/updateUserSuccess';
-import SuspendUser from './pages/users/useradmin/suspendUser';
-import SuspendUserSuccess from './pages/users/useradmin/suspendUserSuccess';
+import ViewUser from './pages/useradmin/usermanagement/viewUser';
+import CreateUser from './pages/useradmin/usermanagement/createUser';
+import CreateUserSuccess from './pages/useradmin/usermanagement/createUserSuccess';
+import UpdateUser from './pages/useradmin/usermanagement/updateUser';
+import UpdateUserSuccess from './pages/useradmin/usermanagement/updateUserSuccess';
+import SuspendUser from './pages/useradmin/usermanagement/suspendUser';
+import SuspendUserSuccess from './pages/useradmin/usermanagement/suspendUserSuccess';
 
 // User Profiles
-import ViewUserProfile from './pages/users/userprofile/viewUserProfile';
-import CreateProfile from './pages/users/userprofile/createProfile';
-import CreateProfileSuccess from './pages/users/userprofile/createProfileSuccess'
-import UpdateProfile from './pages/users/userprofile/updateProfile';
-import UpdateProfileSuccess from './pages/users/userprofile/updateProfileSuccess';
-import SuspendProfile from './pages/users/userprofile/suspendProfile';
-import SuspendProfileSuccess from './pages/users/userprofile/suspendProfileSuccess';
+import ViewUserProfile from './pages/useradmin/userprofile/viewUserProfile';
+import CreateProfile from './pages/useradmin/userprofile/createProfile';
+import CreateProfileSuccess from './pages/useradmin/userprofile/createProfileSuccess'
+import UpdateProfile from './pages/useradmin/userprofile/updateProfile';
+import UpdateProfileSuccess from './pages/useradmin/userprofile/updateProfileSuccess';
+import SuspendProfile from './pages/useradmin/userprofile/suspendProfile';
+import SuspendProfileSuccess from './pages/useradmin/userprofile/suspendProfileSuccess';
+
+// Profile Management
+import ViewCategory from './pages/platformmanagement/categorymanagement/viewCategory'
+import CreateCategory from './pages/platformmanagement/categorymanagement/createCategory';
+import CreateCategorySuccess from './pages/platformmanagement/categorymanagement/createCategorySuccess';
+import UpdateCategory from './pages/platformmanagement/categorymanagement/updateCategory';
+import UpdateCategorySuccess from './pages/platformmanagement/categorymanagement/updateCategorySuccess';
+import SuspendCategory from './pages/platformmanagement/categorymanagement/suspendCategory';
+import SuspendCategorySuccess from './pages/platformmanagement/categorymanagement/suspendCategorySuccess';
 
 // CSR
 import ViewAllRequests from './pages/requests/viewAllRequests';
@@ -75,6 +84,14 @@ function App() {
               <Route path="userprofiles/suspend/:profileId" element={<SuspendProfile />} />
               <Route path="userprofiles/suspend-success" element={<SuspendProfileSuccess />} />
 
+              <Route path="platformmanagement" element={<ViewCategory />} />
+              <Route path="platformmanagement/create" element={<CreateCategory />} />
+              <Route path="platformmanagement/create-success" element={<CreateCategorySuccess />} />
+              <Route path="platformmanagement/update/:categoryId" element={<UpdateCategory />} />
+              <Route path="platformmanagement/update-success" element={<UpdateCategorySuccess />} />
+              <Route path="platformmanagement/suspend/:categoryId" element={<SuspendCategory />} />
+              <Route path="platformmanagement/suspend-success" element={<SuspendCategorySuccess />} />
+              
               <Route path="viewAllRequests" element={<ViewAllRequests />} />
               <Route path="createRequest" element={<CreateRequest />} />
               <Route path="updateRequest/:requestId" element={<UpdateRequest />} />
