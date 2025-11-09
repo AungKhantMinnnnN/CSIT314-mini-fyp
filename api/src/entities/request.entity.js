@@ -5,16 +5,36 @@ class Request{
         this.tableName = 'Request';
     }
 
+    async getAllRequestsForUser(userId){
+        const { data, error } = await supabase
+            .from(this.tableName)
+            .select(`
+                *,
+                User(userId, username),
+                RequestCategory(categoryId, Name),
+                RequestStatus(statusId, statusName)`)
+            .eq('pinUserId', userId)
+            .is('deletedDate', null);
+
+        console.log("getAllRequestsForUser(): Response from database: ", data.length);
+
+        if (error){
+            console.error("getAllRequestsForUser(): An error has occurred: ", error.message);
+        }
+
+        return data;
+    }
+
     async getAllRequests(){
         const { data, error } = await supabase
             .from(this.tableName)
             .select(`
                 *,
                 User(userId, username),
-                Category(categoryId, categoryName),
-                Status(statusId, statusName)
+                RequestCategory(categoryId, Name),
+                RequestStatus(statusId, statusName)
                 `)
-            .maybeSingle();
+            .is('deletedDate', null);
 
         console.log("getAllRequests(): Response from database: ", data.length);
 
@@ -31,13 +51,13 @@ class Request{
             .select(`
                 *,
                 User(userId, username),
-                Category(categoryId, categoryName),
-                Status(statusId, statusName)
+                RequestCategory(categoryId, Name),
+                RequestStatus(statusId, statusName)
                 `)
-            .eq('requestId', requestId)
-            .maybeSingle();
+            .is('deletedDate', null)
+            .eq('requestId', requestId);
 
-            console.log("getRequestInfo(): Response from database: ", data.length);
+            console.log("getRequestInfo(): Response from database: ", data);
 
             if (error){
                 console.log("getRequestInfo(): An error has occurred: ", error.message);
@@ -64,10 +84,9 @@ class Request{
             .select(`
                 *,
                 User(userId, username),
-                Category(categoryId, categoryName),
-                Status(statusId, statusName)
-                `)
-            .maybeSingle();
+                RequestCategory(categoryId, Name),
+                RequestStatus(statusId, statusName)
+            `);
         
         console.log("createRequest(): Response from database: ", data);
 
@@ -88,14 +107,14 @@ class Request{
                 viewCount: request.viewCount,
                 shortListCount: request.shortListCount
             })
+            .is('deletedDate', null)
             .eq('requestId', request.requestId)
             .select(`
                 *,
                 User(userId, username),
-                Category(categoryId, categoryName),
-                Status(statusId, statusName)
-            `)
-            .maybeSingle();
+                RequestCategory(categoryId, Name),
+                RequestStatus(statusId, statusName)
+            `);
 
         console.log("updateRequestInfo(): Response from database: ", data);
 
@@ -110,16 +129,16 @@ class Request{
         const { data, error } = await supabase
             .from(this.tableName)
             .update({
-                updatedDate: Date.now
+                updatedDate: Date.now,
+                deletedDate: Date.now
             })
             .eq('requestId', requestId)
             .select(`
                 *,
                 User(userId, username),
-                Category(categoryId, categoryName),
-                Status(statusId, statusName)
-                `)
-            .maybeSingle();
+                RequestCategory(categoryId, Name),
+                RequestStatus(statusId, statusName)
+            `);
 
             console.log("deleteRequest(): Response from database: ", data);
 

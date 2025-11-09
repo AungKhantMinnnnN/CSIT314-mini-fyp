@@ -16,6 +16,22 @@ class CreateRequestController {
     }
 }
 
+class GetAllRequestsForUserController {
+    async getAllRequestsForUser(userId){
+        const requestEntity = new Request();
+        const requests = await requestEntity.getAllRequestsForUser(userId);
+
+        if (!requests){
+            console.error("Request.Controller.getAllRequestsForUser(): An error has occurred.");
+            return null;
+        }
+
+        return {
+            requests
+        }
+    }
+}
+
 class GetAllRequestController {
     async getAllRequest(){
         const requestEntity = new Request();
@@ -85,5 +101,6 @@ module.exports = {
     GetAllRequestController,
     GetRequestInfoController,
     UpdateRequestInfoController,
-    DeleteRequestController
+    DeleteRequestController,
+    GetAllRequestsForUserController
 }

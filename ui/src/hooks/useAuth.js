@@ -18,6 +18,7 @@ export const useAuth = () => {
         if (response.data.data.user) {
             setUser(response.data.data.user);
             localStorage.setItem('user', JSON.stringify(response.data.data.user));
+            localStorage.setItem('userId', JSON.stringify(response.data.data.userId))
         }
         return response.data;
     };

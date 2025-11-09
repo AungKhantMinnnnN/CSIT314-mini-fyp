@@ -35,13 +35,16 @@ import UpdateCategorySuccess from './pages/platformmanagement/categorymanagement
 import SuspendCategory from './pages/platformmanagement/categorymanagement/suspendCategory';
 import SuspendCategorySuccess from './pages/platformmanagement/categorymanagement/suspendCategorySuccess';
 
+// CSR
+import ViewAllRequests from './pages/requests/viewAllRequests';
+
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
 
   if (loading) return <div>Loading...</div>;
 
   return (
-    <PrivateRoute user={user} allowedRoles={[2,3,4]}>
+    <PrivateRoute user={user} allowedRoles={[1,2,3,4]}>
       <Dashboard user={user}/>
     </PrivateRoute>
   );
@@ -85,6 +88,7 @@ function App() {
               <Route path="platformmanagement/suspend/:categoryId" element={<SuspendCategory />} />
               <Route path="platformmanagement/suspend-success" element={<SuspendCategorySuccess />} />
               
+              <Route path="viewAllRequests" element={<ViewAllRequests />} />
             </Route>
 
             {/* Fallback */}

@@ -6,8 +6,39 @@ const {
     GetAllRequestController,
     GetRequestInfoController,
     UpdateRequestInfoController,
-    DeleteRequestController
- } = require("../controllers/request.controller")
+    DeleteRequestController,
+    GetAllRequestsForUserController
+} = require("../controllers/request.controller")
+
+router.get("/getAllRequestsForUser/:userId", async (req, res) => {
+    try{
+
+        const { userId } = req.params;
+
+        const controller = new GetAllRequestsForUserController();
+
+        const result = await controller.getAllRequestsForUser(userId);
+
+        if (!result){
+            return res.status(400).json({
+                success: false,
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error){
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+})
 
 router.get("/getAllRequest", async (req, res) => {
     try{
@@ -36,9 +67,9 @@ router.get("/getAllRequest", async (req, res) => {
     }
 })
 
-router.post("/getRequestInfo", async (req, res) => {
+router.get("/getRequestInfo/:requestId", async (req, res) => {
     try{
-        const { requestId } = req.body;
+        const { requestId } = req.params;
 
         const controller = new GetRequestInfoController();
 

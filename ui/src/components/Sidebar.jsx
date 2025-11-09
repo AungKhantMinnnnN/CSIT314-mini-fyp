@@ -54,7 +54,7 @@ const Sidebar = ({activePage, setActivePage, user}) => {
 
   const pinMenu = [
     { id: "createrequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Create Request", desc: "Request for Corporate Social Responsibility Representatives" },
-    { id: "viewmyrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "View my requests", desc: "View your submitted requests" },
+    { id: "viewAllRequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "View my requests", desc: "View your submitted requests" },
     { id: "completedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed Requests", desc: "View completed matching requests" }
   ]
 
