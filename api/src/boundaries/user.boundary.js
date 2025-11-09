@@ -3,6 +3,7 @@ const router = express.Router();
 const { 
     CreateUserController,
     GetAllUserInfoController,
+    SearchUserInfoController,
     GetUserInfoController,
     UpdateUserInfoController,
     SuspendUserController,
@@ -34,6 +35,26 @@ router.get("/getAllUserInfo", async (req, res) => {
     }
 });
 
+router.get("/searchUserInfo", async (req, res) => {
+    try{
+        const { query } = req.query
+        const controller = new SearchUserInfoController()
+
+        const result = await controller.searchUserInfo(query);
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error){
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+});
 router.post("/getUserInfo", async (req,res) => {
     try{
         const { userId } = req.body;

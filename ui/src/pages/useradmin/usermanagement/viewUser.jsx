@@ -3,8 +3,6 @@ import { Search, UserPlus, Edit, Pause } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import apiClient from "../../../api/index.js";
 
-
-
 const ViewUser = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
@@ -12,38 +10,60 @@ const ViewUser = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-
-
-    useEffect(() => {
-    const timer = setTimeout(() => {
-      const fetchUserData = async () => {
-        try {
-          const response = await apiClient.get("/user/getAllUserInfo");
-          const usersResponse = response.data.data.userInfo;
-          setUsers(usersResponse);
-        } catch (err) {
-          console.error(err);
-          setError("Failed to fetch users.");
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchUserData();
-    }, 600); // simulate loading delay
-    return () => clearTimeout(timer);
+  // Fetch all users initially
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      try {
+        const response = await apiClient.get("/user/getAllUserInfo");
+        const usersResponse = response.data.data.userInfo;
+        usersResponse.sort((a, b) => a.userId - b.userId);
+        setUsers(usersResponse);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch users.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAllUsers();
   }, []);
 
+  // Dynamic search
+  useEffect(() => {
+  const delayDebounceFn = setTimeout(async () => {
+    setLoading(true);
+    try {
+      let usersResponse = [];
 
+      if (!searchTerm) {
+        // If search is empty, fetch all users
+        const response = await apiClient.get("/user/getAllUserInfo");
+        usersResponse = response.data.data.userInfo;
+      } else {
+        // Otherwise, fetch search results
+        const response = await apiClient.get("/user/searchUserInfo", {
+          params: { query: searchTerm },
+        });
+        usersResponse = response.data.data.userInfo;
+      }
 
-  // Filter by search term
-  const filteredUsers = users
-    .filter((u) => u.username?.toLowerCase().includes(searchTerm.toLowerCase()))
-    .sort((a, b) => a.userId - b.userId);
+      // Sort by userId
+      usersResponse.sort((a, b) => a.userId - b.userId);
+      setUsers(usersResponse);
+      setError(null);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch users.");
+    } finally {
+      setLoading(false);
+    }
+  }, 400);
 
+  return () => clearTimeout(delayDebounceFn);
+}, [searchTerm]);
 
-
-    return (
+  return (
     <div className="flex flex-col p-8 w-full bg-gray-50 min-h-screen">
       {/* Header: Search + Create */}
       <div className="flex justify-between items-center mb-6">
@@ -73,8 +93,8 @@ const ViewUser = () => {
           <div className="text-gray-500 text-center py-6">Loading users...</div>
         ) : error ? (
           <div className="text-red-500 text-center py-6">{error}</div>
-        ) : filteredUsers.length > 0 ? (
-          filteredUsers.map((user) => (
+        ) : users.length > 0 ? (
+          users.map((user) => (
             <div
               key={user.userId}
               className="flex justify-between items-center py-3 px-2 hover:bg-gray-50 rounded-lg transition"
@@ -86,21 +106,23 @@ const ViewUser = () => {
               </div>
 
               {/* Actions */}
-             <div className="flex gap-3">
-              <Link
-                to={`/dashboard/usermanagement/update/${user.userId}`}
-                className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
-              >
-                <Edit className="w-4 h-4" /> Edit
-              </Link>
+              <div className="flex gap-3">
+                <Link
+                  to={`/dashboard/usermanagement/update/${user.userId}`}
+                  className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-gray-100 text-sm text-gray-700 transition"
+                >
+                  <Edit className="w-4 h-4" /> Edit
+                </Link>
 
-              <button
-                className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-red-100 text-sm text-red-600 transition cursor-pointer"
-                onClick={() => navigate(`/dashboard/usermanagement/suspend/${user.userId}`)}
-              >
-                <Pause className="w-4 h-4" /> Suspend
-              </button>
-            </div>
+                <button
+                  className="flex items-center gap-1 px-3 py-1.5 border border-gray-300 rounded-md hover:bg-red-100 text-sm text-red-600 transition cursor-pointer"
+                  onClick={() =>
+                    navigate(`/dashboard/usermanagement/suspend/${user.userId}`)
+                  }
+                >
+                  <Pause className="w-4 h-4" /> Suspend
+                </button>
+              </div>
             </div>
           ))
         ) : (

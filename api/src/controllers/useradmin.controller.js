@@ -24,8 +24,6 @@ class CreateUserController{
     }
 }
 
-
-
 class GetAllUserInfoController {
     async getAllUserInfo(){
         const userEntity = new User();
@@ -41,7 +39,20 @@ class GetAllUserInfoController {
     }
 }
 
+class SearchUserInfoController {
+    async searchUserInfo(search){
+        const userEntity = new User();
+        const userInfo = await userEntity.searchUserInfo(search);
+        if (!userInfo){
+            console.error("An error has occurred.");
+            return null;
+        }
 
+        return {
+            userInfo
+        }
+    }
+}
 
 class GetUserInfoController{
     async get(userId){
@@ -81,8 +92,6 @@ class GetUserInfoController{
     }
 }
 
-
-
 class UpdateUserInfoController{
     async updateUserInfo(user){
         const userEntity = new User();
@@ -104,8 +113,6 @@ class UpdateUserInfoController{
             }
         }
 }
-
-
 
 class SuspendUserController{
     async suspendUser(user){
@@ -144,8 +151,6 @@ class SuspendUserController{
     }
 }
     
-
-
 class GetAllUserProfileController {
     async getAllUserProfile(){
         const userEntity = new User();
@@ -160,8 +165,6 @@ class GetAllUserProfileController {
         }
     }
 }
-
-
 
 class GetProfileController{
     async get(profileId){
@@ -188,8 +191,6 @@ class GetProfileController{
     }
 }
 
-
-
 class CreateProfileController{
     //Create Profile
     async createProfile(profile){
@@ -213,8 +214,6 @@ class CreateProfileController{
     }
 }
 
-
-
 class UpdateProfileController{
     async updateProfile(profile){
         const userEntity = new User();
@@ -236,8 +235,6 @@ class UpdateProfileController{
             }
         }
 }
-
-
 
 class SuspendProfileController{
     async suspendProfile(profile){
@@ -280,6 +277,7 @@ class SuspendProfileController{
 module.exports = {
     CreateUserController,
     GetAllUserInfoController,
+    SearchUserInfoController,
     GetUserInfoController,
     UpdateUserInfoController,
     SuspendUserController,
