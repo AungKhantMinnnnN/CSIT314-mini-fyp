@@ -5,6 +5,7 @@ import apiClient from '../../api';
 
 const ViewAllRequests = () => {
 
+    const [userRole, setUserRole] = useState();
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError]   = useState(null);
@@ -20,23 +21,37 @@ const ViewAllRequests = () => {
             const stored = JSON.parse(localStorage.getItem("user"));
             if (!stored?.userId) throw new Error("No userId in localStorage");
 
-            const res = await apiClient.get(`/request/getAllRequestsForUser/${stored.userId}`);
+            const userProfileId = stored.userProfileId;
+            setUserRole(userProfileId);
 
-            // ✅ Safely dig out data and coerce to array
-            const reqsRaw = res?.data?.data?.requests;
-            const reqs = Array.isArray(reqsRaw)
-            ? reqsRaw
-            : reqsRaw && typeof reqsRaw === "object"
-                ? Object.values(reqsRaw) // handle object keyed by id
-                : [];
+            if (userProfileId == 1){
+                const res = await apiClient.get(`/request/getAllRequestsForUser/${stored.userId}`);
+
+                // ✅ Safely dig out data and coerce to array
+                const reqsRaw = res?.data?.data?.requests;
+                const reqs = Array.isArray(reqsRaw)
+                ? reqsRaw
+                : reqsRaw && typeof reqsRaw === "object"
+                    ? Object.values(reqsRaw) // handle object keyed by id
+                    : [];
+                
+                setRequests(reqs);
+
+                setStats({
+                    totalRequests: reqs.length,
+                    totalViews: reqs.reduce((sum, r) => sum + r.viewCount, 0),
+                    totalShortlistedCount: reqs.reduce((sum, r) => sum + r.shortlistCount, 0),
+                });
+            }
+            else if (userProfileId == 2){
+                const res = await apiClient.get("/request/getAllRequest");
+
+                const requests = res.data.data.requests;
+
+                setRequests(requests);
+            }
             
-            setRequests(reqs);
-
-            setStats({
-                totalRequests: reqs.length,
-                totalViews: reqs.reduce((sum, r) => sum + r.viewCount, 0),
-                totalShortlistedCount: reqs.reduce((sum, r) => sum + r.shortlistCount, 0),
-            });
+            
         } catch (e) {
             setError(e?.message || "Failed to fetch requests");
             setRequests([]); // keep it an array
@@ -64,16 +79,21 @@ const ViewAllRequests = () => {
                 </button>
             </div>
 
-            <div className="flex flex-wrap gap-4 mb-8">
-                <StatCard title="Total Requests" value={stats.totalRequests} />
-                <StatCard title="Total Views" value={stats.totalViews} />
-                <StatCard title="Total Shortlist" value={`${stats.totalShortlistedCount}`}/>
-            </div>
+            {
+                userRole === 1 && (
+                    <div className="flex flex-wrap gap-4 mb-8">
+                        <StatCard title="Total Requests" value={stats.totalRequests} />
+                        <StatCard title="Total Views" value={stats.totalViews} />
+                        <StatCard title="Total Shortlist" value={`${stats.totalShortlistedCount}`}/>
+                    </div>
+                )
+            }
+            
 
             <div className="grid md:grid-cols-2 gap-6">
                 {
                     requests.map((request) => (
-                    <RequestCard key={request.id} request={request} />
+                    <RequestCard key={request.id} request={request} userRole={userRole} />
                 ))}
             </div>
         </div>

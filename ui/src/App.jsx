@@ -37,6 +37,10 @@ import SuspendCategorySuccess from './pages/platformmanagement/categorymanagemen
 
 // CSR
 import ViewAllRequests from './pages/requests/viewAllRequests';
+import CreateRequest from './pages/requests/createRequest';
+import UpdateRequest from './pages/requests/updateRequest';
+import ViewRequestDetails from './pages/requests/viewRequestDetails';
+import DeleteRequest from './pages/requests/deleteRequest';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
@@ -89,6 +93,10 @@ function App() {
               <Route path="platformmanagement/suspend-success" element={<SuspendCategorySuccess />} />
               
               <Route path="viewAllRequests" element={<ViewAllRequests />} />
+              <Route path="createRequest" element={<CreateRequest />} />
+              <Route path="updateRequest/:requestId" element={<UpdateRequest />} />
+              <Route path="viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
+              <Route path="deleteRequest/:requestId" element={<DeleteRequest />} />
             </Route>
 
             {/* Fallback */}

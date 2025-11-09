@@ -1,4 +1,5 @@
 const supabase = require('../config/supabase_client');
+const getRandomId = require('../utils/randomId');
 
 class User{
     constructor(){
@@ -41,8 +42,7 @@ class User{
 
     async createUser(userData){
 
-        const currentUsers = await this.getAllUserInfo();
-        const userId = currentUsers.length + 1;
+        const userId = getRandomId(1000, 9999);
 
         const { data, error } = await supabase
             .from(this.tableName)
@@ -175,8 +175,7 @@ class User{
 }
 
     async createProfile(profile){
-        const currentProfiles = await this.getAllUserProfile();
-        const profileId = currentProfiles.length + 1;
+        const profileId = getRandomId(1000, 9999);
 
         const { data, error } = await supabase
             .from("UserProfile")

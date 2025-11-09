@@ -152,7 +152,7 @@ router.post("/updateRequest", async (req, res) => {
             });
         }
 
-        return res.status(500).json({
+        return res.status(200).json({
             success: true,
             data: result
         });

@@ -1,4 +1,23 @@
-const RequestCard = ({request}) => {
+import { useNavigate } from "react-router-dom";
+
+const RequestCard = ({request, userRole}) => {
+    const navigate = useNavigate();
+    function handleOnClickViewDetails() {
+        navigate(`/dashboard/viewRequestDetail/${request.requestId}`);
+    }
+
+    function handleOnClickUpdate() {
+        navigate(`/dashboard/updateRequest/${request.requestId}`);
+    }
+
+    function handleOnClickDelete(){
+        navigate(`/dashboard/deleteRequest/${request.requestId}`);
+    }
+
+    function handleOnClickShortlist(){
+
+    }
+
     return (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex flex-col justify-between">
             <div>
@@ -29,17 +48,41 @@ const RequestCard = ({request}) => {
                 </div>
             </div>
 
-            <div className="flex justify-between gap-2">
-                <button className="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-200 transition">
-                View Details
-                </button>
-                <button className="text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition">
-                Update
-                </button>
-                <button className="text-sm bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200 transition">
-                Suspend
-                </button>
-            </div>
+            {
+                userRole === 1 ? (
+                    <div className="flex justify-between gap-2">
+                    <button 
+                        className="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-200 transition"
+                        onClick={handleOnClickViewDetails}>
+                        View Details
+                    </button>
+                    <button 
+                        className="text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition"
+                        onClick={handleOnClickUpdate}>
+                    Update
+                    </button>
+                    <button className="text-sm bg-red-100 text-red-700 px-3 py-1 rounded hover:bg-red-200 transition"
+                        onClick={handleOnClickDelete}>
+                    Delete
+                    </button>
+                </div>
+                ) : (
+                    <div className="flex justify-between gap-2">
+                        <button 
+                            className="text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-200 transition"
+                            onClick={handleOnClickViewDetails}>
+                            View Details
+                        </button>
+                        <button 
+                            className="text-sm bg-indigo-50 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-100 transition"
+                            onClick={handleOnClickShortlist}>
+                        Shortlist
+                        </button>
+                    </div>
+                )
+            }
+
+            
         </div>
     )
 }

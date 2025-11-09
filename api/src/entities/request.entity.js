@@ -1,4 +1,6 @@
 const supabase = require('../config/supabase_client');
+const getRandomId = require('../utils/randomId');
+
 
 class Request{
     constructor() {
@@ -62,24 +64,25 @@ class Request{
             if (error){
                 console.log("getRequestInfo(): An error has occurred: ", error.message);
             }
+
+            return data;
     }
 
     async createRequest(request){
         
-        const currentRequests = await this.getAllRequests();
-        const requestId = currentRequests.length + 1;
+        const requestId = getRandomId(1000, 9999);
 
         const { data, error } = await supabase
             .from(this.tableName)
             .insert([{
                 requestId: requestId,
-                pinUserId: request.pinUserId,
+                pinUserId: request.userId,
                 categoryId: request.categoryId,
                 title: request.title,
                 description: request.description,
                 status: 1,
                 viewCount: 0,
-                shortListCount: 0
+                shortlistCount: 0
             }])
             .select(`
                 *,
@@ -103,9 +106,7 @@ class Request{
             .update({
                 title: request.title,
                 description: request.description,
-                status: 1,
-                viewCount: request.viewCount,
-                shortListCount: request.shortListCount
+                status: 1
             })
             .is('deletedDate', null)
             .eq('requestId', request.requestId)
@@ -126,11 +127,12 @@ class Request{
     }
 
     async deleteRequest(requestId){
+        const nowIso = new Date().toISOString(); 
         const { data, error } = await supabase
             .from(this.tableName)
             .update({
-                updatedDate: Date.now,
-                deletedDate: Date.now
+                updatedDate: nowIso,
+                deletedDate: nowIso
             })
             .eq('requestId', requestId)
             .select(`
