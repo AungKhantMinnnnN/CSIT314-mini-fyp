@@ -4,15 +4,15 @@ import apiClient from '../api/index';
 const RequestCard = ({request, userRole}) => {
     const navigate = useNavigate();
     function handleOnClickViewDetails() {
-        navigate(`/dashboard/viewRequestDetail/${request.requestId}`);
+        navigate(`/dashboard/pin/viewRequestDetail/${request.requestId}`);
     }
 
     function handleOnClickUpdate() {
-        navigate(`/dashboard/updateRequest/${request.requestId}`);
+        navigate(`/dashboard/pin/updateRequest/${request.requestId}`);
     }
 
     function handleOnClickDelete(){
-        navigate(`/dashboard/deleteRequest/${request.requestId}`);
+        navigate(`/dashboard/pin/deleteRequest/${request.requestId}`);
     }
 
     async function handleOnClickShortlist(e){

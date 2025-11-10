@@ -1,4 +1,5 @@
 import React , { useState, useEffect } from 'react';
+import { useNavigate, Link } from "react-router-dom";
 import StatCard from '../../components/StatCard';
 import RequestCard from '../../components/RequestCard';
 import apiClient from '../../api';
@@ -9,6 +10,7 @@ const ViewAllRequests = () => {
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError]   = useState(null);
+    const navigate = useNavigate();
     const [stats, setStats] = useState({
         totalRequests: 0,
         totalViews: 0,
@@ -74,7 +76,9 @@ const ViewAllRequests = () => {
                 placeholder="Search requests by title, description"
                 className="w-full sm:w-1/2 px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:ring focus:ring-indigo-200"
                 />
-                <button className="bg-indigo-100 text-indigo-700 px-5 py-2 rounded-lg shadow hover:bg-indigo-200 transition">
+                <button className="bg-indigo-100 text-indigo-700 px-5 py-2 rounded-lg shadow hover:bg-indigo-200 transition"
+                onClick={() => navigate("/dashboard/pin/createRequest")}
+                >
                 Create
                 </button>
             </div>
