@@ -19,7 +19,6 @@ const {
 router.get("/getAllUserInfo", async (req, res) => {
     try{
         const controller = new GetAllUserInfoController()
-
         const result = await controller.getAllUserInfo();
 
         return res.status(200).json({
@@ -40,7 +39,6 @@ router.get("/searchUserInfo", async (req, res) => {
     try{
         const { query } = req.query
         const controller = new SearchUserInfoController()
-
         const result = await controller.searchUserInfo(query);
 
         return res.status(200).json({
