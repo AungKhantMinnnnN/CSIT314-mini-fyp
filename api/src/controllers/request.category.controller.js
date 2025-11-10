@@ -1,4 +1,4 @@
-const RequestCategory = require("../entities/requestCategory.entity");
+const RequestCategory = require("../entities/request.category.entity");
 
 class GetAllRequestCategoriesController{
     async getAllRequestCategories(){

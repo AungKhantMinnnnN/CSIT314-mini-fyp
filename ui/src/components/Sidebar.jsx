@@ -53,9 +53,8 @@ const Sidebar = ({activePage, setActivePage, user}) => {
   ]
 
   const pinMenu = [
-    { id: "createRequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Create Request", desc: "Request for Corporate Social Responsibility Representatives" },
-    { id: "viewAllRequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "View my requests", desc: "View your submitted requests" },
-    { id: "completedrequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed Requests", desc: "View completed matching requests" }
+    { id: "pin", icon: <Users className="w-5 h-5 text-gray-600" />, title: "View my requests", desc: "View your submitted requests" },
+    { id: "pin/viewCompletedRequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed Requests", desc: "View completed matching requests" }
   ]
 
   // Compose final menu depending on role

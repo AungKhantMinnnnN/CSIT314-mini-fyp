@@ -94,13 +94,13 @@ function App() {
               <Route path="platformmanagement/suspend/:categoryId" element={<SuspendCategory />} />
               <Route path="platformmanagement/suspend-success" element={<SuspendCategorySuccess />} />
               
-              <Route path="viewAllRequests" element={<ViewAllRequests />} />
-              <Route path="createRequest" element={<CreateRequest />} />
-              <Route path="updateRequest/:requestId" element={<UpdateRequest />} />
-              <Route path="viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
-              <Route path="deleteRequest/:requestId" element={<DeleteRequest />} />
-              <Route path="viewShortlistRequests" element={<ViewShortlistRequest />} />
-              <Route path="viewCompletedRequest" element={<ViewCompletedRequest />} />
+              <Route path="pin" element={<ViewAllRequests />} />
+              <Route path="pin/createRequest" element={<CreateRequest />} />
+              <Route path="pin/updateRequest/:requestId" element={<UpdateRequest />} />
+              <Route path="pin/viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
+              <Route path="pin/deleteRequest/:requestId" element={<DeleteRequest />} />
+              <Route path="pin/viewShortlistRequests" element={<ViewShortlistRequest />} />
+              <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} />
             </Route>
 
             {/* Fallback */}
