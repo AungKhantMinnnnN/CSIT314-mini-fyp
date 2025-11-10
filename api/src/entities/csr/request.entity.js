@@ -1,5 +1,5 @@
-const supabase = require('../config/supabase_client');
-const getRandomId = require('../utils/randomId');
+const supabase = require('../../config/supabase_client');
+const getRandomId = require('../../utils/randomId');
 
 
 class Request{

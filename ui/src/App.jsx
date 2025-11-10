@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { useAuth } from './hooks/useAuth';
 import Login from './pages/auth/Login';
 import LogOut from './pages/auth/Logout';
-import Dashboard from './pages/auth/Dashboard';
+import Dashboard from './components/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 
 // User Management
@@ -27,22 +27,22 @@ import SuspendProfile from './pages/useradmin/userprofile/suspendProfile';
 import SuspendProfileSuccess from './pages/useradmin/userprofile/suspendProfileSuccess';
 
 // Profile Management
-import ViewCategory from './pages/platformmanagement/categorymanagement/viewCategory'
-import CreateCategory from './pages/platformmanagement/categorymanagement/createCategory';
-import CreateCategorySuccess from './pages/platformmanagement/categorymanagement/createCategorySuccess';
-import UpdateCategory from './pages/platformmanagement/categorymanagement/updateCategory';
-import UpdateCategorySuccess from './pages/platformmanagement/categorymanagement/updateCategorySuccess';
-import SuspendCategory from './pages/platformmanagement/categorymanagement/suspendCategory';
-import SuspendCategorySuccess from './pages/platformmanagement/categorymanagement/suspendCategorySuccess';
+import ViewCategory from './pages/platformmanagement/viewCategory'
+import CreateCategory from './pages/platformmanagement/createCategory';
+import CreateCategorySuccess from './pages/platformmanagement/createCategorySuccess';
+import UpdateCategory from './pages/platformmanagement/updateCategory';
+import UpdateCategorySuccess from './pages/platformmanagement/updateCategorySuccess';
+import SuspendCategory from './pages/platformmanagement/suspendCategory';
+import SuspendCategorySuccess from './pages/platformmanagement/suspendCategorySuccess';
 
 // CSR & PIN
-import ViewAllRequests from './pages/requests/viewAllRequests';
-import CreateRequest from './pages/requests/createRequest';
-import UpdateRequest from './pages/requests/updateRequest';
-import ViewRequestDetails from './pages/requests/viewRequestDetails';
-import DeleteRequest from './pages/requests/deleteRequest';
-import ViewShortlistRequest from './pages/requests/viewShortlistRequests';
-import ViewCompletedRequest from './pages/requests/viewCompletedRequests';
+import ViewAllRequests from './pages/csr/viewAllRequests';
+import CreateRequest from './pages/csr/createRequest';
+import UpdateRequest from './pages/csr/updateRequest';
+import ViewRequestDetails from './pages/csr/viewRequestDetails';
+import DeleteRequest from './pages/csr/deleteRequest';
+import ViewShortlistRequest from './pages/csr/viewShortlistRequests';
+import ViewCompletedRequest from './pages/csr/viewCompletedRequests';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();

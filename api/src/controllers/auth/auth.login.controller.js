@@ -1,4 +1,4 @@
-const Auth = require('../entities/auth.entity');
+const Auth = require('../../entities/auth/auth.entity');
 
 class AuthLoginController {
     async login(username, password){

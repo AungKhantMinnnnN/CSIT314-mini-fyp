@@ -5,7 +5,7 @@ const {
     GetAllShortlistController,
     AddShortlistController,
     SearchShortlistController
-} = require("../../controllers/reqeust.shortlist.controller");
+} = require("../../controllers/pin/request.shortlist.controller");
 
 router.get("/getAllShortlist/:userId", async (req, res) => {
     try{

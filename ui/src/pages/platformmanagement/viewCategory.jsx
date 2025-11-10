@@ -15,7 +15,7 @@ import {
   Boxes,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import apiClient from "../../../api/index.js";
+import apiClient from "../../api/index.js";
 
 const ViewCategory = () => {
   const [searchTerm, setSearchTerm] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AlertTriangle, FileText, FolderOpen, XCircle, ClipboardList } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import apiClient from "../../../api/index.js";
+import apiClient from "../../api/index.js";
 
 const SuspendCategory = () => {
   const navigate = useNavigate();

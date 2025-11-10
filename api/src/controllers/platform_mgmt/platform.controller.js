@@ -1,4 +1,4 @@
-const Category = require("../entities/platform.entity")
+const Category = require("../../entities/platform_mgmt/platform.entity")
 
 class GetAllCategoriesController {
     async GetAllCategories(){

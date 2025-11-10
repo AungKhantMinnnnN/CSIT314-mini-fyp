@@ -1,4 +1,4 @@
-const shortlistEntity = require("../entities/request.shortlist.entity")
+const shortlistEntity = require("../../entities/pin/request.shortlist.entity")
 
 class GetAllShortlistController{
     async getAllShortlist(userId){

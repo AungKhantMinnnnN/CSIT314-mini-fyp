@@ -1,4 +1,4 @@
-const User = require("../entities/user.entity")
+const User = require("../../entities/useradmin/user.entity")
 
 //Controller Classes for User Admin
 

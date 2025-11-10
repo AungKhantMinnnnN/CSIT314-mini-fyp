@@ -1,4 +1,4 @@
-const supabase = require('../config/supabase_client');
+const supabase = require('../../config/supabase_client');
 
 class Category{
     constructor(){

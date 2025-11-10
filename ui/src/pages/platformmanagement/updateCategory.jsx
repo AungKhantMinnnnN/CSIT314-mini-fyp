@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FolderOpen, Pencil } from "lucide-react";
-import apiClient from "../../../api/index.js";
+import apiClient from "../../api/index.js";
 
 const UpdateCategory = () => {
   const { categoryId } = useParams();

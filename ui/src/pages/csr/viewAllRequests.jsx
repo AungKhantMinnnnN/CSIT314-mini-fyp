@@ -97,7 +97,7 @@ const ViewAllRequests = () => {
             <div className="grid md:grid-cols-2 gap-6">
                 {
                     requests.map((request) => (
-                    <RequestCard key={request.id} request={request} userRole={userRole} />
+                    <RequestCard key={request.requestId} request={request} userRole={userRole} />
                 ))}
             </div>
         </div>

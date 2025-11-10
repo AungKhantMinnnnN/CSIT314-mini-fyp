@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import Sidebar from "../../components/Sidebar.jsx";
+import Sidebar from "./Sidebar.jsx";
 
 const Dashboard = ({user}) => {
   const navigate = useNavigate();
