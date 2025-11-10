@@ -73,43 +73,64 @@ function App() {
               path="/dashboard/*"
               element={<DashboardRoute />}
             >
+              {/* View/Search Users Page */}
               <Route path="usermanagement" element={<ViewUser />} />
+              {/* Create Users Pages */} 
               <Route path="usermanagement/create" element={<CreateUser />} />
               <Route path="usermanagement/create-success" element={<CreateUserSuccess />} />
+              {/* Update Users Pages */} 
               <Route path="usermanagement/update/:userId" element={<UpdateUser />} />
               <Route path="usermanagement/update-success" element={<UpdateUserSuccess />} />
+              {/* Suspend Users Pages */} 
               <Route path="usermanagement/suspend/:userId" element={<SuspendUser />} />
               <Route path="usermanagement/suspend-success" element={<SuspendUserSuccess />} />
 
+              {/* View/Search UserProfiles Page */}
               <Route path="userprofiles" element={<ViewUserProfile />} />
+              {/* Create UserProfiles Page */}
               <Route path="userprofiles/create" element={<CreateProfile />} />
               <Route path="userprofiles/create-success" element={<CreateProfileSuccess />} />
+              {/* Update UserProfiles Page */}
               <Route path="userprofiles/update/:profileId" element={<UpdateProfile />} />
               <Route path="userprofiles/update-success" element={<UpdateProfileSuccess />} />
+              {/* Suspend UserProfiles Page */}
               <Route path="userprofiles/suspend/:profileId" element={<SuspendProfile />} />
               <Route path="userprofiles/suspend-success" element={<SuspendProfileSuccess />} />
-
+              
+              {/* View/Search Categories Page */}
               <Route path="platformmanagement" element={<ViewCategory />} />
+              {/* Create Categories Page */}
               <Route path="platformmanagement/create" element={<CreateCategory />} />
               <Route path="platformmanagement/create-success" element={<CreateCategorySuccess />} />
+              {/* Update Categories Page */}
               <Route path="platformmanagement/update/:categoryId" element={<UpdateCategory />} />
               <Route path="platformmanagement/update-success" element={<UpdateCategorySuccess />} />
+              {/* Suspend Categories Page */}
               <Route path="platformmanagement/suspend/:categoryId" element={<SuspendCategory />} />
               <Route path="platformmanagement/suspend-success" element={<SuspendCategorySuccess />} />
               
+              {/* View/Search and check Views/Shortlisted Count for individual PIN request Page */}
               <Route path="pin" element={<ViewAllRequests />} />
+              {/* View individual PIN request detail Page */}
+              <Route path="pin/viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
+              {/* View completed individual PIN request detail Page */}
+              <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} />
+              {/* Create new individual PIN request Page */}
               <Route path="pin/createRequest" element={<CreateRequest />} />
               <Route path="pin/create-success" element={<CreateRequestSuccess />} />
+              {/* Update individual PIN request Page */}
               <Route path="pin/updateRequest/:requestId" element={<UpdateRequest />} />
               <Route path="pin/update-success" element={<UpdateRequestSuccess />} />
-              <Route path="pin/viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
+              {/* Delete individual PIN request Page */}
               <Route path="pin/deleteRequest/:requestId" element={<DeleteRequest />} />
               <Route path="pin/delete-success" element={<DeleteRequestSuccess />} />
-              <Route path="pin/viewShortlistRequests" element={<ViewShortlistRequest />} />
-              <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} />
-
+              
+              {/* View/Search CSR Requests Page */}
               <Route path="csr" element={<ViewAllRequests />} />
               <Route path="csr/viewShortlistRequest" element={<ViewShortlistRequest />} />
+              {/* View CSR request detail Page */}
+              <Route path="csr/viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
+              {/* View completed CSR request Page */}
               <Route path="csr/viewCompletedRequest" element={<ViewCompletedRequest />} />
             </Route> 
 

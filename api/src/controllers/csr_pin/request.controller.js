@@ -1,4 +1,4 @@
-const Request = require("../../entities/pin/request.entity")
+const Request = require("../../entities/csr_pin/request.entity")
 
 class CreateRequestController {
     async createRequest(request){

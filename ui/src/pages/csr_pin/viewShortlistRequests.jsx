@@ -45,7 +45,7 @@ const ViewShortlistRequest = () => {
     }, [searchQuery]);
 
     function handleOnClickViewDetails(requestId) {
-        navigate(`/dashboard/viewRequestDetail/${requestId}`);
+        navigate(`/dashboard/csr/viewRequestDetail/${requestId}`);
     }
 
     if (loading) return <div className="p-4 text-gray-500">Loading…</div>
