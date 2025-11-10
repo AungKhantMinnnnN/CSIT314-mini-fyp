@@ -4,9 +4,9 @@ const authBoundary = require('./src/boundaries/auth/auth.boundary');
 const userBoundary = require('./src/boundaries/useradmin/user.boundary');
 const platformBoundary = require('./src/boundaries/platform_mgmt/platform.boundary');
 
-const requestBoundary = require('./src/boundaries/pin/request.boundary');
-const shortlistBoundary = require('./src/boundaries/pin/request.shortlist.boundary');
-const completedRequestBoundary = require('./src/boundaries/pin/request.completed.boundary');
+const requestBoundary = require('./src/boundaries/csr_pin/request.boundary');
+const shortlistBoundary = require('./src/boundaries/csr_pin/request.shortlist.boundary');
+const completedRequestBoundary = require('./src/boundaries/csr_pin/request.completed.boundary');
 
 require('dotenv').config();
 

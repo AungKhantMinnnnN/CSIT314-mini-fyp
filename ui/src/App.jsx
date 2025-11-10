@@ -36,16 +36,16 @@ import SuspendCategory from './pages/platformmanagement/suspendCategory';
 import SuspendCategorySuccess from './pages/platformmanagement/suspendCategorySuccess';
 
 // PIN
-import ViewAllRequests from './pages/pin/viewAllRequests';
-import CreateRequest from './pages/pin/createRequest';
-import CreateRequestSuccess from './pages/pin/createRequestSuccess';
-import UpdateRequest from './pages/pin/updateRequest';
-import UpdateRequestSuccess from './pages/pin/updateRequestSuccess';
-import ViewRequestDetails from './pages/pin/viewRequestDetails';
-import DeleteRequest from './pages/pin/deleteRequest';
-import DeleteRequestSuccess from './pages/pin/deleteRequestSuccess';
-import ViewShortlistRequest from './pages/pin/viewShortlistRequests';
-import ViewCompletedRequest from './pages/pin/viewCompletedRequests';
+import ViewAllRequests from './pages/csr_pin/viewAllRequests';
+import CreateRequest from './pages/csr_pin/createRequest';
+import CreateRequestSuccess from './pages/csr_pin/createRequestSuccess';
+import UpdateRequest from './pages/csr_pin/updateRequest';
+import UpdateRequestSuccess from './pages/csr_pin/updateRequestSuccess';
+import ViewRequestDetails from './pages/csr_pin/viewRequestDetails';
+import DeleteRequest from './pages/csr_pin/deleteRequest';
+import DeleteRequestSuccess from './pages/csr_pin/deleteRequestSuccess';
+import ViewShortlistRequest from './pages/csr_pin/viewShortlistRequests';
+import ViewCompletedRequest from './pages/csr_pin/viewCompletedRequests';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();

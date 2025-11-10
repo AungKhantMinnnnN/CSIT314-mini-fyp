@@ -75,7 +75,7 @@ class User{
         return data;
     }
 
-    async createUser(userData){
+    async createUser(user){
 
         const currentId = await this.getAllUserInfo();
         const userId = currentId.length + 1;
@@ -84,12 +84,12 @@ class User{
             .from(this.tableName)
             .insert([{
                 userId: userId,
-                username : userData.username,
-                password: userData.password,
-                email: userData.email,
-                firstName: userData.firstName,
-                lastName: userData.lastName,
-                userProfileId: userData.userProfileId,
+                username : user.username,
+                password: user.password,
+                email: user.email,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                userProfileId: user.userProfileId,
                 userStatusId: 1,
                 updatedDate: Date.now
             }])
