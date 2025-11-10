@@ -31,7 +31,7 @@ const ViewAllRequests = () => {
                 if (userProfileId == 1){
                     // PIN
                     if (!searchQuery){
-                        const response = await apiClient.get(`/request/getAllRequestsForUser/${stored.userId}`);
+                        const response = await apiClient.get(`/request/getAllRequestsForUser/${userId}`);
 
                         requests = response.data.data.requests;
                         setRequests(requests);

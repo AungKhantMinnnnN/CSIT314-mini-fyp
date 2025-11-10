@@ -9,8 +9,8 @@ const {
     DeleteRequestController,
     GetAllRequestsForUserController,
     CSRSearchRequestController,
-    PINSearchRequestController
-} = require("../../controllers/csr/request.controller")
+    PINSearchRequestController,
+} = require("../../controllers/pin/request.controller")
 
 router.get("/getAllRequestsForUser/:userId", async (req, res) => {
     try{
