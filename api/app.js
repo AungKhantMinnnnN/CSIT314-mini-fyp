@@ -2,8 +2,9 @@ const express = require('express');
 const supabase = require('./src/config/supabase_client');
 const authBoundary = require('./src/boundaries/auth/auth.boundary');
 const userBoundary = require('./src/boundaries/useradmin/user.boundary');
-const requestBoundary = require('./src/boundaries/csr/request.boundary');
 const platformBoundary = require('./src/boundaries/platform_mgmt/platform.boundary');
+
+const requestBoundary = require('./src/boundaries/pin/request.boundary');
 const shortlistBoundary = require('./src/boundaries/pin/request.shortlist.boundary');
 const completedRequestBoundary = require('./src/boundaries/pin/request.completed.boundary');
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from '../../api';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const UpdateRequest = () => {
+    const navigate = useNavigate();
     const {requestId} = useParams();
-
+    
     const [categories, setCategories] = useState([]);
     const [form, setFormData] = useState({
         requestId: "",
@@ -67,14 +69,15 @@ const UpdateRequest = () => {
 
         try{
             const response = await apiClient.post("/request/updateRequest", requestBody);
-            console.log(response);
+            console.log(response)
+            navigate("/dashboard/pin/update-success", { 
+                state: { request: response.data.data.updateRequestInfo } 
+            });
         }
         catch (e){
             console.error(e);
         }
-        finally{
-            // Navigate to success page
-        }
+
     }
 
     if (loading) return <div className="p-4 text-gray-500">Loading…</div>;

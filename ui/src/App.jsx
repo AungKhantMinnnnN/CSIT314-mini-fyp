@@ -35,12 +35,15 @@ import UpdateCategorySuccess from './pages/platformmanagement/updateCategorySucc
 import SuspendCategory from './pages/platformmanagement/suspendCategory';
 import SuspendCategorySuccess from './pages/platformmanagement/suspendCategorySuccess';
 
-// CSR & PIN
+// PIN
 import ViewAllRequests from './pages/pin/viewAllRequests';
 import CreateRequest from './pages/pin/createRequest';
+import CreateRequestSuccess from './pages/pin/createRequestSuccess';
 import UpdateRequest from './pages/pin/updateRequest';
+import UpdateRequestSuccess from './pages/pin/updateRequestSuccess';
 import ViewRequestDetails from './pages/pin/viewRequestDetails';
 import DeleteRequest from './pages/pin/deleteRequest';
+import DeleteRequestSuccess from './pages/pin/deleteRequestSuccess';
 import ViewShortlistRequest from './pages/pin/viewShortlistRequests';
 import ViewCompletedRequest from './pages/pin/viewCompletedRequests';
 
@@ -96,9 +99,12 @@ function App() {
               
               <Route path="pin" element={<ViewAllRequests />} />
               <Route path="pin/createRequest" element={<CreateRequest />} />
+              <Route path="pin/create-success" element={<CreateRequestSuccess />} />
               <Route path="pin/updateRequest/:requestId" element={<UpdateRequest />} />
+              <Route path="pin/update-success" element={<UpdateRequestSuccess />} />
               <Route path="pin/viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
               <Route path="pin/deleteRequest/:requestId" element={<DeleteRequest />} />
+              <Route path="pin/delete-success" element={<DeleteRequestSuccess />} />
               <Route path="pin/viewShortlistRequests" element={<ViewShortlistRequest />} />
               <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} />
             </Route>

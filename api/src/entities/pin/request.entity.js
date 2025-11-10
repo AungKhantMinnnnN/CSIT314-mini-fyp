@@ -89,7 +89,8 @@ class Request{
                 User(userId, username),
                 RequestCategory(categoryId, Name),
                 RequestStatus(statusId, statusName)
-            `);
+            `)
+            .maybeSingle();
         
         console.log("createRequest(): Response from database: ", data);
 
@@ -115,7 +116,8 @@ class Request{
                 User(userId, username),
                 RequestCategory(categoryId, Name),
                 RequestStatus(statusId, statusName)
-            `);
+            `)
+            .maybeSingle();
 
         console.log("updateRequestInfo(): Response from database: ", data);
 
@@ -140,7 +142,8 @@ class Request{
                 User(userId, username),
                 RequestCategory(categoryId, Name),
                 RequestStatus(statusId, statusName)
-            `);
+            `)
+            .maybeSingle();
 
             console.log("deleteRequest(): Response from database: ", data);
 

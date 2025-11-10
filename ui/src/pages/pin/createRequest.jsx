@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from '../../api';
+import { useNavigate } from "react-router-dom";
 
 const CreateRequest = () => {
-
+    const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [form, setFormData] = useState({
         userId: "",
@@ -61,12 +62,12 @@ const CreateRequest = () => {
         try{
             const response = await apiClient.post("/request/createRequest", requestBody);
             console.log(response);
+            navigate("/dashboard/pin/create-success", { 
+                state: { request: response.data.data.createdRequest } 
+            });
         }
         catch (e){
             console.error(e);
-        }
-        finally{
-            // Navigate to success page
         }
     }
 

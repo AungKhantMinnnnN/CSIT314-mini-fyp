@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../../api';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const DeleteRequest = () => {
-
+    const navigate = useNavigate();
     const {requestId} = useParams();
     const [request, setRequest] = useState({
         title: "",
@@ -50,6 +51,9 @@ const DeleteRequest = () => {
 
             const response = await apiClient.post("/request/deleteRequest", requestBody);
             console.log(response);
+            navigate("/dashboard/pin/delete-success", { 
+                state: { request: response.data.data.deletedRequest } 
+            });
         }
         catch (e){
             console.error(response);
