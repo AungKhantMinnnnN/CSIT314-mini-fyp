@@ -6,6 +6,7 @@ const requestBoundary = require('./src/boundaries/request.boundary');
 const requestCategoryBoundary = require('./src/boundaries/request.category.boundary');
 const platformBoundary = require('./src/boundaries/platform.boundary');
 const shortlistBoundary = require('./src/boundaries/request.shortlist.boundary');
+const completedRequestBoundary = require('./src/boundaries/request.completed.boundary');
 
 require('dotenv').config();
 
@@ -33,6 +34,7 @@ app.use('/api/request', requestBoundary);
 app.use('/api/requestCategory', requestCategoryBoundary);
 app.use('/api/platform', platformBoundary);
 app.use('/api/shortlist', shortlistBoundary);
+app.use('/api/completedRequest', completedRequestBoundary);
 
 // api health check
 app.get('/health', (req, res) => {

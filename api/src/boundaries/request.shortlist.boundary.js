@@ -63,7 +63,7 @@ router.post("/addShortlist", async (req, res) => {
     }
 });
 
-router.get("/searchShortlist/", async (req, res) => {
+router.get("/searchShortlist", async (req, res) => {
     try{
         const { searchQuery, userId } = req.query;
 

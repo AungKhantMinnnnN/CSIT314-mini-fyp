@@ -68,7 +68,7 @@ class RequestShortlist{
             }
 
             const { data, error } = await supabase
-                .from("ShortListedRequest")
+                .from(this.tableName)
                 .select(`
                     *,
                     Request(requestId, title, description, status, pinUserId, viewCount, shortlistCount, categoryId),

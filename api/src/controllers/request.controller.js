@@ -96,11 +96,28 @@ class DeleteRequestController{
     }
 }
 
+class SearchRequestController{
+    async searchRequest(searchQuery){
+        const requestEntity = new Request();
+        const result = await requestEntity.searchRequest(searchQuery);
+
+        if(!result){
+            console.error("Request.Controller.searchRequest(): An error has occurred.");
+            return null;
+        }
+
+        return {
+            result
+        }
+    }
+}
+
 module.exports = {
     CreateRequestController,
     GetAllRequestController,
     GetRequestInfoController,
     UpdateRequestInfoController,
     DeleteRequestController,
-    GetAllRequestsForUserController
+    GetAllRequestsForUserController,
+    SearchRequestController
 }

@@ -7,7 +7,8 @@ const {
     GetRequestInfoController,
     UpdateRequestInfoController,
     DeleteRequestController,
-    GetAllRequestsForUserController
+    GetAllRequestsForUserController,
+    SearchRequestController
 } = require("../controllers/request.controller")
 
 router.get("/getAllRequestsForUser/:userId", async (req, res) => {
@@ -190,6 +191,34 @@ router.post("/deleteRequest", async (req, res) => {
         return res.status(500).json({
             success: false,
             message: error.message
+        });
+    }
+})
+
+router.get("/CsrSearchRequest", async (req, res) => {
+    try{
+        const { searchQuery } = req.query;
+
+        const controller = new SearchRequestController();
+        const result = await controller.searchRequest(searchQuery);
+
+        if(!result){
+            return res.status(400).json({
+                success: false,
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (error){
+        console.error("An error has occurred. Error: ", error);
+        return res.status(500).json({
+            success: false, 
+            data: null
         });
     }
 })

@@ -42,6 +42,7 @@ import UpdateRequest from './pages/requests/updateRequest';
 import ViewRequestDetails from './pages/requests/viewRequestDetails';
 import DeleteRequest from './pages/requests/deleteRequest';
 import ViewShortlistRequest from './pages/requests/viewShortlistRequests';
+import ViewCompletedRequest from './pages/requests/viewCompletedRequests';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
@@ -99,6 +100,7 @@ function App() {
               <Route path="viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
               <Route path="deleteRequest/:requestId" element={<DeleteRequest />} />
               <Route path="viewShortlistRequests" element={<ViewShortlistRequest />} />
+              <Route path="viewCompletedRequest" element={<ViewCompletedRequest />} />
             </Route>
 
             {/* Fallback */}

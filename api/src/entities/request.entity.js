@@ -150,6 +150,34 @@ class Request{
 
             return data;
     }
+
+    async searchRequest(searchQuery){
+        try{
+            const trimmedQuery = searchQuery?.trim();
+            if(!trimmedQuery) return [];
+
+            const pattern = `%${trimmedQuery}%`;
+            const isNumber = !isNaN(Number(trimmedQuery));
+            if (isNumber) {
+                orConditions.push(`requestId.eq.${trimmedQuery}`);
+            }
+
+            const { data, error } = await supabase
+                .from(this.tableName)
+                .select(`
+                    *,
+                    RequestCategory(categoryId, Name, Description),
+                    RequestStatus(statusId, statusName)`);
+
+            console.log("searchRequest(): Response from database: ", data);
+
+            return data;
+        }
+        catch (error){
+            console.error("searchRequest(): An error has occurred: ", error.message);
+            return [];
+        }
+    }
 }
 
 module.exports = Request;
