@@ -115,15 +115,15 @@ class CSRSearchRequestController{
 class PINSearchRequestController{
     async searchRequest(searchQuery, userId){
         const requestEntity = new Request();
-        const result = await requestEntity.PINSearchRequest(searchQuery, userId);
+        const requests = await requestEntity.PINSearchRequest(searchQuery, userId);
 
-        if(!result){
+        if(!requests){
             console.error("Request.PINSearchRequestController.searchRequest(): An error has occurred.");
             return null;
         }
         
         return {
-            result
+            requests
         }
     }
 }

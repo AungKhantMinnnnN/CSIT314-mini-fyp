@@ -47,7 +47,7 @@ const ViewAllRequests = () => {
                                 userId: userId
                             }}
                         );
-
+                        console.log(response)
                         requests = response.data.data.requests;
                         setRequests(requests);
                         setStats({
