@@ -1,4 +1,4 @@
-const completedRequestEntity = require("../entities/request.completed.entity")
+const completedRequestEntity = require("../../entities/pin/request.completed.entity")
 
 class GetAllCompletedRequestController{
     async getAllCompletedRequest(userId){

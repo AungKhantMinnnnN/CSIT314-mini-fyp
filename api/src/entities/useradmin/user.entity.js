@@ -73,7 +73,7 @@ class User{
 
     async createUser(userData){
 
-        const currentId = await this.getAllUserInfo;
+        const currentId = await this.getAllUserInfo();
         const userId = currentId.length + 1;
 
         const { data, error } = await supabase

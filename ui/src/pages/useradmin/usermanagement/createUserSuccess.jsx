@@ -7,8 +7,7 @@ const CreateSuccess = () => {
   const location = useLocation();
 
   // Safely get user from state
-  const user = location.state?.user.createdUser;
-  
+  const user = location.state?.user
 
   if (!user) {
     return (

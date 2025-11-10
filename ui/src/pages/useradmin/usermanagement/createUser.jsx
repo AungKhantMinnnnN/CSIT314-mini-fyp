@@ -52,8 +52,8 @@ const CreateUser = () => {
 
     try {
       const response = await apiClient.post("/user/create-user", requestBody);
-      console.log(response);
-      navigate("/dashboard/create-success", { state: { user: response.data.data } });
+      console.log({ state: { user: response.data.data }})
+      navigate("/dashboard/usermanagement/create-success", { state: { user: response.data.data.createdUser }});
     } catch (error) {
       console.error(error);
     }
