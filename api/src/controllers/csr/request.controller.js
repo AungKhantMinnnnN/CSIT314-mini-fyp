@@ -96,16 +96,32 @@ class DeleteRequestController{
     }
 }
 
-class SearchRequestController{
+class CSRSearchRequestController{
     async searchRequest(searchQuery){
         const requestEntity = new Request();
-        const result = await requestEntity.searchRequest(searchQuery);
+        const result = await requestEntity.CSRSearchRequest(searchQuery);
 
         if(!result){
-            console.error("Request.Controller.searchRequest(): An error has occurred.");
+            console.error("Request.CSRSearchRequestController.searchRequest(): An error has occurred.");
             return null;
         }
 
+        return {
+            result
+        }
+    }
+}
+
+class PINSearchRequestController{
+    async searchRequest(searchQuery, userId){
+        const requestEntity = new Request();
+        const result = await requestEntity.PINSearchRequest(searchQuery, userId);
+
+        if(!result){
+            console.error("Request.PINSearchRequestController.searchRequest(): An error has occurred.");
+            return null;
+        }
+        
         return {
             result
         }
@@ -119,5 +135,6 @@ module.exports = {
     UpdateRequestInfoController,
     DeleteRequestController,
     GetAllRequestsForUserController,
-    SearchRequestController
+    CSRSearchRequestController,
+    PINSearchRequestController
 }

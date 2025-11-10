@@ -99,9 +99,13 @@ function App() {
               <Route path="pin/updateRequest/:requestId" element={<UpdateRequest />} />
               <Route path="pin/viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
               <Route path="pin/deleteRequest/:requestId" element={<DeleteRequest />} />
-              <Route path="pin/viewShortlistRequests" element={<ViewShortlistRequest />} />
-              <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} />
-            </Route>
+              {/* <Route path="pin/viewShortlistRequests" element={<ViewShortlistRequest />} />
+              <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} /> */}
+
+              <Route path="csr" element={<ViewAllRequests />} />
+              <Route path="csr/viewShortlistRequest" element={<ViewShortlistRequest />} />
+              <Route path="csr/viewCompletedRequest" element={<ViewCompletedRequest />} />
+            </Route> 
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/login" replace />} />

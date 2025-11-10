@@ -8,7 +8,8 @@ const {
     UpdateRequestInfoController,
     DeleteRequestController,
     GetAllRequestsForUserController,
-    SearchRequestController
+    CSRSearchRequestController,
+    PINSearchRequestController
 } = require("../../controllers/csr/request.controller")
 
 router.get("/getAllRequestsForUser/:userId", async (req, res) => {
@@ -195,11 +196,39 @@ router.post("/deleteRequest", async (req, res) => {
     }
 })
 
+router.get("/PinSearchRequest", async(req, res) => {
+    try{
+        const { searchQuery, userId } = req.query;
+
+        const controller = new PINSearchRequestController();
+        const result = await controller.searchRequest(searchQuery, userId);
+
+        if(!result){
+            return res.status(400).json({
+                success: false,
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        })
+    }
+    catch (error){
+        console.error("An error has occurred. Error: ", error);
+        return res.status(500).json({
+            success: false,
+            data: null
+        })
+    }
+})
+
 router.get("/CsrSearchRequest", async (req, res) => {
     try{
         const { searchQuery } = req.query;
 
-        const controller = new SearchRequestController();
+        const controller = new CSRSearchRequestController();
         const result = await controller.searchRequest(searchQuery);
 
         if(!result){
