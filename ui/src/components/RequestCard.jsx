@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import apiClient from '../api/index';
 
 const RequestCard = ({request, userRole}) => {
     const navigate = useNavigate();
@@ -14,8 +15,21 @@ const RequestCard = ({request, userRole}) => {
         navigate(`/dashboard/deleteRequest/${request.requestId}`);
     }
 
-    function handleOnClickShortlist(){
+    async function handleOnClickShortlist(e){
+        e.preventDefault();
+        try{
+            const csrUserId = JSON.parse(localStorage.getItem("user")).userId;
+            const requestBody = {
+                csrUserId: csrUserId,
+                shortlist: request
+            }
 
+            const response = await apiClient.post("/shortlist/addShortlist", requestBody);
+            console.log(response);
+        }
+        catch (e){
+            console.error(e);
+        }
     }
 
     return (

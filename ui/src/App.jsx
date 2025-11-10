@@ -35,12 +35,13 @@ import UpdateCategorySuccess from './pages/platformmanagement/categorymanagement
 import SuspendCategory from './pages/platformmanagement/categorymanagement/suspendCategory';
 import SuspendCategorySuccess from './pages/platformmanagement/categorymanagement/suspendCategorySuccess';
 
-// CSR
+// CSR & PIN
 import ViewAllRequests from './pages/requests/viewAllRequests';
 import CreateRequest from './pages/requests/createRequest';
 import UpdateRequest from './pages/requests/updateRequest';
 import ViewRequestDetails from './pages/requests/viewRequestDetails';
 import DeleteRequest from './pages/requests/deleteRequest';
+import ViewShortlistRequest from './pages/requests/viewShortlistRequests';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();
@@ -97,6 +98,7 @@ function App() {
               <Route path="updateRequest/:requestId" element={<UpdateRequest />} />
               <Route path="viewRequestDetail/:requestId" element={<ViewRequestDetails />} />
               <Route path="deleteRequest/:requestId" element={<DeleteRequest />} />
+              <Route path="viewShortlistRequests" element={<ViewShortlistRequest />} />
             </Route>
 
             {/* Fallback */}

@@ -3,7 +3,8 @@ const router = express.Router();
 
 const {
     GetAllShortlistController,
-    AddShortlistController
+    AddShortlistController,
+    SearchShortlistController
 } = require("../controllers/reqeust.shortlist.controller");
 
 router.get("/getAllShortlist/:userId", async (req, res) => {
@@ -36,10 +37,10 @@ router.get("/getAllShortlist/:userId", async (req, res) => {
 
 router.post("/addShortlist", async (req, res) => {
     try{
-        const { shortlist } = req.body;
+        const { csrUserId, shortlist } = req.body;
 
         const controller = new AddShortlistController();
-        const result = await controller.addShortlist(shortlist);
+        const result = await controller.addShortlist(csrUserId, shortlist);
 
         if (!result){
             return res.status(400).json({
@@ -61,6 +62,34 @@ router.post("/addShortlist", async (req, res) => {
         })
     }
 });
+
+router.get("/searchShortlist/", async (req, res) => {
+    try{
+        const { searchQuery, userId } = req.query;
+
+        const controller = new SearchShortlistController();
+        const result = await controller.searchShortlist(searchQuery, userId);
+
+        if(!result){
+            return res.status(400).json({
+                success: false,
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: result
+        });
+    }
+    catch (e){
+        console.error(e);
+        return res.status(500).json({
+            success: false,
+            data: null
+        })
+    }
+})
 
 
 module.exports = router;

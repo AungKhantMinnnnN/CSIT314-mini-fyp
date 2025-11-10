@@ -16,10 +16,24 @@ class GetAllShortlistController{
 }
 
 class AddShortlistController{
-    async addShortlist(shortlist){
+    async addShortlist(csrUserId, shortlist){
 
         const entity = new shortlistEntity();
-        const response = await entity.addShortlist(shortlist);
+        const response = await entity.addShortlist(csrUserId, shortlist);
+
+        if(!response){
+            console.error("An error has occurred.");
+            return null;
+        }
+
+        return response;
+    }
+}
+
+class SearchShortlistController{
+    async searchShortlist(searchQuery, userId){
+        const entity = new shortlistEntity();
+        const response = await entity.searchShortlist(searchQuery, userId);
 
         if(!response){
             console.error("An error has occurred.");
@@ -32,5 +46,6 @@ class AddShortlistController{
 
 module.exports = {
     GetAllShortlistController,
-    AddShortlistController
+    AddShortlistController,
+    SearchShortlistController
 }
