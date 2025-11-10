@@ -36,13 +36,13 @@ import SuspendCategory from './pages/platformmanagement/suspendCategory';
 import SuspendCategorySuccess from './pages/platformmanagement/suspendCategorySuccess';
 
 // CSR & PIN
-import ViewAllRequests from './pages/csr/viewAllRequests';
-import CreateRequest from './pages/csr/createRequest';
-import UpdateRequest from './pages/csr/updateRequest';
-import ViewRequestDetails from './pages/csr/viewRequestDetails';
-import DeleteRequest from './pages/csr/deleteRequest';
-import ViewShortlistRequest from './pages/csr/viewShortlistRequests';
-import ViewCompletedRequest from './pages/csr/viewCompletedRequests';
+import ViewAllRequests from './pages/pin/viewAllRequests';
+import CreateRequest from './pages/pin/createRequest';
+import UpdateRequest from './pages/pin/updateRequest';
+import ViewRequestDetails from './pages/pin/viewRequestDetails';
+import DeleteRequest from './pages/pin/deleteRequest';
+import ViewShortlistRequest from './pages/pin/viewShortlistRequests';
+import ViewCompletedRequest from './pages/pin/viewCompletedRequests';
 
 const DashboardRoute = () => {
   const { user, loading } = useAuth();

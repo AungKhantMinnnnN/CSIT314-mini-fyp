@@ -12,37 +12,34 @@ const ViewUser = () => {
 
   // Dynamic search
   useEffect(() => {
-  const delayDebounceFn = setTimeout(async () => {
-    setLoading(true);
-    try {
-      let usersResponse = [];
+    const delayDebounceFn = setTimeout(async () => {
+      setLoading(true);
+      try {
+        let usersResponse = [];
 
-      if (!searchTerm) {
-        // If search is empty, fetch all users
-        const response = await apiClient.get("/user/getAllUserInfo");
-        usersResponse = response.data.data.userInfo;
-      } else {
-        // Otherwise, fetch search results
-        const response = await apiClient.get("/user/searchUserInfo", {
-          params: { query: searchTerm },
-        });
-        usersResponse = response.data.data.userInfo;
+        if (!searchTerm) {
+          const response = await apiClient.get("/user/getAllUserInfo");
+          usersResponse = response.data.data.userInfo;
+        } else {
+          const response = await apiClient.get("/user/searchUserInfo", {
+            params: { query: searchTerm },
+          });
+          usersResponse = response.data.data.userInfo;
+        }
+
+        usersResponse.sort((a, b) => a.userId - b.userId);
+        setUsers(usersResponse);
+        setError(null);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch users.");
+      } finally {
+        setLoading(false);
       }
+    }, 400);
 
-      // Sort by userId
-      usersResponse.sort((a, b) => a.userId - b.userId);
-      setUsers(usersResponse);
-      setError(null);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to fetch users.");
-    } finally {
-      setLoading(false);
-    }
-  }, 400);
-
-  return () => clearTimeout(delayDebounceFn);
-}, [searchTerm]);
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   return (
     <div className="flex flex-col p-8 w-full bg-gray-50 min-h-screen">
@@ -52,7 +49,7 @@ const ViewUser = () => {
           <Search className="absolute left-3 top-2.5 text-gray-400 w-5 h-5" />
           <input
             type="text"
-            placeholder="Search users..."
+            placeholder="Search users by user id / name ..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-gray-700"
@@ -81,9 +78,38 @@ const ViewUser = () => {
               className="flex justify-between items-center py-3 px-2 hover:bg-gray-50 rounded-lg transition"
             >
               {/* User Info */}
-              <div>
-                <div className="font-semibold text-gray-800">{user.username}</div>
-                <div className="text-gray-500 text-sm">{user.Status?.statusName}</div>
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2">
+                  <div className="font-semibold text-gray-800 text-base">
+                    {user.username}
+                  </div>
+                  {user.Status?.statusName && (
+                    <span
+                      className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                        user.Status.statusName.toLowerCase() === "active"
+                          ? "bg-green-100 text-green-700"
+                          : user.Status.statusName.toLowerCase() === "suspended"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      {user.Status.statusName}
+                    </span>
+                  )}
+                </div>
+
+                <div className="text-gray-600 text-sm">
+                  {user.firstName} {user.lastName}
+                </div>
+
+                <div className="text-gray-500 text-sm">{user.email}</div>
+
+                {/* Role below email */}
+                {user.UserProfile?.roleName && (
+                  <div className="text-gray-400 text-xs mt-0.5">
+                    {user.UserProfile.roleName}
+                  </div>
+                )}
               </div>
 
               {/* Actions */}

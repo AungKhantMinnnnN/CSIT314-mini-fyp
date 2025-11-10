@@ -29,22 +29,26 @@ class User{
             // Sanitize query input
             const trimmedQuery = query?.trim();
             if (!trimmedQuery) {
-                console.warn("searchUser(): Empty query provided.");
-                return [];
+            console.warn("searchUser(): Empty query provided.");
+            return [];
             }
 
             // Build search pattern (case-insensitive)
             const pattern = `%${trimmedQuery}%`;
 
-            // Perform OR-based ILIKE search across allowed columns
+            // Search by base user fields only
             const { data, error } = await supabase
-                .from(this.tableName)
-                .select("userId, createdDate, updatedDate, username, email, firstName, lastName, UserProfile(profileId, roleName), Status(statusId, statusName)")
-                .or(`username.ilike.${pattern},email.ilike.${pattern},firstName.ilike.${pattern},lastName.ilike.${pattern}`);
+            .from(this.tableName)
+            .select(`
+                userId, createdDate, updatedDate, username, email, firstName, lastName,
+                UserProfile(profileId, roleName),
+                Status(statusId, statusName)
+            `)
+            .or(`username.ilike.${pattern},email.ilike.${pattern},firstName.ilike.${pattern},lastName.ilike.${pattern}`);
 
             if (error) {
-                console.error("searchUser(): Database error:", error.message);
-                return [];
+            console.error("searchUser(): Database error:", error.message);
+            return [];
             }
 
             console.log(`searchUser(): Found ${data.length} users for query "${query}"`);
