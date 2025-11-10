@@ -9,7 +9,7 @@ const {
     DeleteRequestController,
     GetAllRequestsForUserController,
     SearchRequestController
-} = require("../controllers/request.controller")
+} = require("../../controllers/request.controller")
 
 router.get("/getAllRequestsForUser/:userId", async (req, res) => {
     try{

@@ -19,8 +19,8 @@ const UpdateRequest = () => {
         const fetchRequestData = async () => {
             try{
 
-                const categoriesResponse = await apiClient.get("/requestCategory/getAllCategories");
-                const categoryData = categoriesResponse.data.data.map(c => ({
+                const categoriesResponse = await apiClient.get("/platform/getAllCategories");
+                const categoryData = categoriesResponse.data.data.categories.map(c => ({
                     id: c.categoryId,
                     name: c.Name
                 }));

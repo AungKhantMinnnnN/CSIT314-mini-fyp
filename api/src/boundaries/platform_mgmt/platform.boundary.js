@@ -8,7 +8,7 @@ const {
     CreateCategoryController,
     UpdateCategoryController,
     SuspendCategoryController
-} = require("../controllers/platform.controller.js");
+} = require("../../controllers/platform.controller.js");
 
 
 router.get("/getAllCategories", async (req , res) =>{

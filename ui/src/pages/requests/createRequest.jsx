@@ -16,8 +16,8 @@ const CreateRequest = () => {
     useEffect(() => {
         (async () => {
             try {
-                const res = await apiClient.get("/requestCategory/getAllCategories");
-                const categoryData = res.data.data.map(c => ({
+                const res = await apiClient.get("platform/getAllCategories");
+                const categoryData = res.data.data.categories.map(c => ({
                     id: c.categoryId,
                     name: c.Name
                 }));

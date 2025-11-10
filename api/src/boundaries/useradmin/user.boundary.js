@@ -13,7 +13,7 @@ const {
     CreateProfileController,
     UpdateProfileController,
     SuspendProfileController
-} = require("../controllers/useradmin.controller.js");
+} = require("../../controllers/useradmin.controller.js");
 
 
 router.get("/getAllUserInfo", async (req, res) => {

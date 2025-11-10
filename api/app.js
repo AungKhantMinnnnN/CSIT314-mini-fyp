@@ -1,12 +1,11 @@
 const express = require('express');
 const supabase = require('./src/config/supabase_client');
-const authBoundary = require('./src/boundaries/auth.boundary');
-const userBoundary = require('./src/boundaries/user.boundary');
-const requestBoundary = require('./src/boundaries/request.boundary');
-const requestCategoryBoundary = require('./src/boundaries/request.category.boundary');
-const platformBoundary = require('./src/boundaries/platform.boundary');
-const shortlistBoundary = require('./src/boundaries/request.shortlist.boundary');
-const completedRequestBoundary = require('./src/boundaries/request.completed.boundary');
+const authBoundary = require('./src/boundaries/auth/auth.boundary');
+const userBoundary = require('./src/boundaries/useradmin/user.boundary');
+const requestBoundary = require('./src/boundaries/csr/request.boundary');
+const platformBoundary = require('./src/boundaries/platform_mgmt/platform.boundary');
+const shortlistBoundary = require('./src/boundaries/pin/request.shortlist.boundary');
+const completedRequestBoundary = require('./src/boundaries/pin/request.completed.boundary');
 
 require('dotenv').config();
 
@@ -31,7 +30,6 @@ app.use((req, res, next) => {
 app.use('/api/auth', authBoundary);
 app.use('/api/user', userBoundary);
 app.use('/api/request', requestBoundary);
-app.use('/api/requestCategory', requestCategoryBoundary);
 app.use('/api/platform', platformBoundary);
 app.use('/api/shortlist', shortlistBoundary);
 app.use('/api/completedRequest', completedRequestBoundary);
