@@ -154,7 +154,7 @@ class Request{
             return data;
     }
 
-    async searchRequest(searchQuery){
+    async CSRSearchRequest(searchQuery){
         try{
             const trimmedQuery = searchQuery?.trim();
             if(!trimmedQuery) return [];
@@ -170,14 +170,53 @@ class Request{
                 .select(`
                     *,
                     RequestCategory(categoryId, Name, Description),
-                    RequestStatus(statusId, statusName)`);
+                    RequestStatus(statusId, statusName)`)
+                .or(`title.ilike.%${pattern}%,description.ilike.%${pattern}%`);;
 
-            console.log("searchRequest(): Response from database: ", data);
+            console.log("CSRSearchRequest(): Response from database: ", data);
+
+            if(error){
+                console.error("CSRSearchRequest(): An error has occurred: ", error.message);
+            }
 
             return data;
         }
         catch (error){
-            console.error("searchRequest(): An error has occurred: ", error.message);
+            console.error("CSRSearchRequest(): An error has occurred: ", error.message);
+            return [];
+        }
+    }
+
+    async PINSearchRequest(searchQuery, userId){
+        try{
+            const trimmedQuery = searchQuery?.trim();
+            if(!trimmedQuery) return [];
+
+            const pattern = `%${trimmedQuery}%`;
+            const isNumber = !isNaN(Number(trimmedQuery));
+            if (isNumber) {
+                orConditions.push(`requestId.eq.${trimmedQuery}`);
+            }
+
+            const { data, error } = await supabase
+                .from(this.tableName)
+                .select(`
+                    *,
+                    RequestCategory(categoryId, Name, Description),
+                    RequestStatus(statusId, statusName)`)
+                .eq('pinUserId', userId)
+                .or(`title.ilike.%${pattern}%,description.ilike.%${pattern}%`);
+
+            console.log("PINSearchRequest(): Response from database: ", data);
+
+            if (error){
+                console.error("PINSearchRequest(): An error has occurred: ", error.message);
+            }
+
+            return data;
+        }
+        catch(e){
+            console.error("PINSearchRequest(): An error has occurred: ", error.message);
             return [];
         }
     }

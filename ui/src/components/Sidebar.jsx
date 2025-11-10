@@ -43,9 +43,9 @@ const Sidebar = ({activePage, setActivePage, user}) => {
   ]
 
   const csrMenu = [
-    { id: "viewAllRequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "PIN Requests", desc: "Manage requests by Person-In-Need" },
-    { id: "viewShortlistRequests", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Shortlisted", desc: "View your shortlisted requests" },
-    { id: "viewCompletedRequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed", desc: "View completed requests" },
+    { id: "csr", icon: <Users className="w-5 h-5 text-gray-600" />, title: "PIN Requests", desc: "Manage requests by Person-In-Need" },
+    { id: "csr/viewShortlistRequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Shortlisted", desc: "View your shortlisted requests" },
+    { id: "csr/viewCompletedRequest", icon: <Users className="w-5 h-5 text-gray-600" />, title: "Completed", desc: "View completed requests" },
   ]
 
   const platformMgmMenu = [

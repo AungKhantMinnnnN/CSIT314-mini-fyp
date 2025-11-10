@@ -107,7 +107,11 @@ function App() {
               <Route path="pin/delete-success" element={<DeleteRequestSuccess />} />
               <Route path="pin/viewShortlistRequests" element={<ViewShortlistRequest />} />
               <Route path="pin/viewCompletedRequest" element={<ViewCompletedRequest />} />
-            </Route>
+
+              <Route path="csr" element={<ViewAllRequests />} />
+              <Route path="csr/viewShortlistRequest" element={<ViewShortlistRequest />} />
+              <Route path="csr/viewCompletedRequest" element={<ViewCompletedRequest />} />
+            </Route> 
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/login" replace />} />
