@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     GetAllCompletedRequestController,
     SearchCompletedRequestController
-} = require("../../controllers/pin/request.completed.controller")
+} = require("../../controllers/csr_pin/request.completed.controller")
 
 router.get("/getAllCompletedRequest/:userId", async (req, res) => {
     try{

@@ -10,7 +10,7 @@ const {
     GetAllRequestsForUserController,
     CSRSearchRequestController,
     PINSearchRequestController,
-} = require("../../controllers/pin/request.controller")
+} = require("../../controllers/csr_pin/request.controller")
 
 router.get("/getAllRequestsForUser/:userId", async (req, res) => {
     try{
