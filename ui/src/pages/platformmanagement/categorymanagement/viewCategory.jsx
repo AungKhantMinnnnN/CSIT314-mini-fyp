@@ -20,19 +20,38 @@ import apiClient from "../../../api/index.js";
 const ViewCategory = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
+  const [stats, setStats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const handler = setTimeout(() => {
       const fetchCategories = async () => {
+        setLoading(true);
         try {
-          const response = await apiClient.get("/platform/getAllCategories");
-          console.log("✅ API response:", response.data);
+          let categoryData = [];
+          let statsData = [];
 
-          const categoryData = response.data?.data?.categories || [];
+          if (!searchTerm) {
+            const response = await apiClient.get("/platform/getAllCategories");
+            categoryData = response.data?.data?.categories || [];
+            statsData = response.data?.data?.categories || [];
+          } else {
+            const statsResponse = await apiClient.get("/platform/getAllCategories");
+            statsData = statsResponse.data?.data?.categories || [];
+
+            const response = await apiClient.get("/platform/searchCategory", {
+              params: { query: searchTerm },
+            });
+            categoryData = response.data?.data?.categories || [];
+          }
+
+          categoryData.sort((a, b) => a.categoryId - b.categoryId);
+
           setCategories(categoryData);
+          setStats(statsData);
+          setError(null);
         } catch (err) {
           console.error("❌ Error fetching categories:", err);
           setError("Failed to fetch categories.");
@@ -42,9 +61,11 @@ const ViewCategory = () => {
       };
 
       fetchCategories();
-    }, 600);
-    return () => clearTimeout(timer);
-  }, []);
+    }, 400); // debounce 400ms
+
+    return () => clearTimeout(handler); // cancel previous timeout on each keystroke
+  }, [searchTerm]);
+
 
   // Icon selector based on category name
   const getCategoryIcon = (name) => {
@@ -60,15 +81,12 @@ const ViewCategory = () => {
     return <FolderOpen className="w-8 h-8 text-gray-400" />;
   };
 
-  // Filtered categories by search
-  const filteredCategories = categories.filter((c) =>
-    c.Name?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
 
   // Stats
-  const totalCategories = categories.length;
-  const activeCategories = categories.filter((c) => c.statusId === 1).length;
-  const suspendedCategories = categories.filter((c) => c.statusId !== 1).length;
+  const totalCategories = stats.length;
+  const activeCategories = stats.filter((c) => c.statusId === 1).length;
+  const suspendedCategories = stats.filter((c) => c.statusId !== 1).length;
   const totalServices = totalCategories; // placeholder if services = categories
 
   return (
@@ -145,9 +163,9 @@ const ViewCategory = () => {
         </div>
       ) : error ? (
         <div className="text-red-500 text-center py-6">{error}</div>
-      ) : filteredCategories.length > 0 ? (
+      ) : categories.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {filteredCategories.map((category) => (
+          {categories.map((category) => (
             <div
               key={category.categoryId}
               className="bg-white shadow rounded-xl p-5 flex flex-col justify-between transition hover:shadow-md"

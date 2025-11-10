@@ -15,6 +15,21 @@ class GetAllCategoriesController {
     }
 }
 
+class SearchCategoryController {
+    async searchCategory(search){
+        const categoryEntity = new Category();
+        const categories = await categoryEntity.searchCategory(search);
+        if (!categories){
+            console.error("An error has occured.");
+            return null;
+        }
+
+        return {
+            categories
+        }
+    }
+}
+
 class GetCategoryController{
     async get(categoryId){
         const categoryEntity = new Category();
@@ -128,6 +143,7 @@ class SuspendCategoryController{
 
 module.exports = {
     GetAllCategoriesController,
+    SearchCategoryController,
     GetCategoryController,
     CreateCategoryController,
     UpdateCategoryController,

@@ -3,7 +3,6 @@ const User = require("../entities/user.entity")
 //Controller Classes for User Admin
 
 class CreateUserController{
-    //Create Users
     async createUser(user){
         const userEntity = new User();
         const createdUser = await userEntity.createUser(user);
@@ -111,7 +110,7 @@ class UpdateUserInfoController{
             updatedUserInfo,
             isUserUpdated : true
             }
-        }
+    }
 }
 
 class SuspendUserController{
@@ -207,7 +206,6 @@ class GetProfileController{
 }
 
 class CreateProfileController{
-    //Create Profile
     async createProfile(profile){
         const userEntity = new User();
         const createdProfile = await userEntity.createProfile(profile);
