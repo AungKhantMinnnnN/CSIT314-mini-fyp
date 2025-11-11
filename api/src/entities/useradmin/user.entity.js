@@ -115,7 +115,7 @@ class User{
             console.error("createUser(): An error has occurred. Error: " + error.message);
         }
 
-        return {success:true, data};
+        return {success:true, data:data};
     }
 
     async updateUserInfo(userData){
