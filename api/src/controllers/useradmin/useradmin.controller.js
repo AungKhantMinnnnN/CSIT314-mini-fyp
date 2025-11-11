@@ -17,6 +17,15 @@ class CreateUserController{
             }
         }
 
+        if (!createdUser.success){
+            return {
+                user : {
+                    username: "",
+                    isUserCreated: false
+                }
+            }
+        }
+
         return {
             createdUser
         }
