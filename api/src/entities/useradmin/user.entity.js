@@ -85,7 +85,7 @@ class User{
 
         if (existingUser.data) {
             return {
-                message: 'Username already exists. Please choose another one.',
+                message: 'Username already exists. Please choose another one.'
             };
         }
 
@@ -114,7 +114,7 @@ class User{
             console.error("createUser(): An error has occurred. Error: " + error.message);
         }
 
-        return data};
+        return data;
     }
 
     async updateUserInfo(userData){
