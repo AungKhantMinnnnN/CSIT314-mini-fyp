@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Logo from "../../assets/Logo.svg"
+import Logo from "../../assets/logo.svg"
 
 const LogOut = () => {
     const navigate = useNavigate();
