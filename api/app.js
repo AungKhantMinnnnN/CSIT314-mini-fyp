@@ -1,5 +1,4 @@
-import cors from "cors";
-
+const cors = require("cors");
 const express = require('express');
 const supabase = require('./src/config/supabase_client');
 const authBoundary = require('./src/boundaries/auth/auth.boundary');
