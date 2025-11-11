@@ -223,7 +223,8 @@ class User{
                 updatedDate: Date.now,
                 roleName: profile.roleName,
                 description: profile.description,
-                userProfileStatusId: 1
+                userProfileStatusId: 1,
+                permission: profile.permission
             }])
             .select('*')
             .maybeSingle();
@@ -238,13 +239,15 @@ class User{
     }
 
     async updateProfile(profile){
+        console.log(profile);
         const { data, error } = await supabase
             .from("UserProfile")
             .update({
                 updatedDate: Date.now,
                 roleName: profile.roleName,
                 description: profile.description,
-                userProfileStatusId: profile.userProfileStatusId
+                userProfileStatusId: profile.userProfileStatusId,
+                permissions: profile.permission
             })
             .eq('profileId', profile.profileId)
             .select('*')

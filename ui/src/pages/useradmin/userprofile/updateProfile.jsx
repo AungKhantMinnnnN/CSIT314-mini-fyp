@@ -12,7 +12,8 @@ const UpdateUserProfile = () => {
     profileId: 0,
     roleName: "",
     description: "",
-    userProfileStatusId: 1
+    userProfileStatusId: 1,
+    permission: ""
   });
 
   const [profile, setProfile] = useState(null);
@@ -31,7 +32,8 @@ const UpdateUserProfile = () => {
           profileId: profileData.profileId,
           roleName: profileData.roleName,
           description: profileData.description || "",
-          userProfileStatusId: profileData.userProfileStatusId
+          userProfileStatusId: profileData.userProfileStatusId,
+          permission: profileData.permissions
         });
 
         setProfile(profileData);
@@ -62,7 +64,8 @@ const UpdateUserProfile = () => {
             profileId: profileId,
             roleName: formData.roleName,
             description: formData.description,
-            userProfileStatusId: 1
+            userProfileStatusId: 1,
+            permission: formData.permission
         }
     };
 
@@ -149,6 +152,23 @@ const UpdateUserProfile = () => {
                 rows="3"
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               />
+            </div>
+
+            <div className="grid grid-cols-2 gap-6 mb-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Role Permissions
+                </label>
+                <input
+                  type="text"
+                  name="permission"
+                  placeholder="Enter role permission (eg. Read, Read/Write)"
+                  value={formData.permission}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
+
             </div>
 
             {/* Submit Button */}

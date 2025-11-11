@@ -8,6 +8,7 @@ const CreateProfile = () => {
     roleName: "",
     description: "",
     userProfileStatusId: 1, // active by default
+    permission: ""
   });
 
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ const CreateProfile = () => {
               value={formData.roleName}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -87,7 +88,22 @@ const CreateProfile = () => {
               onChange={handleInputChange}
               rows={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-md 
-                         focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Role Permissions
+            </label>
+            <input
+              type="text"
+              name="permission"
+              placeholder="e.g. Read, Read/Write"
+              value={formData.permission}
+              onChange={handleInputChange}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md 
+                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
@@ -96,9 +112,9 @@ const CreateProfile = () => {
             <button
               onClick={handleSubmit}
               className="flex items-center justify-center gap-2 px-36 py-3 
-                         bg-indigo-600 text-white font-medium rounded-md 
-                         hover:bg-indigo-700 focus:outline-none focus:ring-2 
-                         focus:ring-indigo-500 transition-colors"
+                        bg-indigo-600 text-white font-medium rounded-md 
+                        hover:bg-indigo-700 focus:outline-none focus:ring-2 
+                        focus:ring-indigo-500 transition-colors"
             >
               Create Profile
             </button>

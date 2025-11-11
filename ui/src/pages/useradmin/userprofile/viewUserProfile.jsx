@@ -21,6 +21,7 @@ const ViewUserProfile = () => {
           // Fetch all profiles if search is empty
           const response = await apiClient.get("/user/getAllUserProfiles");
           profileData = response.data.data.userProfiles;
+          console.log(profileData);
         } else {
           // Fetch search results
           const response = await apiClient.get("/user/searchUserProfile", {
@@ -84,7 +85,11 @@ const ViewUserProfile = () => {
               <div>
                 <div className="font-semibold text-gray-800">{profile.roleName}</div>
                 {profile.description && (
-                  <div className="text-gray-500 text-sm">{profile.description}</div>
+                  <div>
+                    <div className="text-gray-500 text-sm">Description: {profile.description}</div>
+                    <div className="text-gray-500 text-sm">Permission: {profile.permissions}</div>
+                  </div>
+                  
                 )}
               </div>
 
