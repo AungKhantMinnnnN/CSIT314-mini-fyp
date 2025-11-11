@@ -1,3 +1,5 @@
+import cors from "cors";
+
 const express = require('express');
 const supabase = require('./src/config/supabase_client');
 const authBoundary = require('./src/boundaries/auth/auth.boundary');
@@ -9,6 +11,9 @@ const shortlistBoundary = require('./src/boundaries/csr_pin/request.shortlist.bo
 const completedRequestBoundary = require('./src/boundaries/csr_pin/request.completed.boundary');
 
 require('dotenv').config();
+
+
+app.use(cors({ origin: "https://your-frontend.vercel.app" }));
 
 const app = express();
 
