@@ -11,14 +11,12 @@ const completedRequestBoundary = require('./src/boundaries/csr_pin/request.compl
 
 require('dotenv').config();
 
-
-app.use(cors({ origin: "https://your-frontend.vercel.app" }));
-
 const app = express();
 
 // Middleware injection
 app.use(express.json());
 app.use(express.urlencoded({ extended : true}));
+app.use(cors({ origin: "https://your-frontend.vercel.app" }));
 
 // CORS
 app.use((req, res, next) => {
