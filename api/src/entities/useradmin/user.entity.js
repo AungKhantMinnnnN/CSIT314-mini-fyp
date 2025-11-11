@@ -84,9 +84,7 @@ class User{
             .maybeSingle();
 
         if (existingUser.data) {
-            return {
-                message: 'Username already exists. Please choose another one.'
-            };
+            return null
         }
 
         const currentId = await this.getAllUserInfo();
