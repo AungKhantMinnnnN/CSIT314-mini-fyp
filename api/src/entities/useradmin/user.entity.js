@@ -77,6 +77,19 @@ class User{
 
     async createUser(user){
 
+        const existingUser = await supabase
+            .from(this.tableName)
+            .select('userId')
+            .eq('username', user.username)
+            .maybeSingle();
+
+        if (existingUser.data) {
+            return {
+                success: false,
+                message: 'Username already exists. Please choose another one.',
+            };
+        }
+
         const currentId = await this.getAllUserInfo();
         const userId = currentId.length + 1;
 
@@ -102,7 +115,7 @@ class User{
             console.error("createUser(): An error has occurred. Error: " + error.message);
         }
 
-        return data;
+        return {success:true, data};
     }
 
     async updateUserInfo(userData){

@@ -41,7 +41,7 @@ const CreateUser = () => {
     const requiredFields = ["firstName", "lastName", "email", "username", "password", "confirmPassword"];
     for (const field of requiredFields) {
       if (!formData[field]) {
-        showErrorDialog("Please fill in all required fields before submitting.");
+        showErrorDialog("Please fill in all fields before submitting.");
         return;
       }
     }
