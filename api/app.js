@@ -16,7 +16,7 @@ const app = express();
 // Middleware injection
 app.use(express.json());
 app.use(express.urlencoded({ extended : true}));
-app.use(cors({ origin: "https://your-frontend.vercel.app" }));
+app.use(cors({ origin: "https://csit-314-mini-fyp.vercel.app" }));
 
 // CORS
 app.use((req, res, next) => {
