@@ -8,7 +8,7 @@ const CreateProfile = () => {
     roleName: "",
     description: "",
     userProfileStatusId: 1, // active by default
-    permission: ""
+    permissions: ""
   });
 
   const navigate = useNavigate();
@@ -31,16 +31,17 @@ const CreateProfile = () => {
       userProfile: {
         roleName: formData.roleName,
         description: formData.description,
-        userProfileStatusId: 1
+        userProfileStatusId: 1,
+        permissions: formData.permissions
       },
     };
 
     try {
       const response = await apiClient.post("/user/create-profile", requestBody);
-      console.log("Profile created:", response.data);
+      
 
       navigate("/dashboard/userprofiles/create-success", {
-        state: { profile: response.data.data },
+        state: { profile: response.data.data.createdProfile },
       });
     } catch (error) {
       console.error("Error creating profile:", error);
@@ -98,9 +99,9 @@ const CreateProfile = () => {
             </label>
             <input
               type="text"
-              name="permission"
+              name="permissions"
               placeholder="e.g. Read, Read/Write"
-              value={formData.permission}
+              value={formData.permissions}
               onChange={handleInputChange}
               className="w-full px-3 py-2 border border-gray-300 rounded-md 
                         focus:outline-none focus:ring-2 focus:ring-indigo-500"

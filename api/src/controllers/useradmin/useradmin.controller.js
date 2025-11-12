@@ -1,4 +1,5 @@
 const User = require("../../entities/useradmin/user.entity")
+const UserProfile = require("../../entities/useradmin/userprofile.entity")
 
 //Controller Classes for User Admin
 
@@ -161,7 +162,7 @@ class SuspendUserController{
     
 class GetAllUserProfileController {
     async getAllUserProfile(){
-        const userEntity = new User();
+        const userEntity = new UserProfile();
         const userProfiles = await userEntity.getAllUserProfile();
         if (!userProfiles){
             console.error("An error has occurred.");
@@ -176,7 +177,7 @@ class GetAllUserProfileController {
 
 class SearchUserProfileController {
     async searchUserProfile(search){
-        const userEntity = new User();
+        const userEntity = new UserProfile();
         const userProfiles = await userEntity.searchUserProfile(search);
         if (!userProfiles){
             console.error("An error has occurred.");
@@ -191,7 +192,7 @@ class SearchUserProfileController {
 
 class GetProfileController{
     async get(profileId){
-        const userEntity = new User();
+        const userEntity = new UserProfile();
         const profileInfo = await userEntity.getProfileInfo(profileId);
 
         if (!profileInfo){
@@ -216,7 +217,7 @@ class GetProfileController{
 
 class CreateProfileController{
     async createProfile(profile){
-        const userEntity = new User();
+        const userEntity = new UserProfile();
         const createdProfile = await userEntity.createProfile(profile);
 
         if (!createdProfile){
@@ -238,7 +239,7 @@ class CreateProfileController{
 
 class UpdateProfileController{
     async updateProfile(profile){
-        const userEntity = new User();
+        const userEntity = new UserProfile();
         const updatedProfile = await userEntity.updateProfile(profile);
 
         if (!updatedProfile){
@@ -262,7 +263,7 @@ class SuspendProfileController{
     async suspendProfile(profile){
         if (profile.userProfileStatusId == 1){
             const suspendedId = 2
-            const userEntity = new User();
+            const userEntity = new UserProfile();
             const updatedProfile = await userEntity.changeProfileStatus(profile.profileId, suspendedId);
             return {
                 userProfile : {
