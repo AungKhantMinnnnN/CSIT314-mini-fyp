@@ -1,48 +1,65 @@
+import axios from "axios";
 
-import axios from 'axios';
-
-const API_URL = "https://csit314api.onrender.com/api";
+// ✅ Automatically switch base URL based on environment
+const API_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:3000/api"           // local backend
+    : "https://csit314api.onrender.com/api"; // deployed backend
 
 const apiClient = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    timeout: 10000
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+  timeout: 15000, // slightly longer timeout
 });
 
-// Add a request interceptor to include the token in headers
+// ✅ Request Interceptor - Attach token if available
 apiClient.interceptors.request.use(
-    (config) => {
-        const user = localStorage.getItem('user');
-        if (user) {
-            const token = JSON.parse(user).token;
-            if (token) {
-                config.headers.Authorization = `Bearer ${token}`;
-            }
+  (config) => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      try {
+        const token = JSON.parse(user)?.token;
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
         }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
+      } catch {
+        console.warn("⚠️ Failed to parse stored user token");
+      }
     }
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
 
-// Add a response interceptor to handle 401 errors
+// ✅ Response Interceptor - Handle Unauthorized or Network errors
 apiClient.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if (error.response && error.response.status === 401) {
-            localStorage.removeItem('user');
-            const currentPath = window.location.pathname;
-            if (currentPath !== '/logout') {
-                window.location.href = '/login';
+  (response) => response,
+  (error) => {
+    if (error.code === "ECONNABORTED") {
+      console.error("⏳ Request timeout. The server took too long to respond.");
     }
+
+    if (error.response) {
+      if (error.response.status === 401) {
+        console.warn("🔒 Unauthorized: token invalid or expired");
+        localStorage.removeItem("user");
+
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
         }
-        return Promise.reject(error);
+      } else if (error.response.status >= 500) {
+        console.error("💥 Server error:", error.response.data?.message || error.message);
+      }
+    } else if (error.request) {
+      console.error("🌐 No response from server — check your network or CORS settings.");
+    } else {
+      console.error("⚠️ Request setup error:", error.message);
     }
+
+    return Promise.reject(error);
+  }
 );
 
 export default apiClient;
