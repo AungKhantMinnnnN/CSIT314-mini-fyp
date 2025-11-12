@@ -16,41 +16,42 @@ const Login = () => {
   };
 
   const handleLoginSubmit = async (e) => {
-    e.preventDefault();
-    setIsSuspended(false);
+  e.preventDefault();
 
-    // --- Check for empty fields ---
-    if (!username || !password) {
-      showErrorDialog("Please fill in both username and password before logging in.");
-      return;
-    }
+  // --- Check for empty fields ---
+  if (!username || !password) {
+    showErrorDialog("Please fill in both username and password before logging in.");
+    return;
+  }
 
-    try {
-      const response = await login(username, password);
+  try {
+    const response = await login(username, password);
 
-      if (response.success) {
-        const userRole = response.data.user.userProfileId;
-        const userStatus = response.data.user.userStatusId;
+    if (response.success) {
+      const userRole = response.data.user.userProfileId;
+      const userStatus = response.data.user.userStatusId;
 
-        if (userStatus === 2) {
-          setIsSuspended(true);
-          return;
-        }
-
-        if (userRole !== 0) {
-          console.log(`${username} has been logged in successfully.`);
-          navigate("/dashboard");
-        }
-      } else {
-        // API returned success: false
-        showErrorDialog("Invalid credentials. Please check your username or password.");
+      if (userStatus === 2) {
+        // Suspended account
+        showErrorDialog("Your account has been suspended. Please contact an administrator.");
+        return;
       }
 
-    } catch (error) {
-      console.error("An error has occurred while trying to login. Error:", error);
+      if (userRole !== 0) {
+        console.log(`${username} has been logged in successfully.`);
+        navigate("/dashboard");
+      }
+    } else {
+      // API returned success: false
       showErrorDialog("Invalid credentials. Please check your username or password.");
     }
-  };
+
+  } catch (error) {
+    console.error("An error has occurred while trying to login. Error:", error);
+    showErrorDialog("An unexpected error occurred. Please check your network or credentials.");
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-indigo-900 flex flex-col items-center justify-center p-8">

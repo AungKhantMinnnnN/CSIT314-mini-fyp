@@ -7,17 +7,8 @@ class AuthLoginController {
         const validUser = await authEntity.login(username, password);
 
         if (!validUser){
-            console.error("Auth.Login.Controller.Login(): Invalid credentials.");
-            return {
-                user: {
-                    userId: "",
-                    username: "",
-                    email: "",
-                    roleId: "",
-                    statusId: "",
-                    isLoggedIn: false
-                }
-            }
+            const error = new Error("Invalid credentials");
+            throw error;
         }
 
         return{
@@ -27,7 +18,7 @@ class AuthLoginController {
                 email: validUser.email,
                 userProfileId: validUser.userProfileId,
                 userStatusId: validUser.userStatusId,
-                isLoggedIn: true
+                success: true
             }
         }
     }

@@ -11,7 +11,6 @@ class Auth{
             .select('*')
             .eq('username', username)
             .eq('password', password)
-            //.eq('roleId', roleId)
             .maybeSingle();
 
         if (error) {
