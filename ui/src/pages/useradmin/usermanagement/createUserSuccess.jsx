@@ -86,12 +86,6 @@ const CreateSuccess = () => {
       <div className="flex justify-center gap-10 mt-10">
         <button
           className="w-60 bg-indigo-500 hover:bg-indigo-400 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-md transition"
-          onClick={() => navigate("/dashboard")}
-        >
-          Back to Dashboard
-        </button>
-        <button
-          className="w-60 bg-indigo-500 hover:bg-indigo-400 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-md transition"
           onClick={() => navigate("/dashboard/usermanagement")}
         >
           Back to View Users

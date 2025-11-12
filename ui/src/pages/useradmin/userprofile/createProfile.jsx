@@ -46,7 +46,10 @@ const CreateProfile = () => {
       });
     } catch (error) {
       console.error("Error creating profile:", error);
-      showErrorDialog("Failed to create userProfile.");
+      const message =
+        error.response?.data?.message ||
+        error.message;
+      showErrorDialog(message);
     }
   };
 

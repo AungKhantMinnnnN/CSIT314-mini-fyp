@@ -9,22 +9,13 @@ class CreateUserController{
         const createdUser = await userEntity.createUser(user);
 
         if (!createdUser){
-            console.error("user.create.Controller.createUser(): Invalid user object.");
-            return {
-                user : {
-                    username: "",
-                    isUserCreated: false
-                }
-            }
+            const error = new Error("Invalid User Object.");
+            throw error
         }
 
-        if (!createdUser.success){
-            return {
-                user : {
-                    username: "",
-                    isUserCreated: false
-                }
-            }
+        if (!createdUser.success && createdUser.message == "Existing User"){
+            const error = new Error("Username already in system. Use a different username.");
+            throw error
         }
 
         return {
@@ -221,13 +212,13 @@ class CreateProfileController{
         const createdProfile = await userEntity.createProfile(profile);
 
         if (!createdProfile){
-            console.error("user.create.Controller.createProfile(): Invalid profile object.");
-            return {
-                profile : {
-                    roleName: "",
-                    isProfileCreated: false
-                }
-            }
+            const error = new Error("Invalid profile object.");
+            throw error
+        }
+        
+        if (!createdProfile.success && createdProfile.message == "Existing Profile"){
+            const error = new Error("Profile name already exists, try a different role name.");
+            throw error
         }
 
         return {

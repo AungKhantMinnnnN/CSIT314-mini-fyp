@@ -69,6 +69,20 @@ class UserProfile{
     }
 
     async createProfile(profile){
+        
+        const existingProfile = await supabase
+            .from(this.tableName)
+            .select('profileId')
+            .eq('roleName', profile.roleName)
+            .maybeSingle();
+
+        if (existingProfile) {
+            return {
+                success: false,
+                message: "Existing Profile"
+            }
+        }
+
         const currentId = await this.getAllUserProfile();
         const profileId = currentId.length + 1
 

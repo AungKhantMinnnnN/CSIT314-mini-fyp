@@ -25,9 +25,6 @@ const CreateUser = () => {
   const navigate = useNavigate();
 
   // Centralized error handler
-  const showErrorDialog = (message) => {
-    alert(`Error: ${message}`);
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

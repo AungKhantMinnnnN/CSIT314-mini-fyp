@@ -247,6 +247,7 @@ router.post("/create-profile", async (req, res) =>  {
 
         const controller = new CreateProfileController()
         const result = await controller.createProfile(userProfile);
+
         return res.status(200).json({
             success : true,
             data: result

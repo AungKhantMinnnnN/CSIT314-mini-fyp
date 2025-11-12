@@ -84,7 +84,10 @@ class User{
             .maybeSingle();
 
         if (existingUser.data) {
-            return null
+            return {
+                success: false,
+                message: "Existing User"
+            }
         }
 
         const currentId = await this.getAllUserInfo();
