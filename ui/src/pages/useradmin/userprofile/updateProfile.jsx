@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserCog, Pencil } from "lucide-react";
 import apiClient from "../../../api/index.js";
+import { showErrorDialog } from "../../../components/ShowErrorDialog.jsx";
 
 const UpdateUserProfile = () => {
   const { profileId } = useParams();
@@ -73,12 +74,17 @@ const UpdateUserProfile = () => {
       const response = await apiClient.post("/user/update-profile", requestBody);
       console.log(response);
 
+      if(!response.data.success){
+        showErrorDialog("Failed to update user profile.");
+        return;
+      }
+
       navigate("/dashboard/userprofiles/update-success", {
         state: { userProfile: response.data.data.userProfile }
       });
     } catch (err) {
       console.error("Error updating profile:", err);
-      setError("Failed to update profile.");
+      showErrorDialog("Failed to update user profile.");
     }
   };
 

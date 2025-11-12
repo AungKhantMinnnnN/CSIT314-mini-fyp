@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AlertTriangle, FileText, FolderOpen, XCircle, ClipboardList } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../api/index.js";
+import { showErrorDialog } from "../../components/ShowErrorDialog.jsx";
 
 const SuspendCategory = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const SuspendCategory = () => {
     const fetchCategory = async () => {
       try {
         const response = await apiClient.post("/platform/getCategory", { categoryId });
+
         const result = response.data.data.category;
         setCategory(result);
       } catch (error) {
@@ -38,8 +40,13 @@ const SuspendCategory = () => {
       const response = await apiClient.post("/platform/suspend-category", requestBody);
       const result = response.data.data;
 
+      if(!response.data.success){
+        showErrorDialog("Failed to suspend category.");
+        return;
+      }
+
       if (!result.category.isCategorySuspended) {
-        alert(result.message || "Category is already suspended.");
+        showErrorDialog(result.message || "Category is already suspended.");
         return;
       }
 
@@ -49,6 +56,7 @@ const SuspendCategory = () => {
       });
     } catch (error) {
       console.error("Error suspending category:", error);
+      showErrorDialog("Failed to suspend category.");
     }
   };
 

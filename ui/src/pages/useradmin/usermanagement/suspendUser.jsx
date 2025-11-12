@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AlertTriangle, User, Mail, Phone, Building, IdCard, XCircle } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../../api/index.js";
+import { showErrorDialog } from "../../../components/ShowErrorDialog.jsx";
 
 const SuspendUser = () => {
     const navigate = useNavigate();
@@ -38,16 +39,21 @@ const SuspendUser = () => {
         };
     
         const response = await apiClient.post("/user/suspend-user", requestBody);
+        if(!response.data.success){
+            showErrorDialog("Failed to suspend user.");
+            return;
+        }
         const result = response.data.data
 
         if (!result.user.isUserSuspended) {
-            alert(result.message || "User is already suspended.");
+            showErrorDialog( result.message || "User is already suspended.");
             return;
         }
         
         navigate("/dashboard/usermanagement/suspend-success", { state: { user } });
 
         } catch (error) {
+            showErrorDialog("Failed to suspend user.");
             console.error("Error suspending user:", error);
         }
     };

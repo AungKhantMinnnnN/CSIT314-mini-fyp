@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { AlertTriangle, FileText, IdCard, XCircle, ClipboardList } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import apiClient from "../../../api/index.js";
+import { showErrorDialog } from "../../../components/ShowErrorDialog.jsx";
 
 const SuspendProfile = () => {
   const navigate = useNavigate();
@@ -37,16 +38,21 @@ const SuspendProfile = () => {
       };
 
       const response = await apiClient.post("/user/suspend-profile", requestBody);
+      if(!response.data.success){
+        showErrorDialog("Failed to suspend user profile.");
+        return;
+      }
       const result = response.data.data
 
       if (!result.userProfile.isProfileSuspended) {
-            alert(result.message || "User is already suspended.");
-            return;
+          showErrorDialog("User profile is already suspended.");
+          return;
         }
       console.log({ userProfile: profile } )
       navigate("/dashboard/userprofiles/suspend-success", { state: { userProfile: profile } });
     } catch (error) {
       console.error("Error suspending profile:", error);
+      showErrorDialog("Failed to suspend user profile.")
     }
   };
 

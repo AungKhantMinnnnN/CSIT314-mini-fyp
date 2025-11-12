@@ -70,12 +70,19 @@ const UpdateCategory = () => {
       const response = await apiClient.post("/platform/update-category", requestBody);
       console.log("Update response:", response);
 
-      navigate("/dashboard/platformmanagement/update-success", {
-        state: { category: response.data.data.updatedCategory },
-      });
+      if(response.data.success){
+        navigate("/dashboard/platformmanagement/update-success", {
+          state: { category: response.data.data.updatedCategory },
+        });
+      }
+      else{
+        showErrorDialog("Failed to update category.");
+        return;
+      }
+      
     } catch (err) {
       console.error("Error updating category:", err);
-      setError("Failed to update category.");
+      showErrorDialog("Failed to update category.");
     }
   };
 

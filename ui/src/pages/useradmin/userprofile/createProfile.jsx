@@ -2,6 +2,7 @@ import { useState } from "react";
 import apiClient from "../../../api/index.js";
 import { IdCard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { showErrorDialog } from "../../../components/ShowErrorDialog.jsx";
 
 const CreateProfile = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const CreateProfile = () => {
 
   const handleSubmit = async () => {
     if (!formData.roleName.trim()) {
-      alert("Role name cannot be empty");
+      showErrorDialog("Role name cannot be empty.");
       return;
     }
 
@@ -45,7 +46,7 @@ const CreateProfile = () => {
       });
     } catch (error) {
       console.error("Error creating profile:", error);
-      alert("Failed to create profile. Check console for details.");
+      showErrorDialog("Failed to create userProfile.");
     }
   };
 

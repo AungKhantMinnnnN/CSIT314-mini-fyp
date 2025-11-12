@@ -4,13 +4,14 @@ import StatCard from '../../components/StatCard';
 import RequestCard from '../../components/RequestCard';
 import apiClient from '../../api';
 import { Search } from "lucide-react";
+import { showErrorDialog } from '../../components/ShowErrorDialog';
 
 const ViewAllRequests = () => {
 
     const [userRole, setUserRole] = useState();
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError]   = useState(null);
+    const [error, setError]   = useState("");
     const navigate = useNavigate();
     const [stats, setStats] = useState({
         totalRequests: 0,
@@ -75,6 +76,7 @@ const ViewAllRequests = () => {
             }
             catch (e){
                 console.error(e);
+                showErrorDialog(e.message);
             }
             finally {
                 setLoading(false);

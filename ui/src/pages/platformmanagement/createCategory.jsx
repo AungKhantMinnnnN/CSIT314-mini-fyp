@@ -2,6 +2,7 @@ import { useState } from "react";
 import apiClient from "../../api/index.js";
 import { FolderPlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { showErrorDialog } from "../../components/ShowErrorDialog.jsx";
 
 const CreateCategory = () => {
   const [formData, setFormData] = useState({
@@ -38,12 +39,19 @@ const CreateCategory = () => {
       const response = await apiClient.post("/platform/create-category", requestBody);
       console.log("Category created:", response.data);
 
-      navigate("/dashboard/platformmanagement/create-success", {
-        state: { category: response.data.data.createdCategory },
-      });
+      if(response.data.success){
+        navigate("/dashboard/platformmanagement/create-success", {
+          state: { category: response.data.data.createdCategory },
+        });
+      }
+      else{
+        showErrorDialog("Failed to create category.");
+        return;
+      }
+      
     } catch (error) {
       console.error("Error creating category:", error);
-      alert("Failed to create category. Check console for details.");
+      showErrorDialog("Failed to create category.");
     }
   };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import apiClient from '../../api';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { showErrorDialog } from '../../components/ShowErrorDialog';
 
 const UpdateRequest = () => {
     const navigate = useNavigate();
@@ -69,13 +70,20 @@ const UpdateRequest = () => {
 
         try{
             const response = await apiClient.post("/request/updateRequest", requestBody);
-            console.log(response)
-            navigate("/dashboard/pin/update-success", { 
-                state: { request: response.data.data.updateRequestInfo } 
-            });
+            console.log(response);
+            if(response.data.success){
+                navigate("/dashboard/pin/update-success", { 
+                    state: { request: response.data.data.updateRequestInfo } 
+                });
+            }
+            else{
+                showErrorDialog("Failed to update request.");
+                return;
+            }
         }
         catch (e){
             console.error(e);
+            showErrorDialog("Failed to update request.");
         }
 
     }

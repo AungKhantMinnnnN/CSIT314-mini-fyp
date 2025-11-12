@@ -86,7 +86,7 @@ router.get("/getRequestInfo/:requestId", async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            data: result
+            data: resultRe
         });
     }
     catch (error){

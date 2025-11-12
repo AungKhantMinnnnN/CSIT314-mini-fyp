@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import apiClient from '../../api';
 import { useNavigate } from "react-router-dom";
+import { showErrorDialog } from '../../components/ShowErrorDialog';
 
 const CreateRequest = () => {
     const navigate = useNavigate();
@@ -25,6 +26,7 @@ const CreateRequest = () => {
                 setCategories(categoryData);
             } catch (e) {
                 console.error(e);
+                showErrorDialog(e.message);
             } 
             finally{
                 setLoading(false);
@@ -62,12 +64,19 @@ const CreateRequest = () => {
         try{
             const response = await apiClient.post("/request/createRequest", requestBody);
             console.log(response);
-            navigate("/dashboard/pin/create-success", { 
-                state: { request: response.data.data.createdRequest } 
-            });
+            if(response.data.success){
+                navigate("/dashboard/pin/create-success", { 
+                    state: { request: response.data.data.createdRequest } 
+                });
+            }
+            else{
+                showErrorDialog("Failed to create new request.");
+                return;
+            }
         }
         catch (e){
             console.error(e);
+            showErrorDialog("Failed to create new request.");
         }
     }
 

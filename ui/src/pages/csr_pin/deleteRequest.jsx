@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiClient from '../../api';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { showErrorDialog } from '../../components/ShowErrorDialog';
 
 const DeleteRequest = () => {
     const navigate = useNavigate();
@@ -51,12 +52,19 @@ const DeleteRequest = () => {
 
             const response = await apiClient.post("/request/deleteRequest", requestBody);
             console.log(response);
-            navigate("/dashboard/pin/delete-success", { 
-                state: { request: response.data.data.deletedRequest } 
-            });
+            if(response.data.success){
+                navigate("/dashboard/pin/delete-success", { 
+                    state: { request: response.data.data.deletedRequest } 
+                });
+            }
+            else{
+                showErrorDialog("Failed to delete request.");
+                return;
+            }
         }
         catch (e){
-            console.error(response);
+            console.error(e);
+            showErrorDialog("Failed to delete request.")
         }
     }
 

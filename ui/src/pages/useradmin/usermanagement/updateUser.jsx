@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import apiClient from "../../../api/index.js";
 import { UserCircle2, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { showErrorDialog } from '../../../components/ShowErrorDialog.jsx';
 
 const UpdateUser = () => {
   const { userId } = useParams();
@@ -102,10 +103,17 @@ const UpdateUser = () => {
     try {
         const response = await apiClient.post("/user/update-user", requestBody);
         console.log(response);
-
-        navigate("/dashboard/usermanagement/update-success", { state: { user: response.data.data } });
+        if(response.data.success){
+          navigate("/dashboard/usermanagement/update-success", { state: { user: response.data.data } });
+        }
+        else{
+          showErrorDialog("Failed to update user.");
+          return;
+        }
+        
     } catch (error) {
         console.error(error);
+        showErrorDialog("Failed to update user.");
     }
   };
 
