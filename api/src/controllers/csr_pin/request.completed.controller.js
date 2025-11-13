@@ -14,6 +14,20 @@ class GetAllCompletedRequestController{
     }
 }
 
+class GetAllCompletedRequestPINController{
+    async getAllCompletedRequest(userId){
+        const entity = new completedRequestEntity();
+        const result = await entity.getAllCompletedRequest_PIN(userId);
+
+        if(!result){
+            console.error("An error has occurred.");
+            return null;
+        }
+
+        return result;
+    }
+}
+
 class SearchCompletedRequestController{
     async searchCompletedRequest(searchQuery, userId){
         const entity = new completedRequestEntity();
@@ -28,8 +42,24 @@ class SearchCompletedRequestController{
     }
 }
 
+class SearchCompletedRequestPINController{
+    async searchCompletedRequest(searchQuery, userId){
+        const entity = new completedRequestEntity();
+        const result = await entity.searchCompletedRequest_PIN(searchQuery, userId);
+
+        if(!result){
+            console.error("An error has occurred.");
+            return null;
+        }
+
+        return result;
+    }
+}
+
 
 module.exports = {
     GetAllCompletedRequestController,
-    SearchCompletedRequestController
+    SearchCompletedRequestController,
+    GetAllCompletedRequestPINController,
+    SearchCompletedRequestPINController
 }

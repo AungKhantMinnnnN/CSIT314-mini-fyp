@@ -3,7 +3,9 @@ const router = express.Router();
 
 const {
     GetAllCompletedRequestController,
-    SearchCompletedRequestController
+    SearchCompletedRequestController,
+    GetAllCompletedRequestPINController,
+    SearchCompletedRequestPINController
 } = require("../../controllers/csr_pin/request.completed.controller")
 
 router.get("/getAllCompletedRequest/:userId", async (req, res) => {
@@ -39,6 +41,62 @@ router.get("/searchCompletedRequest", async (req, res) => {
         const { searchQuery, userId } = req.query;
 
         const controller = new SearchCompletedRequestController();
+        const response = await controller.searchCompletedRequest(searchQuery, userId);
+
+        if(!response){
+            return res.status(400).json({
+                success: false,
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: response
+        });
+    }
+    catch (e){
+        console.error(e);
+        return res.status(500).json({
+            success: false,
+            data: null
+        });
+    }
+})
+
+router.get("/getAllCompletedRequestPIN/:userId", async (req, res) => {
+    try{
+        const { userId } = req.params;
+
+        const controller = new GetAllCompletedRequestPINController();
+        const response = await controller.getAllCompletedRequest(userId);
+
+        if(!response){
+            return res.status(400).json({
+                success: false, 
+                data: null
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: response
+        });
+    }
+    catch (e){
+        console.error(e);
+        return res.status(500).json({
+            success: false,
+            data: null
+        });
+    }
+})
+
+router.get("/searchCompletedRequestPIN", async (req, res) => {
+    try{
+        const { searchQuery, userId } = req.query;
+
+        const controller = new SearchCompletedRequestPINController();
         const response = await controller.searchCompletedRequest(searchQuery, userId);
 
         if(!response){

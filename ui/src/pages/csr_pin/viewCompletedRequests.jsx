@@ -17,26 +17,49 @@ const ViewCompletedRequest = () => {
         async function fetchCompletedRequests(){
 
             const userId = JSON.parse(localStorage.getItem("user")).userId;
+            const userProfileId = JSON.parse(localStorage.getItem("user")).userProfileId;
             let requestResponse = [];
             try{
-                if (!searchQuery){
-                    const response = await apiClient.get(`/completedRequest/getAllCompletedRequest/${userId}`);
-                    requestResponse = response.data.data;
-                }
-                else{
-                    const response = await apiClient.get('/completedRequest/searchCompletedRequest', {
-                        params: {
-                            searchQuery: searchQuery,
-                            userId: userId
-                        }
+                if(userProfileId == 1){
+                    if (!searchQuery){
+                        const response = await apiClient.get(`/completedRequest/getAllCompletedRequestPIN/${userId}`);
+                        requestResponse = response.data.data;
+                    }
+                    else{
+                        const response = await apiClient.get('/completedRequest/searchCompletedRequestPIN', {
+                            params: {
+                                searchQuery: searchQuery,
+                                userId: userId
+                            }
+                        });
+                        requestResponse = response.data.data;
+                    }
+                    requestResponse.sort((a, b) => a.completedId - b.completedId);
+                    setCompletedRequests(requestResponse);
+                    setStats({
+                        totalCompletedRequests: requestResponse.length
                     });
-                    requestResponse = response.data.data;
                 }
-                requestResponse.sort((a, b) => a.completedId - b.completedId);
-                setCompletedRequests(requestResponse);
-                setStats({
-                    totalCompletedRequests: requestResponse.length
-                });
+                else if(userProfileId == 2){
+                    if (!searchQuery){
+                        const response = await apiClient.get(`/completedRequest/getAllCompletedRequest/${userId}`);
+                        requestResponse = response.data.data;
+                    }
+                    else{
+                        const response = await apiClient.get('/completedRequest/searchCompletedRequest', {
+                            params: {
+                                searchQuery: searchQuery,
+                                userId: userId
+                            }
+                        });
+                        requestResponse = response.data.data;
+                    }
+                    requestResponse.sort((a, b) => a.completedId - b.completedId);
+                    setCompletedRequests(requestResponse);
+                    setStats({
+                        totalCompletedRequests: requestResponse.length
+                    });
+                }
             }
             catch(e){
                 console.error(e);
@@ -81,45 +104,39 @@ const ViewCompletedRequest = () => {
                     <div className="mt-1 text-xl font-semibold text-slate-900">{stats.totalCompletedRequests}</div>
                 </div>
 
-                <div className="flex items-center">
-                    {
-                        completedRequests.map((r) => (
-                            <div
-                                key={r.Request.requestId}
-                                className="rounded-xl border border-slate-300 bg-white p-4 shadow-sm">
-
-                            <div className="flex flex-col sm:flex-row sm:items-center">
-                                <div className="flex-1">
-                                    <h3 className="text-base font-semibold text-slate-900">
-                                    {r.Request?.title}
-                                    </h3>
-                                    <p className="text-sm text-slate-600">
-                                    {r.Request?.description}
-                                    </p>
-                                </div>
-                                <div className="ml-0 sm:ml-auto mt-2 sm:mt-0">
-                                    <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
-                                    Category : {r.Request?.RequestCategory?.Name}
-                                    </span>
-                                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {completedRequests.map((r) => (
+                        <div key={r.Request.requestId} className="h-full">
+                        {/* Card */}
+                        <div className="h-full rounded-xl border border-slate-200 bg-white p-4 shadow-sm flex flex-col">
+                            {/* Header row: title + badge */}
+                            <div className="flex items-start justify-between gap-3">
+                            <h3 className="text-base font-semibold text-slate-900 leading-snug line-clamp-2">
+                                {r.Request?.title}
+                            </h3>
+                            <span className="shrink-0 text-xs bg-gray-100 px-2 py-1 rounded-full">
+                                Category : {r.Request?.RequestCategory?.Name}
+                            </span>
                             </div>
 
-                                <button 
-                                    className="mt-3 text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-200 transition"
-                                    onClick={() => handleOnClickViewDetails(r.Request.requestId)}>
-                                    View Details
-                                </button>
-                            </div>
-                        ))
-                    }
+                            {/* Description */}
+                            <p className="mt-2 text-sm text-slate-600 line-clamp-4">
+                            {r.Request?.description}
+                            </p>
 
-                    {
-                        completedRequests.length === 0 && (
-                            <div className="rounded-xl border bord`er-dashed border-slate-300 bg-white p-10 text-center text-slate-500">
-                                No completed requests match “{searchQuery}”.
-                            </div>
-                        )
-                    }
+                            {/* Spacer pushes button to bottom for equal heights */}
+                            <div className="flex-1" />
+
+                            {/* Action */}
+                            <button
+                            className="mt-3 inline-flex w-max text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded hover:bg-indigo-200 transition"
+                            onClick={() => handleOnClickViewDetails(r.Request.requestId)}
+                            >
+                            View Details
+                            </button>
+                        </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
