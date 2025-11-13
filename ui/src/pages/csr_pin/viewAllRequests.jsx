@@ -106,11 +106,16 @@ const ViewAllRequests = () => {
                         className="w-full border border-gray-300 rounded-lg pl-10 pr-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400 text-gray-700"
                     />
                 </div>
-                <button className="bg-indigo-100 text-indigo-700 px-5 py-2 rounded-lg shadow hover:bg-indigo-200 transition"
-                    onClick={() => navigate("/dashboard/pin/createRequest")}
-                >
-                Create
-                </button>
+                {
+                    userRole == 1 && (
+                        <button className="bg-indigo-100 text-indigo-700 px-5 py-2 rounded-lg shadow hover:bg-indigo-200 transition"
+                        onClick={() => navigate("/dashboard/pin/createRequest")}
+                        >
+                            Create
+                        </button>
+                    )
+                }
+                
             </div>
 
             {
